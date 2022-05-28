@@ -1,0 +1,82 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <i style="font-size: 40px;margin-left: 20px;" class="fas fa-shipping-fast">
+        </i>
+        <h1 class="vms-heading">Vehicle Management</h1>
+        <div class="d-flex">
+            <li class="nav-list">
+                <a routerLink="/menu/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+            </li>
+            <li class="nav-list">
+                <a routerLink="/menu/aboutus" routerLinkActive="active">About</a>
+            </li>
+            <div class="dropdown">
+                <a class="admin" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Administration
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item " routerLink="/menu/account">
+                            Account
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item " routerLink="/menu/adduser">
+                            Add New System User
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/adddriver">
+                            Add New Driver
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/addvehicle">
+                            Add New Vehicle
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/addfuel">
+                            Add Fuel
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/addmaintain">
+                            Add Maintanence
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/addinsurance">
+                            Add Insurance
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a class="dropdown-item" routerLink="/menu/report">
+                            Report
+                        </a>
+                    </li> -->
+                    <li>
+                        <a class="dropdown-item" routerLink="/menu/dash_board">
+                            Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <li>
+                <a routerLink="/menu/contactus" class="nav-list" style="margin-left: 85px;"
+                    routerLinkActive="active">Contact
+                    Us
+                </a>
+            </li>
+            <li>
+                <a routerLink="/login" (click)='logout()' class="nav-list">
+                    Logout
+                </a>
+            </li>
+        </div>
+
+    </div>
+</nav>
+<div>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,62 @@
+.about-card{
+    align-items: center;
+    background-color: white;
+    background: linear-gradient(rgb(174, 26, 174),rgb(41, 3, 41));
+    border: 2px solid rgb(236, 232, 232);
+    border-radius: 30px;
+    box-shadow: 5px 10px 20px grey;
+    flex-direction: column;
+    display: flex;
+    height: 300px;
+    margin-bottom: 20px;
+    padding: 5px;
+    text-align: center;
+    width: 350px;
+}
+
+.about-all-card p,.about-card h3{
+    color: white;
+}
+.about-card:hover{
+    cursor:pointer;
+    transform: scale(0.9);
+    transition:ease 1s;
+}
+.about-all-card{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+}
+.about{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.about-heading{
+    color: #173050;
+    width: 700px;
+}
+.about-paragraph{
+    width: 550px;
+}
+p{
+    font-size: 30px;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.about-product{
+    background-color: #f7f7f7;
+    padding:20px;
+    height: 220vh;
+}
+img{
+    border-radius: 100%;
+    box-shadow: 1px 4px 15px black;
+    height: 130px;
+    margin-top: -50px;
+    width: 130px;
+}
+.feature2-title{
+    margin-top: 50px;
+}

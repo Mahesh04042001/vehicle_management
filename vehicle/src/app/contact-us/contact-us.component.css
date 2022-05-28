@@ -1,0 +1,38 @@
+.contact_footer{
+    background-color: rgb(28, 25, 25);
+    height: 529px;
+    padding-top: 80px;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
+.contact{
+    overflow-x: hidden;
+    width: 100vw;
+}
+.footer_content{
+    color:#6c757d!important;
+    font-size: 20px;
+    margin-left: 80px;
+    width: 300px;
+}
+.footer_content h3,hr{
+    color:white;
+}
+hr{
+    height: 2px;
+}
+.social_media i{
+    font-size: xx-large;
+    margin: 20px;
+}
+.social_media i:hover{
+    cursor: pointer;
+    font-size: 25px;
+}
+.social_media a{
+    border-style: none;
+    text-decoration: none;
+}

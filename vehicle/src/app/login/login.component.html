@@ -1,0 +1,47 @@
+<div class="container" *ngIf="this.ser.showTag">
+    <div class="row">
+        <div>
+            <div class="card">
+                <div class="text-center">
+                    <h1>
+                        Login
+                    </h1>
+                    <h6>
+                        Please enter user name & password
+                    </h6>
+                </div>
+                <form [formGroup]="loginform">
+                    <div class="mb-3" class="form-group">
+                        <label for="username" class="form-label">
+                            User Name
+                        </label>
+                        <input type="text" class="form-control" formControlName="username" id="username"
+                            aria-describedby="emailHelp">
+                        <span class="text-danger"
+                            *ngIf="loginform.controls['username'].dirty && loginform.hasError('required','username')">
+                            *Username is required!!
+                        </span>
+                    </div>
+                    <div class="mb-3" class="form-group">
+                        <label for="Password" class="form-label">
+                            Password
+                        </label>
+                        <input type="password" class="form-control" id="Password" formControlName="password">
+                        <span class="text-danger"
+                            *ngIf="loginform.controls['password'].dirty && loginform.hasError('required','password')">
+                            *Username is required!!
+                        </span>
+                    </div>
+                    <div class="form-text">
+                        We'll never share your credentials.
+                    </div>
+                    <button type="submit" class="btn btn-primary" *ngIf="loginBtnDisable">
+                        <a (click)="login(this.loginform.value)">
+                            Login
+                        </a>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+.container{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 900px;
+}
+.container h1{
+    font-size:45px;
+    font-weight: bold;
+}
+.heading h1{
+    color: rgb(8, 8, 81);
+    margin-bottom: 40px;
+}
+.vms_para{
+    color: rgb(39, 39, 97);
+    font-size: 20px;
+    margin-top: -20px;
+}
+.banner_img_part{
+    margin-top: -40px;
+}

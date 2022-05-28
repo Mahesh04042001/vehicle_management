@@ -1,0 +1,159 @@
+<!--Search Bar-->
+
+<mat-form-field appearance="standard" class="searchBar">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
+</mat-form-field>
+
+<!-- Add Button-->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="showOrHide()">
+    Add Insurance Details
+</button><br><br>
+
+<!--Table of insurance-->
+
+<table class="table">
+    <thead class="myTable">
+        <tr>
+            <th scope="col">Vehicle Number</th>
+            <th scope="col">Vehicle Type</th>
+            <th scope="col">Company</th>
+            <th scope="col">Starting Date</th>
+            <th scope="col">Ending Date</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of this.share.store | filter:this.share.searchText">
+            <td>{{user.vehiclenumber}}</td>
+            <td>{{user.vehicletype}}</td>
+            <td>{{user.company}}</td>
+            <td>{{user.startdate | date:'dd/MM/YYYY'}}</td>
+            <td>{{user.enddate | date:'dd/MM/YYYY'}}</td>
+            <td>{{user.cost}}</td>
+            <td>
+                <button type="button" (click)="onEdit(user)" class="btn btn-warning" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Edit
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" (click)="delete(user,user)" class=" btn btn-primary"
+                    data-bs-target="#exampleModal" style="background-color: red;">
+                    Remove
+                </button>
+                <br><br>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- popup Form -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">
+                    Add Vehicle Insurance Details
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="insuranceform">
+                    <div>
+                        <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
+                            Select Vehicle Number
+                        </label>
+                        <select type="text" *ngIf="this.share.setFieldShow" id="vinNumber" (change)=setField($event)
+                            class="form-control" formControlName="vinNumber">
+                            <option value="0">Please Select One</option>
+                            <option *ngFor="let user of this.share.storeDrobdownObj" [value]="user._id">
+                                {{user.vehiclenumber}}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="vehiclenumber" class="form-label">
+                            Vehicle Number
+                        </label>
+                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['vehiclenumber'].dirty && insuranceform.hasError('required','vehiclenumber')">*Vehicle
+                            number
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="vehicletype" class="form-label">
+                            Vehicle Type
+                        </label>
+                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['vehicletype'].dirty && insuranceform.hasError('required','vehicletype')">*Vehicle
+                            type
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="company" class="form-label">
+                            Insurance Company
+                        </label>
+                        <input type="text" class="form-control" id="company" formControlName="company">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['company'].dirty && insuranceform.hasError('required','company')">*Insurance
+                            company
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="startdate" class="form-label">
+                            Start Date
+                        </label>
+                        <input type="date" class="form-control" id="startdate" formControlName="startdate">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['startdate'].dirty && insuranceform.hasError('required','startdate')">*Start
+                            date
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="enddate" class="form-label">
+                            End Date
+                        </label>
+                        <input type="date" class="form-control" id="enddate" formControlName="enddate">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['enddate'].dirty && insuranceform.hasError('required','enddate')">*End
+                            date
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="cost" class="form-label">
+                            Total Cost
+                        </label>
+                        <input type="number" class="form-control" id="cost" formControlName="cost">
+                        <span class="text-danger"
+                            *ngIf="insuranceform.controls['cost'].dirty && insuranceform.hasError('required','cost')">*Cost
+                            is required!!
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceform.valid"
+                    *ngIf="this.share.showAdd" (click)="add(this.insuranceform.value)">
+                    Add
+                </button>
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceform.valid"
+                    (click)="update(this.insuranceform.value)" *ngIf="this.share.showUpdate">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

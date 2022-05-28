@@ -1,0 +1,26 @@
+.delete:hover{
+    background-color: grey;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    width: 40px;
+}
+.button{
+    width: 470px;
+}
+.space{
+    margin-bottom: 30px;
+}
+h1{
+   font-size:x-large;
+   font-weight: bold;
+   margin-left: 50px;
+}
+.modal-header{
+    border: 1px solid grey;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+
+

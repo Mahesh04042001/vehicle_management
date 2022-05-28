@@ -1,0 +1,148 @@
+<!--search bar-->
+
+<mat-form-field appearance="standard" class="searchBar">
+    <mat-label>
+        Search
+    </mat-label>
+    <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
+</mat-form-field>
+
+<!-- Add button-->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="showOrHide()">
+    Add Driver
+</button><br><br>
+
+
+<!--table-->
+<table class="table">
+    <thead class="myTable">
+        <tr>
+            <th scope="col">Driver Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Licence Number</th>
+            <th scope="col">Licence End date</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of this.share.store | filter:this.share.searchText">
+            <td>{{user.drivername}}</td>
+            <td>{{user.mobile}}</td>
+            <td>{{user.licencenumber}}</td>
+            <td>{{user.licenceenddate | date:'dd/MM/YYYY'}}</td>
+            <td>{{user.city}}</td>
+            <td>{{user.state}}</td>
+            <td>
+                <button type="button" (click)="onEdit(user)" class="btn btn-warning" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Edit
+                </button>&nbsp;&nbsp;
+                <button type="button" (click)="delete(user)" class=" btn btn-primary" data-bs-target="#exampleModal"
+                    style="background-color: red;">
+                    Remove
+                </button><br><br>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- popup form -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Driver Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="driverform">
+                    <div>
+                        <label for="drivername" class="form-label">
+                            Driver Name
+                        </label>
+                        <input type="text" class="form-control" id="drivername" formControlName="drivername">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['drivername'].dirty && driverform.hasError('required','drivername')">*Driver
+                            Name
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="mobile" class="form-label">
+                            Mobile
+                        </label>
+                        <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
+                            formControlName="mobile">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['mobile'].dirty && driverform.hasError('required','mobile')">*Mobile
+                            number
+                            is required!!
+                        </span>
+                        <span class="text-danger" *ngIf="driverform.controls['mobile'].errors?.pattern">*Mobile Number
+                            Should be 10
+                            Digit!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="licencenumber" class="form-label">
+                            Licence Number
+                        </label>
+                        <input type="text" class="form-control" id="licencenumber" formControlName="licencenumber">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['licencenumber'].dirty && driverform.hasError('required','licencenumber')">*Licence
+                            number
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="licenceenddate" class="form-label">
+                            Licence End Date
+                        </label>
+                        <input type="date" class="form-control" id="licenceenddate" formControlName="licenceenddate">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['licenceenddate'].dirty && driverform.hasError('required','licenceenddate')">*Licence
+                            end date
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="city" class="form-label">
+                            City
+                        </label>
+                        <input type="text" class="form-control" id="city" formControlName="city">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['city'].dirty && driverform.hasError('required','city')">*City
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="state" class="form-label">
+                            State
+                        </label>
+                        <input type="text" class="form-control" id="state" formControlName="state">
+                        <span class="text-danger"
+                            *ngIf="driverform.controls['state'].dirty && driverform.hasError('required','state')">*State
+                            is required!!
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" [disabled]="!driverform.valid" *ngIf="this.share.showAdd"
+                    (click)="driverCheck(this.driverform.value)">
+                    Add
+                </button>
+                <button type="button" class="btn btn-primary" [disabled]="!driverform.valid"
+                    (click)="update(this.driverform.value)" *ngIf="this.share.showUpdate">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

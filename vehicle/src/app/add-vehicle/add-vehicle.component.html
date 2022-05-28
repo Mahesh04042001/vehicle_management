@@ -1,0 +1,137 @@
+<mat-form-field appearance="standard" class="searchBar">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
+</mat-form-field>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="showOrHide()">
+    Add Vehicle
+</button><br><br>
+
+<table class="table">
+    <thead class="myTable">
+        <tr>
+            <th scope="col">Vehicle Number</th>
+            <th scope="col">Vehicle Type</th>
+            <!-- <th scope="col">Driver Name</th> -->
+            <th scope="col">Vehicle Color</th>
+            <th scope="col">Registeration Date</th>
+            <th scope="col">Chasis No</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of this.share.store | filter:this.share.searchText">
+
+            <td>{{user.vehiclenumber}}</td>
+            <td>{{user.vehicletype}}</td>
+            <!-- <td>{{user.drivername}}</td> -->
+            <td>{{user.color}}</td>
+            <td>{{user.registerdate | date:'dd/MM/YYYY'}}</td>
+            <td>{{user.chasisno}}</td>
+            <td>{{user.cost}}</td>
+            <td>
+                <button type="button" (click)="onEdit(user)" class="btn btn-warning" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Edit
+                </button>&nbsp;&nbsp;
+                <button type="button" (click)="delete(user)" class=" btn btn-primary" data-bs-target="#exampleModal"
+                    style="background-color: red;">
+                    Remove
+                </button><br><br>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Vehicle Registration Form</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="vehicleform">
+                    <div>
+                        <label for="vehiclenumber" class="form-label">Vehicle Number</label>
+                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['vehiclenumber'].dirty && vehicleform.hasError('required','vehiclenumber')">*Vehicle
+                            number
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="vehicletype" class="form-label">Vehicle Type</label>
+                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['vehicletype'].dirty && vehicleform.hasError('required','vehicletype')">*Vehicle
+                            type
+                            is required!!
+                        </span>
+                    </div>
+                    <!-- <div>
+                        <label for="drivername" class="form-label">Driver Name</label>
+                        <input type="text" class="form-control" id="drivername" formControlName="drivername">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['drivername'].dirty && vehicleform.hasError('required','drivername')">*Drive
+                            name
+                            is required!!
+                        </span>
+                    </div> -->
+                    <div>
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" id="color" formControlName="color">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['color'].dirty && vehicleform.hasError('required','color')">*Color
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="registerdate" class="form-label">Registration Date</label>
+                        <input type="date" class="form-control" id="registerdate" formControlName="registerdate">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['registerdate'].dirty && vehicleform.hasError('required','registerdate')">*Registration
+                            date
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="chasisno" class="form-label">Chasis Number</label>
+                        <input type="text" class="form-control" id="chasisno" formControlName="chasisno">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['chasisno'].dirty && vehicleform.hasError('required','chasisno')">*Chasis
+                            number
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <label for="cost" class="form-label">Total Cost</label>
+                        <input type="number" class="form-control" id="cost" formControlName="cost">
+                        <span class="text-danger"
+                            *ngIf="vehicleform.controls['cost'].dirty && vehicleform.hasError('required','cost')">*Cost
+                            is required!!
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" [disabled]="!vehicleform.valid" *ngIf="this.share.showAdd"
+                    (click)="vehicleCheck(this.vehicleform.value)">
+                    Add
+                </button>
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!vehicleform.valid"
+                    (click)="update(this.vehicleform.value)" *ngIf="this.share.showUpdate">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,171 @@
+<!--Search Bar-->
+
+<mat-form-field appearance="standard" class="searchBar">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
+</mat-form-field>
+
+<!--Add User button-->
+
+
+<button type="button" id="add-new-user" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="showOrHide()">
+    Add User
+</button>
+
+<!--User Details Table-->
+
+<table class="table">
+    <thead class="myTable">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Date Of Birth</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of this.share.store | filter:this.share.searchText">
+
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.mobile}}</td>
+            <td>{{user.dob | date:'dd/MM/YYYY'}}</td>
+            <td>{{user.city}}</td>
+            <td>{{user.state}}</td>
+            <td>
+                <button type="button" (click)="onEdit(user)" class="btn btn-warning" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Edit
+                </button>&nbsp;&nbsp;
+                <button type="button" (click)="delete(user)" class=" btn btn-primary" data-bs-target="#exampleModal"
+                    style="background-color: red;">
+                    Remove
+                </button><br><br>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!--Popup Form-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">
+                    System User Registration Form
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userform">
+                    <div>
+                        <mat-form-field appearance="outline" class="button">
+                            <mat-label for="name">
+                                Name
+                            </mat-label>
+                            <input matInput placeholder="Enter your name here.." id="name" formControlName="name">
+                            <mat-icon matSuffix>
+                                sentiment_very_satisfied
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="button">
+                            <mat-label for="username">
+                                User Name
+                            </mat-label>
+                            <input matInput placeholder="Enter username here.." id="username"
+                                formControlName="username">
+                            <mat-icon matSuffix>
+                                sentiment_very_satisfied
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="fill" class="button">
+                            <mat-label for="pwd">
+                                Enter your password
+                            </mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" id="pwd" formControlName="pwd">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide">
+                                <mat-icon>
+                                    {{hide ? 'visibility_off' : 'visibility'}}
+                                </mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div class="space">
+                        <label for="mobile" class="form-label button">
+                            Mobile
+                        </label>
+                        <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
+                            formControlName="mobile">
+                        <span class="text-danger"
+                            *ngIf="userform.controls['mobile'].dirty && userform.hasError('required','mobile')">*Mobile
+                            number
+                            is required!!
+                        </span>
+                        <span class="text-danger" *ngIf="userform.controls['mobile'].errors?.pattern">*Mobile Number
+                            Should be 10
+                            Digit!!
+                        </span>
+                    </div>
+                    <div class="space">
+                        <label for="dob" class="form-label">
+                            Date Of Birth
+                        </label>
+                        <input type="date" class="form-control" id="dob" formControlName="dob">
+                        <span class="text-danger"
+                            *ngIf="userform.controls['dob'].dirty && userform.hasError('required','dob')">*Date of
+                            birth
+                            is required!!
+                        </span>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="button">
+                            <mat-label for="city">
+                                City
+                            </mat-label>
+                            <input matInput placeholder="Enter city here.." id="city" formControlName="city">
+                            <mat-icon matSuffix>
+                                sentiment_very_satisfied
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline" class="button">
+                            <mat-label for="state">
+                                Sate
+                            </mat-label>
+                            <input matInput placeholder="Enter state here.." id="state" formControlName="state">
+                            <mat-icon matSuffix>
+                                sentiment_very_satisfied
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" [disabled]="!userform.valid" *ngIf="this.share.showAdd"
+                    (click)="userCheck(this.userform.value)">
+                    Add
+                </button>
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!userform.valid"
+                    (click)="update(this.userform.value)" *ngIf="this.share.showUpdate">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

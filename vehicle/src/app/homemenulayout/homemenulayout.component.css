@@ -1,0 +1,58 @@
+.nav-list, a{
+    color:white;
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    margin-left: 50px;
+    text-decoration: none;
+}
+.nav-list1{
+    list-style: none;
+}
+.vms-heading{
+    margin-left: -100px;
+}
+.fas,.vms-heading,.admin{
+    color: white;
+}
+a{
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 30px;
+    text-decoration: none;
+}
+.dropdown button{
+    border-style: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+.dropdown-item{
+    border-bottom: 1px solid black;
+    margin-right: 100px;
+}
+.dropdown{
+    margin: 0px 40px;
+    width: 50px;
+}
+.container-fluid{
+    color: black;
+}
+.navbar{
+    background-color: white;
+    position: sticky;
+    top:0;
+}
+.dropdown-menu{
+    background-color: black;
+    overflow-x: hidden;
+    width: 230px;
+}
+li a:hover,.admin:hover{
+    background-color: white;
+    border-radius: 12px;
+    color: black;
+    padding: 8px 8px;
+}
+.active{
+    color:rgb(41, 192, 41);
+}

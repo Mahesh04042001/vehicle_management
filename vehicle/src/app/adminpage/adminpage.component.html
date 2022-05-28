@@ -1,0 +1,40 @@
+<nav class="navbar navbar-dark bg-primary" style="color: aliceblue;">
+    <div class="container-fluid">
+        <i style="font-size: 40px;" class="fas fa-shipping-fast">
+        </i>
+        <h1 class="text-light">
+            Vehicle Management
+        </h1>
+        <div class="d-flex">
+            <div class="dropdown">
+                <button class="bg-primary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Administration
+                </button>
+                <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" routerLink="/adduser">Add New System User</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/adddriver">Add New Driver</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/addvehicle">Add New Vehicle</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/addfuel">Add Fuel</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/addmaintain">Add Maintanence</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/addinsurance">Add Insurance</a>
+                    </li>
+                </ul>
+            </div>
+            <li>
+                <a routerLink="/home">Logout</a>
+            </li>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,80 @@
+<div class="about-product">
+    <div class="about-all-card">
+        <div class="about-card " routerLink="/menu/adddriver">
+            <img src="../../images/driver.webp" alt="driver_img" data-pagespeed-url-hash="4032969889"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                NO OF DRIVERS
+            </h3>
+            <p>
+                {{noOfDriver}}
+            </p>
+        </div>
+        <div class="about-card " routerLink="/menu/addvehicle">
+            <img src="../../images/vehicle-image.webp" alt="vehicle_img" data-pagespeed-url-hash="2845858233"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                NO OF VEHICLES
+            </h3>
+            <p>
+                {{noOfVehicle}}
+            </p>
+        </div>
+        <div class="about-card " routerLink="/menu/adduser">
+            <img src="../../images/admin.jpg" alt="admin_img" data-pagespeed-url-hash="3828134984"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                NO OF ADMIN
+            </h3>
+            <p>
+                {{noOfAdmin}}
+            </p>
+        </div>
+
+    </div>
+    <div class="about-all-card">
+        <div class="about-card " routerLink="/menu/addinsurance">
+            <img src="../../images/insurance.jpg" alt="insurance_img" data-pagespeed-url-hash="4032969889"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                INSURANCE EXPENDITURE
+            </h3>
+            <p>
+                {{insuranceExp | currency:'INR'}}
+            </p>
+        </div>
+        <div class="about-card " routerLink="/menu/addmaintain">
+            <img src="../../images/maintanence.png" alt="maintanence_img" data-pagespeed-url-hash="4032969889"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                MAINTANENCE EXPENDITURE
+            </h3>
+            <p>
+                {{maintanenceExp | currency:'INR'}}
+            </p>
+        </div>
+        <div class="about-card " routerLink="/menu/addfuel">
+            <img src="../../images/fuel.jpg" alt="fuel_img" data-pagespeed-url-hash="4032969889"
+                onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                FUEL EXPENDITURE
+            </h3>
+            <p>
+                {{fuelExp | currency:'INR'}}
+            </p>
+        </div>
+
+    </div>
+    <div class="about-all-card">
+        <div class="about-card ">
+            <img src="../../images/ensuring-profitability.png" alt="ensuring-profitability.png"
+                data-pagespeed-url-hash="4032969889" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <h3 class="feature2-title">
+                TOTAL EXPENDITURE
+            </h3>
+            <p>
+                {{totalExp | currency:'INR'}}
+            </p>
+        </div>
+    </div>
+</div>
