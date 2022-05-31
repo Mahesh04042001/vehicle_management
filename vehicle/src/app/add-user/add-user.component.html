@@ -64,50 +64,73 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="userform">
+                <form [formGroup]="userform" autocomplete="off">
                     <div>
-                        <mat-form-field appearance="outline" class="button">
-                            <mat-label for="name">
-                                Name
-                            </mat-label>
-                            <input matInput placeholder="Enter your name here.." id="name" formControlName="name">
-                            <mat-icon matSuffix>
-                                sentiment_very_satisfied
-                            </mat-icon>
-                        </mat-form-field>
+                        <label for="name" class="form-label">
+                            Name:
+                        </label>
+                        <input type="text" class="form-control" id="name" formControlName="name" minlength="3"
+                            placeholder="Enter Name" pattern="[a-zA-Z]*">
+                        <span class="text-danger"
+                            *ngIf="userform.controls['name'].dirty && userform.hasError('required','name')">*
+                            Name
+                            is required!!
+                        </span>
+                        <div>
+                            <span class="text-danger" *ngIf="userform.hasError('minlength','name')">
+                                *Name
+                                must be more than 3 letters!!
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-danger" *ngIf="userform.hasError('pattern','name')">
+                                *Name
+                                must be in letters only!!
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <mat-form-field appearance="outline" class="button">
-                            <mat-label for="username">
-                                User Name
-                            </mat-label>
-                            <input matInput placeholder="Enter username here.." id="username"
-                                formControlName="username">
-                            <mat-icon matSuffix>
-                                sentiment_very_satisfied
-                            </mat-icon>
-                        </mat-form-field>
+                        <label for="username" class="form-label">
+                            User Name:
+                        </label>
+                        <input type="text" class="form-control" id="username" formControlName="username" minlength="4"
+                            placeholder="Enter User Name" pattern="[a-zA-Z0-9]*">
+                        <span class="text-danger"
+                            *ngIf="userform.controls['username'].dirty && userform.hasError('required','username')">*User
+                            Name
+                            is required!!
+                        </span>
+                        <span class="text-danger" *ngIf="userform.hasError('minlength','username')">*User
+                            Name
+                            must be more than 4 letters!!
+                        </span>
+                        <div>
+                            <span class="text-danger" *ngIf="userform.hasError('pattern','username')">
+                                *User name
+                                must be in letters and numbers only!!
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <mat-form-field appearance="fill" class="button">
-                            <mat-label for="pwd">
-                                Enter your password
-                            </mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" id="pwd" formControlName="pwd">
-                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                                [attr.aria-pressed]="hide">
-                                <mat-icon>
-                                    {{hide ? 'visibility_off' : 'visibility'}}
-                                </mat-icon>
-                            </button>
-                        </mat-form-field>
+                        <label for="pwd" class="form-label">
+                            Password:
+                        </label>
+                        <input type="password" class="form-control" id="pwd" formControlName="pwd" minlength="8"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Enter Password">
+                        <span class="text-danger"
+                            *ngIf="userform.controls['pwd'].dirty && userform.hasError('required','pwd')">*password
+                            is required!!
+                        </span>
+                        <span class="text-danger" *ngIf="userform.hasError('pattern','pwd')">
+                            *password must have letter's and should have 1 digit and password also contain 8 character!
+                        </span>
                     </div>
-                    <div class="space">
-                        <label for="mobile" class="form-label button">
-                            Mobile
+                    <div>
+                        <label for="mobile" class="form-label">
+                            Mobile:
                         </label>
                         <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
-                            formControlName="mobile">
+                            formControlName="mobile" placeholder="Enter Mobile Number">
                         <span class="text-danger"
                             *ngIf="userform.controls['mobile'].dirty && userform.hasError('required','mobile')">*Mobile
                             number
@@ -118,38 +141,48 @@
                             Digit!!
                         </span>
                     </div>
-                    <div class="space">
+                    <div>
                         <label for="dob" class="form-label">
-                            Date Of Birth
+                            Date Of Birth:
                         </label>
-                        <input type="date" class="form-control" id="dob" formControlName="dob">
+                        <input type="date" class="form-control" id="dob" formControlName="dob" max="{{maxdate}}">
                         <span class="text-danger"
-                            *ngIf="userform.controls['dob'].dirty && userform.hasError('required','dob')">*Date of
-                            birth
+                            *ngIf="userform.controls['dob'].dirty && userform.hasError('required','dob')">*
+                            Date of birth
                             is required!!
                         </span>
                     </div>
                     <div>
-                        <mat-form-field appearance="outline" class="button">
-                            <mat-label for="city">
-                                City
-                            </mat-label>
-                            <input matInput placeholder="Enter city here.." id="city" formControlName="city">
-                            <mat-icon matSuffix>
-                                sentiment_very_satisfied
-                            </mat-icon>
-                        </mat-form-field>
+                        <label for="city" class="form-label">
+                            City:
+                        </label>
+                        <select formControlName="city">
+                            <option disabled selected>Select city</option>
+                            <option value="Salem">Salem</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Virudhunagar">Virudhunagar</option>
+                            <option value="Coimbatore">Coimbatore</option>
+                            <option value="Madurai">Madurai</option>
+                            <option value="Thirunelveli">Thirunelveli</option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="userform.controls['city'].touched && userform.hasError('required','city')">*City
+                            is required
+                        </span>
                     </div>
                     <div>
-                        <mat-form-field appearance="outline" class="button">
-                            <mat-label for="state">
-                                Sate
-                            </mat-label>
-                            <input matInput placeholder="Enter state here.." id="state" formControlName="state">
-                            <mat-icon matSuffix>
-                                sentiment_very_satisfied
-                            </mat-icon>
-                        </mat-form-field>
+                        <label for="state" class="form-label">
+                            State:
+                        </label>
+                        <select formControlName="state">
+                            <option value="" disabled>Select State</option>
+                            <option value="TamilNadu">TamilNadu</option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="userform.controls['state'].dirty && userform.hasError('required','state')">*State
+                            is
+                            required
+                        </span>
                     </div>
                 </form>
             </div>

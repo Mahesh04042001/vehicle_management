@@ -61,14 +61,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="insuranceform">
+                <form [formGroup]="insuranceform" autocomplete="off">
                     <div>
                         <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
-                            Select Vehicle Number
+                            Select Vehicle Number:
                         </label>
                         <select type="text" *ngIf="this.share.setFieldShow" id="vinNumber" (change)=setField($event)
                             class="form-control" formControlName="vinNumber">
-                            <option value="0">Please Select One</option>
+                            <option value="" disabled>Please Select One</option>
                             <option *ngFor="let user of this.share.storeDrobdownObj" [value]="user._id">
                                 {{user.vehiclenumber}}
                             </option>
@@ -76,9 +76,10 @@
                     </div>
                     <div>
                         <label for="vehiclenumber" class="form-label">
-                            Vehicle Number
+                            Vehicle Number:
                         </label>
-                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber">
+                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
+                            placeholder="Enter Vehicle Number">
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['vehiclenumber'].dirty && insuranceform.hasError('required','vehiclenumber')">*Vehicle
                             number
@@ -87,9 +88,10 @@
                     </div>
                     <div>
                         <label for="vehicletype" class="form-label">
-                            Vehicle Type
+                            Vehicle Type:
                         </label>
-                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype">
+                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
+                            placeholder="Enter Vehicle Type">
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['vehicletype'].dirty && insuranceform.hasError('required','vehicletype')">*Vehicle
                             type
@@ -98,9 +100,16 @@
                     </div>
                     <div>
                         <label for="company" class="form-label">
-                            Insurance Company
+                            Insurance Company:
                         </label>
-                        <input type="text" class="form-control" id="company" formControlName="company">
+                        <select formControlName="company">
+                            <option value="" disabled>Select city</option>
+                            <option value="The New India Assurance Co. Ltd.">The New India Assurance Co. Ltd.</option>
+                            <option value="National Insurance">National Insurance</option>
+                            <option value="Shriram Commercial Vehicle Insurance">Shriram Commercial Vehicle Insurance
+                            </option>
+                        </select>
+                        <!-- <input type="text" class="form-control" id="company" formControlName="company" placeholder="Enter Insurance Company"> -->
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['company'].dirty && insuranceform.hasError('required','company')">*Insurance
                             company
@@ -109,9 +118,10 @@
                     </div>
                     <div>
                         <label for="startdate" class="form-label">
-                            Start Date
+                            Start Date:
                         </label>
-                        <input type="date" class="form-control" id="startdate" formControlName="startdate">
+                        <input type="date" class="form-control" id="startdate" formControlName="startdate"
+                            min="{{mindate}}" max="{{maxdate}}">
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['startdate'].dirty && insuranceform.hasError('required','startdate')">*Start
                             date
@@ -120,9 +130,10 @@
                     </div>
                     <div>
                         <label for="enddate" class="form-label">
-                            End Date
+                            End Date:
                         </label>
-                        <input type="date" class="form-control" id="enddate" formControlName="enddate">
+                        <input type="date" class="form-control" id="enddate" formControlName="enddate"
+                            min="{{endingMinDate}}">
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['enddate'].dirty && insuranceform.hasError('required','enddate')">*End
                             date
@@ -131,9 +142,10 @@
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost
+                            Total Cost:
                         </label>
-                        <input type="number" class="form-control" id="cost" formControlName="cost">
+                        <input type="number" class="form-control" id="cost" formControlName="cost"
+                            placeholder="Enter Cost" pattern="[0-9]{9}*" (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
                             *ngIf="insuranceform.controls['cost'].dirty && insuranceform.hasError('required','cost')">*Cost
                             is required!!

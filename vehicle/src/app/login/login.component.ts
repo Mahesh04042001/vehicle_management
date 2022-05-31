@@ -31,18 +31,12 @@ export class LoginComponent implements OnInit {
   login(formvalue:any){
     this.ser.storeCredentials=[];
     this.loginBtnDisable=false;
-    this.api.getUserData().subscribe(res=>{
+    this.api.getlogindata(formvalue.username,formvalue.password).subscribe(res=>{
       this.show.allIdObj=res;
-      this.show.allIdObj=this.show.allIdObj.docs;
-      for (const key of this.show.allIdObj) {
-        if(key.username==formvalue.username && key.password==formvalue.password){
-          this.logIncheck=1;
-          this.ser.userId=key._id;
-          this.ser.storeCredentials.push(key);
-        }
-      }
+      this.show.allIdObj=this.show.allIdObj.docs[0];
+      this.ser.storeCredentials.push(this.show.allIdObj);
       setTimeout(()=>{
-        if(this.logIncheck==1 && this.ser.storeCredentials.length!=0){
+        if(this.show.allIdObj!=undefined && this.ser.storeCredentials.length!=0){
           localStorage.setItem("currentUser",JSON.stringify(this.ser.storeCredentials));
           this.loginform.reset();
           this.ser.showTag=false;
@@ -54,6 +48,8 @@ export class LoginComponent implements OnInit {
           this.loginform.reset();
         }
       },1000);
+    },rej=>{
+      console.log("error",rej);
     })
   }
 }

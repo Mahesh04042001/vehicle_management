@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { HomemenulayoutComponent } from './homemenulayout/homemenulayout.component';
 import { LoginComponent } from './login/login.component';
+import { TripComponent } from './trip/trip.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'login',pathMatch:'full'},
@@ -30,10 +31,10 @@ const routes: Routes = [
       {path:'adduser',component:AddUserComponent},
       {path:'adddriver',component:AddDriverComponent},
       {path:'addvehicle',component:AddVehicleComponent},
+      {path:'addtrip',component:TripComponent},
       {path:'addfuel',component:AddFuelComponent},
       {path:'addmaintain',component:AddMaintanenceComponent},
       {path:'addinsurance',component:AddInsuranceComponent},
-      // {path:'report',component:ReportCheckComponent},
       {path:'dash_board',component:DashboardComponent}
     ]
   },

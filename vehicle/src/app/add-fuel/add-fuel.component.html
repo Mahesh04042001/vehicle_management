@@ -3,7 +3,6 @@
     <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
-<!-- <button (click)="test()">test</button> -->
 <!-- Add button -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
     (click)="showOrHide()">
@@ -17,6 +16,7 @@
         <tr>
             <th scope="col">Vehicle Number</th>
             <th scope="col">Vehicle Type</th>
+            <th scope="col">Fuel Type</th>
             <th scope="col">Quantity</th>
             <th scope="col">Filling Date</th>
             <th scope="col">Cost</th>
@@ -27,6 +27,7 @@
         <tr *ngFor="let user of this.share.store | filter:this.share.searchText">
             <td>{{user.vehiclenumber}}</td>
             <td>{{user.vehicletype}}</td>
+            <td>{{user.fuel}}</td>
             <td>{{user.quantity}}</td>
             <td>{{user.fillingdate | date:'dd/MM/YYYY'}}</td>
             <td>{{user.cost}}</td>
@@ -57,15 +58,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                <form [formGroup]="fuelform">
+                <form [formGroup]="fuelform" autocomplete="off">
                     <div>
                         <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
-                            Select Vehicle Number
+                            Select Vehicle Number:
                         </label>
                         <select type="text" *ngIf="this.share.setFieldShow" id="vinNumber" (change)=setField($event)
-                            class="form-control" formControlName="vinNumber">
-                            <option value="0">Please Select One</option>
+                            class="form-control" formControlName="vehicle_Id">
+                            <option disabled selected>Please Select One</option>
                             <option *ngFor="let user of this.share.storeDrobdownObj" [value]="user._id">
                                 {{user.vehiclenumber}}
                             </option>
@@ -73,9 +73,10 @@
                     </div>
                     <div>
                         <label for="vehiclenumber" class="form-label">
-                            Vehicle Number
+                            Vehicle Number:
                         </label>
-                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber">
+                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
+                            placeholder="Enter Vehicle Number">
                         <span class="text-danger"
                             *ngIf="fuelform.controls['vehiclenumber'].dirty && fuelform.hasError('required','vehiclenumber')">*Vehicle
                             number
@@ -84,9 +85,10 @@
                     </div>
                     <div>
                         <label for="vehicletype" class="form-label">
-                            Vehicle Type
+                            Vehicle Type:
                         </label>
-                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype">
+                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
+                            placeholder="Enter Vehicle Type">
                         <span class="text-danger"
                             *ngIf="fuelform.controls['vehicletype'].dirty && fuelform.hasError('required','vehicletype')">*Vehicle
                             type
@@ -94,10 +96,27 @@
                         </span>
                     </div>
                     <div>
-                        <label for="quantity" class="form-label">
-                            Quantity (in litres)
+                        <label for="fuel" class="form-label">
+                            Fuel Type:
+                        </label><br>
+                        <input type="radio" id="fuel" name="fuel" value="petrol" formControlName="fuel">&nbsp;&nbsp;
+                        <label for="fuel">
+                            Petrol
                         </label>
-                        <input type="number" class="form-control" id="quantity" formControlName="quantity">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="fuel" name="fuel" value="diesel" formControlName="fuel">&nbsp;&nbsp;
+                        <label for="fuel">
+                            Diesel
+                        </label>
+                        <br>
+                    </div>
+                    <div>
+                        <label for="quantity" class="form-label">
+                            Quantity (in litres):
+                        </label>
+                        <input type="number" class="form-control" id="quantity" formControlName="quantity"
+                            placeholder="Enter quantity in litres" pattern="[0-9]{9}*"
+                            (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
                             *ngIf="fuelform.controls['quantity'].dirty && fuelform.hasError('required','quantity')">*Quantity
                             is required!!
@@ -105,9 +124,10 @@
                     </div>
                     <div>
                         <label for="fillingdate" class="form-label">
-                            Filling Date
+                            Filling Date:
                         </label>
-                        <input type="date" class="form-control" id="fillingdate" formControlName="fillingdate">
+                        <input type="date" class="form-control" id="fillingdate" formControlName="fillingdate"
+                            min="{{mindate}}" max="{{maxdate}}">
                         <span class="text-danger"
                             *ngIf="fuelform.controls['fillingdate'].dirty && fuelform.hasError('required','fillingdate')">*Filling
                             date
@@ -116,9 +136,11 @@
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost
+                            Total Cost:
                         </label>
-                        <input type="number" class="form-control" id="cost" formControlName="cost">
+                        <input type="number" class="form-control" id="cost" formControlName="cost"
+                            placeholder="Enter Fuel Cost" pattern="[0-9]{9}*"
+                            (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
                             *ngIf="fuelform.controls['cost'].dirty && fuelform.hasError('required','cost')">*Cost
                             is required!!
@@ -130,10 +152,6 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <!-- <button type="button" class="btn btn-primary" [disabled]="!fuelform.valid" *ngIf="showAdd"
-                    (click)="fuelCheck(this.fuelform.value)">
-                    Add
-                </button> -->
                 <button type="button" class="btn btn-primary" [disabled]="!fuelform.valid" *ngIf="this.share.showAdd"
                     (click)="add(this.fuelform.value)">
                     Add

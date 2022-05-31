@@ -14,9 +14,8 @@
         <tr>
             <th scope="col">Vehicle Number</th>
             <th scope="col">Vehicle Type</th>
-            <!-- <th scope="col">Driver Name</th> -->
             <th scope="col">Vehicle Color</th>
-            <th scope="col">Registeration Date</th>
+            <th scope="col">Current Date</th>
             <th scope="col">Chasis No</th>
             <th scope="col">Cost</th>
             <th scope="col">Action</th>
@@ -27,7 +26,6 @@
 
             <td>{{user.vehiclenumber}}</td>
             <td>{{user.vehicletype}}</td>
-            <!-- <td>{{user.drivername}}</td> -->
             <td>{{user.color}}</td>
             <td>{{user.registerdate | date:'dd/MM/YYYY'}}</td>
             <td>{{user.chasisno}}</td>
@@ -55,45 +53,76 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="vehicleform">
+                <form [formGroup]="vehicleform" autocomplete="off">
                     <div>
-                        <label for="vehiclenumber" class="form-label">Vehicle Number</label>
-                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber">
+                        <label for="vehiclenumber" class="form-label">
+                            Vehicle Number:
+                        </label>
+                        <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
+                            placeholder="Enter Vehicle Number"
+                            pattern="[T][N][0-9][0-9][A-Z][A-Z][0-9][0-9][0-9][0-9][0-9]*" maxlength="10">
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['vehiclenumber'].dirty && vehicleform.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','vehiclenumber')">*Vehicle
+                                number must start with 'TN' and format is 'TN76JJ5676'!!
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <label for="vehicletype" class="form-label">Vehicle Type</label>
-                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype">
+                        <label for="vehicletype" class="form-label">
+                            Vehicle Type:
+                        </label>
+                        <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
+                            placeholder="Enter Vehicle Type" minlength="3" pattern="[a-zA-Z]*">
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['vehicletype'].dirty && vehicleform.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('minlength','vehicletype')">*Vehicle
+                                type must have atleast 3 characters!!
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','vehicletype')">
+                                *Vehicle type
+                                must be in letters only!!
+                            </span>
+                        </div>
                     </div>
-                    <!-- <div>
-                        <label for="drivername" class="form-label">Driver Name</label>
-                        <input type="text" class="form-control" id="drivername" formControlName="drivername">
-                        <span class="text-danger"
-                            *ngIf="vehicleform.controls['drivername'].dirty && vehicleform.hasError('required','drivername')">*Drive
-                            name
-                            is required!!
-                        </span>
-                    </div> -->
                     <div>
-                        <label for="color" class="form-label">Color</label>
-                        <input type="text" class="form-control" id="color" formControlName="color">
+                        <label for="color" class="form-label">
+                            Color:
+                        </label>
+                        <input type="text" class="form-control" id="color" formControlName="color"
+                            placeholder="Enter Color" minlength="3" pattern="[a-zA-Z]*">
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['color'].dirty && vehicleform.hasError('required','color')">*Color
                             is required!!
                         </span>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('minlength','color')">*Color
+                                must be more than 3 letters!!
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','color')">
+                                *Color
+                                must be in letters only!!
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <label for="registerdate" class="form-label">Registration Date</label>
-                        <input type="date" class="form-control" id="registerdate" formControlName="registerdate">
+                        <label for="registerdate" class="form-label">
+                            Current Date:
+                        </label>
+                        <input type="date" class="form-control" id="registerdate" formControlName="registerdate"
+                            min="{{mindate}}" max="{{maxdate}}">
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['registerdate'].dirty && vehicleform.hasError('required','registerdate')">*Registration
                             date
@@ -101,17 +130,30 @@
                         </span>
                     </div>
                     <div>
-                        <label for="chasisno" class="form-label">Chasis Number</label>
-                        <input type="text" class="form-control" id="chasisno" formControlName="chasisno">
+                        <label for="chasisno" class="form-label">
+                            Chasis Number:
+                        </label>
+                        <input type="text" class="form-control" id="chasisno" formControlName="chasisno"
+                            placeholder="Enter Chasis Number" pattern="[a-zA-Z0-9]*">
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['chasisno'].dirty && vehicleform.hasError('required','chasisno')">*Chasis
                             number
                             is required!!
                         </span>
+                        <div>
+                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','chasisno')">
+                                *Chasis number
+                                must be in letters only!!
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <label for="cost" class="form-label">Total Cost</label>
-                        <input type="number" class="form-control" id="cost" formControlName="cost">
+                        <label for="cost" class="form-label">
+                            Total Cost:
+                        </label>
+                        <input type="number" class="form-control" id="cost" formControlName="cost"
+                            placeholder="Enter Vehicle Cost" pattern="[0-9]{9}*"
+                            (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
                             *ngIf="vehicleform.controls['cost'].dirty && vehicleform.hasError('required','cost')">*Cost
                             is required!!

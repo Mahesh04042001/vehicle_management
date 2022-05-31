@@ -21,8 +21,8 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getUser/${id}`);
   }
   
-  deleteUser(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteUser/${id}/${id1}`);
+  deleteUser(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteUser/${id}/${rev}`);
   }
   updateUser(doc:any){
     return this.http.put('http://localhost:8000/updateUser/',doc);
@@ -42,8 +42,8 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getDriver/${id}`);
   }
   
-  deleteDriverData(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteDriver/${id}/${id1}`);
+  deleteDriverData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteDriver/${id}/${rev}`);
   }
   updateDriverData(doc:any){
     return this.http.put('http://localhost:8000/updateDriver/',doc);
@@ -64,8 +64,8 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getVehicle/${id}`);
   }
   
-  deleteVehicleData(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteVehicle/${id}/${id1}`);
+  deleteVehicleData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteVehicle/${id}/${rev}`);
   }
   updateVehicleData(doc:any){
     return this.http.put('http://localhost:8000/updateVehicle/',doc);
@@ -87,8 +87,8 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getFuel/${id}`);
   }
   
-  deleteFuelData(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteFuel/${id}/${id1}`);
+  deleteFuelData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteFuel/${id}/${rev}`);
   }
   updateFuelData(doc:any){
     return this.http.put('http://localhost:8000/updateFuel/',doc);
@@ -110,8 +110,8 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getInsurance/${id}`);
   }
   
-  deleteInsuranceData(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteInsurance/${id}/${id1}`);
+  deleteInsuranceData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteInsurance/${id}/${rev}`);
   }
   updateInsuranceData(doc:any){
     return this.http.put('http://localhost:8000/updateInsurance/',doc);
@@ -133,13 +133,38 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/getMaintanence/${id}`);
   }
   
-  deleteMaintanenceData(id:any,id1:any){
-    return this.http.delete(`http://localhost:8000/deleteMaintanence/${id}/${id1}`);
+  deleteMaintanenceData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteMaintanence/${id}/${rev}`);
   }
   updateMaintanenceData(doc:any){
     return this.http.put('http://localhost:8000/updateMaintanence/',doc);
   }
 
+  //Add Maintanence Component Api Services--------------------------------------------
+
+  addTripData(doc:any){
+    return this.http.post('http://localhost:8000/postTrip/',doc);
+  }
+
+  getTripData(): Observable<{}> {
+    return this.http.get('http://localhost:8000/getTrip/');
+  }
+  getAllTripData(id:any): Observable<{}> {
+    return this.http.get(`http://localhost:8000/getTrip/${id}`);
+  }
+  
+  deleteTripData(id:any,rev:any){
+    return this.http.delete(`http://localhost:8000/deleteTrip/${id}/${rev}`);
+  }
+  updateTripData(doc:any){
+    return this.http.put('http://localhost:8000/updateTrip/',doc);
+  }
+
   //------------------------------------------------------------------------------
+  //get the user login data-----------------------------------------------------
+
+  getlogindata(username:any,password:any){
+    return this.http.get(`http://localhost:8000/get_login_user/${username}/${password}`);
+  }
 
 }

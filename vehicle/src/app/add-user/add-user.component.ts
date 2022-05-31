@@ -12,6 +12,7 @@ import { SharedserviceService } from '../service/sharedservice.service';
 export class AddUserComponent implements OnInit {
   hide=true;
   userform!:FormGroup;
+  maxdate:any;
   constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService ) { }
 
   ngOnInit(): void {
@@ -27,6 +28,22 @@ export class AddUserComponent implements OnInit {
       _rev:[''],
     });
     this.getuser();
+    this.setdate();
+  }
+
+  //set date in date field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.maxdate = currentyear-18 + "-" + currentmonth + "-" + currentdate;
   }
 
   showOrHide(){
@@ -35,7 +52,7 @@ export class AddUserComponent implements OnInit {
     this.share.showUpdate=false;
   }
 
-  //Add user details fun
+  //Add user details function
 
   adduser(formvalue:any){
     this.api.addUser(formvalue).subscribe(res=>{

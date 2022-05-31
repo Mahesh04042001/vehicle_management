@@ -1,10 +1,10 @@
 body{
-    margin-top: 20px;
     background-color: lightgray;
+    margin-top: 20px;
 }
 .main{
-    padding: 15px;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 15px;
 }
 
 .sidebar{
@@ -13,11 +13,11 @@ body{
     height: 100%;
 }
 .sidebar h4{
-    margin-left: 10px;
-    display: block;
     color: white;
-    padding-bottom: 10px;
+    display: block;
     font-size: 30px;
+    margin-left: 10px;
+    padding-bottom: 10px;
     text-decoration: none;
 }
 .card{
@@ -26,13 +26,13 @@ body{
     height: 400px;
 }
 .content{
-    position: relative;
     background-color: whitesmoke;
+    position: relative;
 }
 img{
-    width: 200px;
-    height: 200px;
     border-radius: 50%;
+    height: 200px;
+    width: 200px;
 }
 .container{
     margin-top: 150px;

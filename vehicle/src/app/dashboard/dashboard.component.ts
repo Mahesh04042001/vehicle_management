@@ -17,6 +17,10 @@ export class DashboardComponent implements OnInit {
   fuelExp: any=0;
   totalExp: any=0;
   storeDriver:any;
+  driverAssigned:any;
+  driverAvailable:any;
+  vehicleAssigned:any;
+  vehicleAvailable:any;
 
   constructor(private api:ApiService,public share:SharedserviceService) { }
 
@@ -42,23 +46,35 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  //get the Total number of Driver
+  //get the Total number,assigned and available of Driver
 
   getDriver(){
     this.api.getDriverData().subscribe(res=>{
       this.share.store=res;
       this.share.store=this.share.store.docs;
       this.noOfDriver=this.share.store.length;
+      this.api.getTripData().subscribe(res=>{
+        this.share.store=res;
+        this.share.store=this.share.store.docs;
+        this.driverAssigned=this.share.store.length;
+        this.driverAvailable=this.noOfDriver-this.driverAssigned;
+      })
     })
   }
 
-  //get the Total number of vehicle
+  //get the Total number,assigned and available of vehicle
 
   getVehicle(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.store=res;
       this.share.store=this.share.store.docs;
       this.noOfVehicle=this.share.store.length;
+      this.api.getTripData().subscribe(res=>{
+        this.share.store=res;
+        this.share.store=this.share.store.docs;
+        this.vehicleAssigned=this.share.store.length;
+        this.vehicleAvailable=this.noOfVehicle-this.vehicleAssigned;
+      })
     })
   }
 

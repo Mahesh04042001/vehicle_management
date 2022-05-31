@@ -37,6 +37,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import { AccountComponent } from './account/account.component';
+import { TripComponent } from './trip/trip.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { AccountComponent } from './account/account.component';
     AddInsuranceComponent,
     AddFuelComponent,
     AddDriverComponent,
-    AccountComponent
+    AccountComponent,
+    TripComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import { AccountComponent } from './account/account.component';
     MatSidenavModule,
     MatMenuModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

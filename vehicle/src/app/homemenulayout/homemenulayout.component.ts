@@ -16,6 +16,7 @@ export class HomemenulayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //user logout function
   logout(){
     this.ser.showTag=true;
     localStorage.removeItem('currentUser');

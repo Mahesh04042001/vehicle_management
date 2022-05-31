@@ -26,9 +26,9 @@ export class AccountComponent implements OnInit {
       _id:[''],
       _rev:[''],
     });
-    console.log(this.ser.storeCredentials);
   }
 
+  //show or hide add and update
   showOrHide(){
     this.adminform.reset();
     this.share.showAdd=true;

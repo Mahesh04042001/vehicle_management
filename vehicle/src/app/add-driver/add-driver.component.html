@@ -58,24 +58,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="driverform">
+                <form [formGroup]="driverform" autocomplete="off">
                     <div>
                         <label for="drivername" class="form-label">
-                            Driver Name
+                            Driver Name:
                         </label>
-                        <input type="text" class="form-control" id="drivername" formControlName="drivername">
+                        <input type="text" class="form-control" id="drivername" formControlName="drivername"
+                            minlength="3" placeholder="Enter Driver Name" pattern="[a-zA-Z]*">
                         <span class="text-danger"
                             *ngIf="driverform.controls['drivername'].dirty && driverform.hasError('required','drivername')">*Driver
                             Name
                             is required!!
                         </span>
+                        <span class="text-danger" *ngIf="driverform.hasError('minlength','drivername')">*Driver
+                            Name
+                            must be more than 3 letters!!
+                        </span>
+                        <div>
+                            <span class="text-danger" *ngIf="driverform.hasError('pattern','drivername')">
+                                *Driver name
+                                must be in letters only!!
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="mobile" class="form-label">
-                            Mobile
+                            Mobile:
                         </label>
                         <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
-                            formControlName="mobile">
+                            formControlName="mobile" placeholder="Enter Mobile Number">
                         <span class="text-danger"
                             *ngIf="driverform.controls['mobile'].dirty && driverform.hasError('required','mobile')">*Mobile
                             number
@@ -88,20 +99,33 @@
                     </div>
                     <div>
                         <label for="licencenumber" class="form-label">
-                            Licence Number
+                            Licence Number:
                         </label>
-                        <input type="text" class="form-control" id="licencenumber" formControlName="licencenumber">
+                        <input type="text" class="form-control" id="licencenumber" formControlName="licencenumber"
+                            placeholder="Enter Licence Number (starts with 'TN')" minlength="15" maxlength="15"
+                            pattern="[T][N][a-zA-Z0-9]*">
                         <span class="text-danger"
                             *ngIf="driverform.controls['licencenumber'].dirty && driverform.hasError('required','licencenumber')">*Licence
                             number
                             is required!!
                         </span>
+                        <div>
+                            <span class="text-danger" *ngIf="driverform.hasError('minlength','licencenumber')">*Licence
+                                number must be 15 digits!!
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-danger" *ngIf="driverform.hasError('pattern','licencenumber')">*Licence
+                                number must start with TN!!
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="licenceenddate" class="form-label">
-                            Licence End Date
+                            Licence End Date:
                         </label>
-                        <input type="date" class="form-control" id="licenceenddate" formControlName="licenceenddate">
+                        <input type="date" class="form-control" id="licenceenddate" formControlName="licenceenddate"
+                            placeholder="Enter Licence End Date" min="{{mindate}}">
                         <span class="text-danger"
                             *ngIf="driverform.controls['licenceenddate'].dirty && driverform.hasError('required','licenceenddate')">*Licence
                             end date
@@ -110,22 +134,34 @@
                     </div>
                     <div>
                         <label for="city" class="form-label">
-                            City
+                            City:
                         </label>
-                        <input type="text" class="form-control" id="city" formControlName="city">
+                        <select formControlName="city">
+                            <option disabled selected>Select city</option>
+                            <option value="Salem">Salem</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Virudhunagar">Virudhunagar</option>
+                            <option value="Coimbatore">Coimbatore</option>
+                            <option value="Madurai">Madurai</option>
+                            <option value="Thirunelveli">Thirunelveli</option>
+                        </select>
                         <span class="text-danger"
-                            *ngIf="driverform.controls['city'].dirty && driverform.hasError('required','city')">*City
-                            is required!!
+                            *ngIf="driverform.controls['city'].touched && driverform.hasError('required','city')">*City
+                            is required
                         </span>
                     </div>
                     <div>
                         <label for="state" class="form-label">
-                            State
+                            State:
                         </label>
-                        <input type="text" class="form-control" id="state" formControlName="state">
+                        <select formControlName="state">
+                            <option value="" disabled>Select State</option>
+                            <option value="TamilNadu">TamilNadu</option>
+                        </select>
                         <span class="text-danger"
                             *ngIf="driverform.controls['state'].dirty && driverform.hasError('required','state')">*State
-                            is required!!
+                            is
+                            required
                         </span>
                     </div>
                 </form>

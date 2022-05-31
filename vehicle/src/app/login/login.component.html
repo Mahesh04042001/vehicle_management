@@ -6,17 +6,14 @@
                     <h1>
                         Login
                     </h1>
-                    <h6>
-                        Please enter user name & password
-                    </h6>
                 </div>
-                <form [formGroup]="loginform">
+                <form [formGroup]="loginform" autocomplete="off">
                     <div class="mb-3" class="form-group">
                         <label for="username" class="form-label">
                             User Name
                         </label>
                         <input type="text" class="form-control" formControlName="username" id="username"
-                            aria-describedby="emailHelp">
+                            aria-describedby="emailHelp" placeholder="Enter Username">
                         <span class="text-danger"
                             *ngIf="loginform.controls['username'].dirty && loginform.hasError('required','username')">
                             *Username is required!!
@@ -26,7 +23,8 @@
                         <label for="Password" class="form-label">
                             Password
                         </label>
-                        <input type="password" class="form-control" id="Password" formControlName="password">
+                        <input type="password" class="form-control" id="Password" formControlName="password"
+                            placeholder="Enter Password">
                         <span class="text-danger"
                             *ngIf="loginform.controls['password'].dirty && loginform.hasError('required','password')">
                             *Username is required!!

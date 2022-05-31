@@ -12,7 +12,8 @@ import { SharedserviceService } from '../service/sharedservice.service';
 export class AddMaintanenceComponent implements OnInit {
 
   maintanenceform!:FormGroup;
-  
+  mindate:any;
+  maxdate:any;
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
 
   ngOnInit(): void {
@@ -29,8 +30,24 @@ export class AddMaintanenceComponent implements OnInit {
     })
     this.get();
     this.setValueInDropdown();
+    this.setdate();
   }
 
+  //set date in date field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.mindate = currentyear + "-" + currentmonth + "-" + (currentdate);
+    this.maxdate=currentyear + "-" + currentmonth + "-" + (currentdate);
+  }
 
   //To show add and hide update button function
   showOrHide(){
@@ -39,7 +56,7 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.showUpdate=false;
     this.share.setFieldShow=true;
   }
-  // To set the drobdown list
+  // To set vehicle number and type the drobdown list
   setField(val:any){
     this.share.entryCheck=0;
     this.api.getAllVehicleData(val.target.value).subscribe(res=>{
@@ -49,6 +66,7 @@ export class AddMaintanenceComponent implements OnInit {
     })
   }
 
+  //set values in drobdown of select vehicle field
   setValueInDropdown(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;

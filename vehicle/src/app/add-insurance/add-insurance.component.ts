@@ -15,6 +15,11 @@ export class AddInsuranceComponent implements OnInit {
   storeInsureData:any;
   storeInsuranceObj:any;
   storeAllInsuranceObj:any;
+  mindate:any;
+  maxdate:any;
+  endingMinDate:any;
+
+
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
 
   ngOnInit(): void {
@@ -32,9 +37,25 @@ export class AddInsuranceComponent implements OnInit {
     })
     this.get();
     this.setValueInDropdown();
+    this.setdate();
   }
 
-
+  //set date in date field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.mindate = currentyear + "-" + currentmonth + "-" + (currentdate);
+    this.maxdate=currentyear + "-" + currentmonth + "-" + (currentdate);
+    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + (currentdate);
+  }
 
   //To show add and hide update button
   showOrHide(){
@@ -44,7 +65,7 @@ export class AddInsuranceComponent implements OnInit {
     this.share.setFieldShow=true;
   }
   
-  //set values in drobdown
+  //set vehicle number and type values in drobdown
 
   setField(val:any){
     this.share.entryCheck=0;
@@ -55,6 +76,7 @@ export class AddInsuranceComponent implements OnInit {
     })
   }
 
+  //set value in drobdown of select vehicle
   setValueInDropdown(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;

@@ -1,9 +1,9 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { ServiceService } from '../service/service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+
 
 @Component({
   selector: 'app-add-driver',
@@ -15,6 +15,8 @@ export class AddDriverComponent implements OnInit {
 
   driverform!:FormGroup;
   userId:any;
+  mindate:any;
+
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private ser:ServiceService) { }
 
   ngOnInit(): void {
@@ -33,8 +35,23 @@ export class AddDriverComponent implements OnInit {
     for (const iterator of this.ser.storeCredentials) {
       this.userId=iterator._id;
     }
+    this.setdate();
   }
 
+  //set date in calender field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+  }
 
   //show add and hide update button
   showOrHide(){
@@ -54,7 +71,6 @@ export class AddDriverComponent implements OnInit {
       state:formvalue.state,
       userId:this.userId
     }
-    console.log(formvalue);
     this.api.addDriverData(formvalue).subscribe(res=>{
       alert("Your data was posted successfully!");
       this.driverform.reset();
@@ -105,7 +121,6 @@ export class AddDriverComponent implements OnInit {
     this.driverform.controls['_id'].setValue(row._id);
     this.driverform.controls['_rev'].setValue(row._rev);
     this.driverform.controls['userId'].setValue(row.userId);
-
   }
 
   //update the existing form
@@ -118,8 +133,11 @@ export class AddDriverComponent implements OnInit {
       this.share.store=[];
       this.get();
     },rej=>{
-      console.log("can not update....."+rej);
+      alert("can not update....."+rej);
     })
+  }
+  getLicenceNumber(){
+    return this.driverform.get('licencenumber');
   }
 
   //check dublicate validation using licence number

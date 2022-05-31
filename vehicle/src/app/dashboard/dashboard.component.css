@@ -8,7 +8,6 @@
     flex-direction: column;
     display: flex;
     height: 300px;
-    margin-bottom: 20px;
     padding: 5px;
     text-align: center;
     width: 350px;
@@ -43,7 +42,7 @@
 p{
     font-size: 30px;
     font-weight: bolder;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .about-product{
     background-color: #f7f7f7;
@@ -59,4 +58,15 @@ img{
 }
 .feature2-title{
     margin-top: 50px;
+}
+h5,span{
+    color:yellowgreen;
+}
+.info{
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+.assign{
+    color:red;
 }

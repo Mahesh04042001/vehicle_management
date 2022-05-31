@@ -21,6 +21,15 @@ h1{
     border-radius: 20px;
     margin: 5px;
 }
+label{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size:large;
+    font-weight:300;
+}
 
-
+select {
+    height: 35px;
+    width: 100%;
+}
+        
 

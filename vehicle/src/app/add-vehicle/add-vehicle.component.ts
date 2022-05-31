@@ -14,6 +14,8 @@ export class AddVehicleComponent implements OnInit {
 
   vehicleform!:FormGroup;
   userId:any;
+  mindate:any;
+  maxdate:any;
   
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private ser:ServiceService) { }
 
@@ -21,7 +23,6 @@ export class AddVehicleComponent implements OnInit {
     this.vehicleform=this.formbuilder.group({
       vehiclenumber:['',Validators.required],
       vehicletype:['',Validators.required],
-      // drivername:['',Validators.required],
       color:['',Validators.required],
       registerdate:['',Validators.required],
       chasisno:['',Validators.required],
@@ -34,22 +35,40 @@ export class AddVehicleComponent implements OnInit {
     for (const iterator of this.ser.storeCredentials) {
       this.userId=iterator._id;
     }
+    this.setdate();
   }
 
+  //set date in date field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.mindate = currentyear + "-" + currentmonth + "-" + (currentdate);
+    this.maxdate=currentyear + "-" + currentmonth + "-" + (currentdate);
+  }
+
+  
   //This functioin is used when add
+
   showOrHide(){
     this.vehicleform.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
   }
   
-//Add function to add form value
+  //Add function to add form value
 
   add(formvalue: any){
     formvalue={
       vehiclenumber: formvalue.vehiclenumber,
       vehicletype: formvalue.vehicletype,
-      // drivername: formvalue.drivername,
       color: formvalue.color,
       registerdate: formvalue.registerdate,
       chasisno: formvalue.chasisno,
@@ -67,7 +86,7 @@ export class AddVehicleComponent implements OnInit {
     });
   }
 
-//To get all data from database to show in table
+  //To get all data from database to show in table
   
   get(){
     this.api.getVehicleData().subscribe(res=>{
@@ -81,7 +100,7 @@ export class AddVehicleComponent implements OnInit {
     })
   }
 
-//To delete table row  
+  //To delete table row  
 
   delete(data:any){
     this.api.deleteVehicleData(data._id,data._rev).subscribe(res=>{
@@ -93,14 +112,13 @@ export class AddVehicleComponent implements OnInit {
     })
   }
 
-//To eset values in table fields  
+  //To eset values in table fields  
 
   onEdit(row:any){
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.vehicleform.controls['vehiclenumber'].setValue(row.vehiclenumber);
     this.vehicleform.controls['vehicletype'].setValue(row.vehicletype);
-    // this.vehicleform.controls['drivername'].setValue(row.drivername);
     this.vehicleform.controls['color'].setValue(row.color);
     this.vehicleform.controls['registerdate'].setValue(row.registerdate);
     this.vehicleform.controls['chasisno'].setValue(row.chasisno);
@@ -110,7 +128,8 @@ export class AddVehicleComponent implements OnInit {
     this.vehicleform.controls['userId'].setValue(row.userId);
   }
 
-//To update existing form values OR modified existing  
+  //To update existing form values OR modified existing  
+
   update(formvalue:NgForm){
     this.api.updateVehicleData(formvalue).subscribe(res=>{
       alert("Your data was updated successfully!");
@@ -120,11 +139,11 @@ export class AddVehicleComponent implements OnInit {
       this.share.store=[];
       this.get();
       },rej=>{
-      console.log("can not update.....",rej);
+      alert("can not update....."+rej);
     })
   }
 
-//Vehicle database check using Chasis number
+  //Vehicle database check using Chasis number
 
   vehicleCheck(formvalue:any){
     this.share.showAdd=false;
@@ -141,7 +160,7 @@ export class AddVehicleComponent implements OnInit {
       }
       setTimeout(()=>{
         if(this.share.primaryCheck==1){
-          alert("your vehicle details already exist try new one!");
+          alert("your vehicle chasis number already exist try new one!");
           this.share.store=[];
           this.get();
           this.share.primaryCheck=0;
