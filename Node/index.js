@@ -12,6 +12,30 @@ app.use(
   })
 );
 
+//admin user login---------------
+app.get("/get_login_user/:username/:password", (request, response) => {
+  var data = {
+    selector: {
+      type: "user",
+      username: request.params.username,
+      password: request.params.password,
+    },
+  };
+  controller
+    .Get(data)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `get_login_user  response of the user's  username and password send to the angular ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not get_login_id of users");
+      logger.logger.error("error", `can not get_login_id of users data ${err}`);
+    });
+});
+
 //User--------------------------------------------------------
 //To post the user data to the database form node
 
@@ -269,7 +293,6 @@ app.post("/postVehicle", (request, response) => {
   var object = {
     vehiclenumber: request.body.vehiclenumber,
     vehicletype: request.body.vehicletype,
-    // drivername: request.body.drivername,
     color: request.body.color,
     registerdate: request.body.registerdate,
     chasisno: request.body.chasisno,
@@ -365,7 +388,6 @@ app.put("/updateVehicle", (request, response) => {
     _rev: request.body._rev,
     vehiclenumber: request.body.vehiclenumber,
     vehicletype: request.body.vehicletype,
-    // drivername: request.body.drivername,
     color: request.body.color,
     registerdate: request.body.registerdate,
     chasisno: request.body.chasisno,
@@ -397,10 +419,11 @@ app.put("/updateVehicle", (request, response) => {
 //To post the fuel data to the database
 app.post("/postFuel", (request, response) => {
   var object = {
+    fuel: request.body.fuel,
     quantity: request.body.quantity,
     fillingdate: request.body.fillingdate,
     cost: request.body.cost,
-    vehicle: request.body.vehicle,
+    vehicle_Id: request.body.vehicle_Id,
     type: "fuel",
   };
   controller
@@ -483,10 +506,11 @@ app.put("/updateFuel", (request, response) => {
   var object = {
     _id: request.body._id,
     _rev: request.body._rev,
+    fuel: request.body.fuel,
     quantity: request.body.quantity,
     fillingdate: request.body.fillingdate,
     cost: request.body.cost,
-    vehicle: request.body.vehicle,
+    vehicle_Id: request.body.vehicle_Id,
     type: "fuel",
   };
   controller
@@ -748,6 +772,122 @@ app.put("/updateMaintanence", (request, response) => {
         "error",
         `can not update details of the maintanence ${err}`
       );
+    });
+});
+
+//Trip---------------------------------------------------------
+//To post the Trip data to the database
+app.post("/postTrip", (request, response) => {
+  var object = {
+    from: request.body.from,
+    to: request.body.to,
+    date: request.body.date,
+    driver_id: request.body.driver_id,
+    vehicle_id: request.body.vehicle_id,
+    userId: request.body.userId,
+    type: "trip",
+  };
+  controller
+    .Post(object)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `post_trip response send to the angular ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not post details of the trip");
+      logger.logger.error("error", "can not post details of the trip");
+    });
+});
+
+//To get details using qeury with type form database
+app.get("/getTrip", (request, response) => {
+  var data = {
+    selector: {
+      type: "trip",
+    },
+  };
+  controller
+    .Get(data)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `get_trip list of the user's  _id send to the angular ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not get _id of trip data");
+      logger.logger.error("error", `can not get _id of trip data ${err}`);
+    });
+});
+
+//To get the all trip's data value from database
+app.get("/getTrip/:id", (request, response) => {
+  controller
+    .GetParticularDetails(request.params.id)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `get_trip details of the user's from  _id send to the angular ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not get details of trip data");
+      logger.logger.error("error", `can not get details of trip data ${err}`);
+    });
+});
+
+//To delete particular trip from database
+
+app.delete("/deleteTrip/:id/:rev", (request, response) => {
+  controller
+    .DeleteDetails(request.params.id, request.params.rev)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `delete_trip details of the user's from  _id send to the angular ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not delete details of trip data");
+      logger.logger.error(
+        "error",
+        `can not delete details of trip data from node ${err}`
+      );
+    });
+});
+
+// To update the particular trip data using id
+
+app.put("/updateTrip", (request, response) => {
+  var object = {
+    _id: request.body._id,
+    _rev: request.body._rev,
+    from: request.body.from,
+    to: request.body.to,
+    date: request.body.date,
+    driver_id: request.body.driver_id,
+    vehicle_id: request.body.vehicle_id,
+    userId: request.body.userId,
+    type: "trip",
+  };
+  controller
+    .UpdateDetails(object)
+    .then((res) => {
+      response.send(res);
+      logger.logger.log(
+        "info",
+        `update_trip response send to the angular from node ${res}`
+      );
+    })
+    .catch((err) => {
+      response.send("can not update details of the trip");
+      logger.logger.log("error", `can not update details of the trip ${err}`);
     });
 });
 
