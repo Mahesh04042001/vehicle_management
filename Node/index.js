@@ -1,3 +1,5 @@
+//import the reqiured files and npm
+
 const express = require("express");
 const controller = require("./controllers/controller");
 const bodyparser = require("body-parser");
@@ -6,13 +8,17 @@ const logger = require("./config/logger");
 const port = 8000;
 const cors = require("cors");
 app.use(bodyparser.json());
+
+//allow the given origin port in node
+
 app.use(
   cors({
     origin: "http://localhost:4200",
   })
 );
 
-//admin user login---------------
+//admin user login using username and password---------------
+
 app.get("/get_login_user/:username/:password", (request, response) => {
   var data = {
     selector: {
@@ -37,7 +43,7 @@ app.get("/get_login_user/:username/:password", (request, response) => {
 });
 
 //User--------------------------------------------------------
-//To post the user data to the database form node
+//To post the user data to the database from node
 
 app.post("/postUser", (request, response) => {
   var object = {
@@ -68,7 +74,7 @@ app.post("/postUser", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
 
 app.get("/getUser", (request, response) => {
   var data = {
@@ -91,7 +97,8 @@ app.get("/getUser", (request, response) => {
     });
 });
 
-//To get the all user data value from database
+//To get the all user data value using id from database
+
 app.get("/getUser/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -108,7 +115,7 @@ app.get("/getUser/:id", (request, response) => {
     });
 });
 
-//To delete particular user from database
+//To delete particular user using id and rev from database
 
 app.delete("/deleteUser/:id/:rev", (request, response) => {
   controller
@@ -130,6 +137,7 @@ app.delete("/deleteUser/:id/:rev", (request, response) => {
 });
 
 // To update the particular user data using id
+
 app.put("/updateUser", (request, response) => {
   var object = {
     _id: request.body._id,
@@ -193,7 +201,8 @@ app.post("/postDriver", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
+
 app.get("/getDriver", (request, response) => {
   var data = {
     selector: {
@@ -215,7 +224,8 @@ app.get("/getDriver", (request, response) => {
     });
 });
 
-//To get the all driver data value from database
+//To get the all driver data value using id from database
+
 app.get("/getDriver/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -232,7 +242,7 @@ app.get("/getDriver/:id", (request, response) => {
     });
 });
 
-//To delete particular driver from database
+//To delete particular driver details using id and rev from database
 
 app.delete("/deleteDriver/:id/:rev", (request, response) => {
   controller
@@ -254,6 +264,7 @@ app.delete("/deleteDriver/:id/:rev", (request, response) => {
 });
 
 // To update the particular driver data using id
+
 app.put("/updateDriver", (request, response) => {
   var object = {
     _id: request.body._id,
@@ -318,7 +329,7 @@ app.post("/postVehicle", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
 app.get("/getVehicle", (request, response) => {
   var data = {
     selector: {
@@ -340,7 +351,7 @@ app.get("/getVehicle", (request, response) => {
     });
 });
 
-//To get the all vehicle's data value from database
+//To get the all vehicle's data using id from database
 app.get("/getVehicle/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -360,7 +371,7 @@ app.get("/getVehicle/:id", (request, response) => {
     });
 });
 
-//To delete particular vehicle from database
+//To delete particular vehicle data  using id and rev from database
 
 app.delete("/deleteVehicle/:id/:rev", (request, response) => {
   controller
@@ -382,6 +393,7 @@ app.delete("/deleteVehicle/:id/:rev", (request, response) => {
 });
 
 // To update the particular vehicle data using id
+
 app.put("/updateVehicle", (request, response) => {
   var object = {
     _id: request.body._id,
@@ -441,7 +453,7 @@ app.post("/postFuel", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
 app.get("/getFuel", (request, response) => {
   var data = {
     selector: {
@@ -463,7 +475,8 @@ app.get("/getFuel", (request, response) => {
     });
 });
 
-//To get the all fuel's data value from database
+//To get the all fuel's data using id from database
+
 app.get("/getFuel/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -480,7 +493,7 @@ app.get("/getFuel/:id", (request, response) => {
     });
 });
 
-//To delete particular fuel from database
+//To delete particular fuel data using id and rev from database
 
 app.delete("/deleteFuel/:id/:rev", (request, response) => {
   controller
@@ -502,6 +515,7 @@ app.delete("/deleteFuel/:id/:rev", (request, response) => {
 });
 
 // To update the particular fuel data using id
+
 app.put("/updateFuel", (request, response) => {
   var object = {
     _id: request.body._id,
@@ -532,6 +546,7 @@ app.put("/updateFuel", (request, response) => {
 
 //Insurance---------------------------------------------------------
 //To post the insurance data to the database
+
 app.post("/postInsurance", (request, response) => {
   var object = {
     company: request.body.company,
@@ -559,7 +574,8 @@ app.post("/postInsurance", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
+
 app.get("/getInsurance", (request, response) => {
   var data = {
     selector: {
@@ -581,7 +597,8 @@ app.get("/getInsurance", (request, response) => {
     });
 });
 
-//To get the all insurance's data value from database
+//To get the all insurance's data using id from database
+
 app.get("/getInsurance/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -601,7 +618,7 @@ app.get("/getInsurance/:id", (request, response) => {
     });
 });
 
-//To delete particular insurance from database
+//To delete particular insurance from database using id and rev
 
 app.delete("/deleteInsurance/:id/:rev", (request, response) => {
   controller
@@ -623,6 +640,7 @@ app.delete("/deleteInsurance/:id/:rev", (request, response) => {
 });
 
 // To update the particular insurance data using id
+
 app.put("/updateInsurance", (request, response) => {
   var object = {
     _id: request.body._id,
@@ -656,6 +674,7 @@ app.put("/updateInsurance", (request, response) => {
 
 //Maintanence---------------------------------------------------------
 //To post the maintanence data to the database
+
 app.post("/postMaintanence", (request, response) => {
   var object = {
     date: request.body.date,
@@ -679,7 +698,8 @@ app.post("/postMaintanence", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
+
 app.get("/getMaintanence", (request, response) => {
   var data = {
     selector: {
@@ -704,7 +724,7 @@ app.get("/getMaintanence", (request, response) => {
     });
 });
 
-//To get the all maintanence's data value from database
+//To get the all maintanence's data using id from database
 app.get("/getMaintanence/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -724,7 +744,7 @@ app.get("/getMaintanence/:id", (request, response) => {
     });
 });
 
-//To delete particular maintanence from database
+//To delete particular maintanence data using id and rev from database
 
 app.delete("/deleteMaintanence/:id/:rev", (request, response) => {
   controller
@@ -777,6 +797,7 @@ app.put("/updateMaintanence", (request, response) => {
 
 //Trip---------------------------------------------------------
 //To post the Trip data to the database
+
 app.post("/postTrip", (request, response) => {
   var object = {
     from: request.body.from,
@@ -802,7 +823,7 @@ app.post("/postTrip", (request, response) => {
     });
 });
 
-//To get details using qeury with type form database
+//To get details using query with type from database
 app.get("/getTrip", (request, response) => {
   var data = {
     selector: {
@@ -824,7 +845,7 @@ app.get("/getTrip", (request, response) => {
     });
 });
 
-//To get the all trip's data value from database
+//To get the all trip's data using id from database
 app.get("/getTrip/:id", (request, response) => {
   controller
     .GetParticularDetails(request.params.id)
@@ -841,7 +862,7 @@ app.get("/getTrip/:id", (request, response) => {
     });
 });
 
-//To delete particular trip from database
+//To delete particular trip data using id and rev from database
 
 app.delete("/deleteTrip/:id/:rev", (request, response) => {
   controller
@@ -892,6 +913,8 @@ app.put("/updateTrip", (request, response) => {
 });
 
 //----------------------------------------------------------
+
+//listing port----------------------------------------------
 
 app.listen(port, (err) => {
   if (err) {

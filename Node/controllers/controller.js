@@ -1,9 +1,9 @@
-//import required
+//import required files
 
 const database = require("../connection/db");
 const logger = require("../config/logger");
 
-//controller post method for driver
+//controller post method
 
 var Post = async (object) => {
   try {
@@ -32,7 +32,7 @@ var Post = async (object) => {
   return result;
 };
 
-//controller get method for getting detail using type for driver
+//controller get method for getting detail using type
 
 var Get = async (query) => {
   try {
@@ -61,7 +61,7 @@ var Get = async (query) => {
   return result;
 };
 
-//controller get method for getting details for driver
+//controller get method for getting details
 
 var GetParticularDetails = async (id) => {
   try {
@@ -90,7 +90,7 @@ var GetParticularDetails = async (id) => {
   return result;
 };
 
-//controller delete method for driver
+//controller delete method
 
 var DeleteDetails = async (id, rev) => {
   try {
@@ -119,7 +119,7 @@ var DeleteDetails = async (id, rev) => {
   return result;
 };
 
-//controller update method for driver
+//controller update method
 
 var UpdateDetails = async (objectValue) => {
   try {

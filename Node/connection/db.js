@@ -1,4 +1,4 @@
-//import required
+//import required npm
 
 var nano = require("nano");
 const val = require("../config/config");
@@ -11,7 +11,6 @@ const nanodb = nano(url);
 
 //insert function
 
-// nanodb.use("project_db").insert(objectValue);
 var insert = function (objectValue, dbname) {
   return new Promise((resolve, reject) => {
     if (objectValue == undefined) {

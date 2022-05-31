@@ -1,6 +1,8 @@
 const winston = require("winston");
 const { createLogger, transports, format } = require("winston");
 
+//create logger and store successfull response in info.log file and
+//error responses store in errors.log file
 const logger = createLogger({
   transports: [
     new transports.File({
@@ -21,4 +23,7 @@ const logger = createLogger({
     }),
   ],
 });
+
+//export the logger
+
 module.exports = { logger };
