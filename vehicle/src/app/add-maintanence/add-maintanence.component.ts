@@ -45,8 +45,8 @@ export class AddMaintanenceComponent implements OnInit {
     if(currentmonth < 10){
       currentmonth = "0" + currentmonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + (currentdate);
-    this.maxdate=currentyear + "-" + currentmonth + "-" + (currentdate);
+    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
   }
 
   //To show add and hide update button function

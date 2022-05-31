@@ -52,9 +52,9 @@ export class AddInsuranceComponent implements OnInit {
     if(currentmonth < 10){
       currentmonth = "0" + currentmonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + (currentdate);
-    this.maxdate=currentyear + "-" + currentmonth + "-" + (currentdate);
-    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + (currentdate);
+    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
+    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + currentdate;
   }
 
   //To show add and hide update button

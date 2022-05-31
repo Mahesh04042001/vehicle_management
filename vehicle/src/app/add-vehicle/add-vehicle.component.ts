@@ -17,7 +17,7 @@ export class AddVehicleComponent implements OnInit {
   mindate:any;
   maxdate:any;
   
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private ser:ServiceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
 
   ngOnInit(): void {
     this.vehicleform=this.formbuilder.group({
@@ -32,9 +32,9 @@ export class AddVehicleComponent implements OnInit {
       userId:['']
     })
     this.get();
-    for (const iterator of this.ser.storeCredentials) {
-      this.userId=iterator._id;
-    }
+    let parsed:any =localStorage.getItem("currentUser");
+    this.userId= JSON.parse(parsed);
+    this.userId=this.userId._id;
     this.setdate();
   }
 

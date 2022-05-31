@@ -1,4 +1,4 @@
-.delete:hover{
+/* .delete:hover{
     background-color: grey;
     border-radius: 10px;
     color: white;
@@ -25,7 +25,7 @@ label{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size:large;
     font-weight:300;
-}
+} */
 
 select {
     height: 35px;

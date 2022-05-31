@@ -10,9 +10,10 @@ import { SharedserviceService } from '../service/sharedservice.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  hide=true;
   adminform!:FormGroup;
-  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService,public ser:ServiceService ) { }
+  maxdate:any;
+  storeCredential:any;
+  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService) { }
 
   ngOnInit(): void {
     this.adminform=this.formbuilder.group({
@@ -26,6 +27,9 @@ export class AccountComponent implements OnInit {
       _id:[''],
       _rev:[''],
     });
+    this.setdate();
+    let parsed:any =localStorage.getItem("currentUser");
+    this.storeCredential= JSON.parse(parsed);
   }
 
   //show or hide add and update
@@ -34,50 +38,24 @@ export class AccountComponent implements OnInit {
     this.share.showAdd=true;
     this.share.showUpdate=false;
   }
-
-  //Add user details fun
-
-  adduser(formvalue:any){
-    this.api.addUser(formvalue).subscribe(res=>{
-      alert("Your data was posted successfully!");
-      this.adminform.reset();
-      let cancel=document.getElementById("cancel");
-      cancel?.click();
-      this.share.store=[];
-      this.getuser();
-    },rej=>{
-      alert("opps! Can not post data"+rej);
-    });
-  }
-
-  //Get user details and show in table
-
-
-  getuser(){
-    this.api.getUserData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.store.push(key);
-      }
-    },rej=>{
-        alert("opps! Somthing went wrong"+rej);
-    })
-  }
-
-  //To delete particular user
   
-  delete(data:any){
-    this.api.deleteUser(data._id,data._rev).subscribe(res=>{
-      alert("your data has deleted, please refresh the page");
-      this.share.store=[];
-      this.getuser();
-    },rej=>{
-      alert("oops can not delete"+rej);
-    })
+  //set date in date field in form
+  setdate(){
+    var date = new Date();
+    var currentdate:any = date.getDate();
+    var currentmonth:any = date.getMonth() + 1;
+    var currentyear:any = date.getFullYear();
+    if (currentdate < 10){
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.maxdate = currentyear-18 + "-" + currentmonth + "-" + currentdate;
   }
-  
 
+
+ 
   //To set the values in the field
 
   onEdit(row:any){
@@ -103,38 +81,11 @@ export class AccountComponent implements OnInit {
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
-      this.getuser();
+      // this.getuser();
     },rej=>{
       console.log("can not update.....",rej);
     })
   }
 
-  //To check the user is already exist using username and mobile
-
-  userCheck(formvalue:any){
-    this.share.showAdd=false;
-    this.api.getUserData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.storeValidation.push(key);
-        for (const iterator of this.share.storeValidation) {
-          if((iterator.username==formvalue.username   && iterator.password==formvalue.pwd)){
-            this.share.primaryCheck=1;
-          }
-        }
-      }
-      setTimeout(()=>{
-        if(this.share.primaryCheck==1){
-          alert("Username and Password already in use try another one!");
-          this.share.store=[];
-          this.getuser();
-          this.share.primaryCheck=0;
-        }else{
-          this.adduser(formvalue);
-        }
-      },1000);
-    })
-  }
-
+  
 }

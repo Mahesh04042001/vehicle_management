@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class SharedserviceService {
 
   searchText:any;
-  showTag:any;
   primaryCheck:number=0;
   storeValidation:any=[];
   setFieldShow:boolean=false;
@@ -28,7 +27,10 @@ export class SharedserviceService {
   storeVehicleArr:any=[];
 
   constructor() { }
+
+  
   //restrict minus(-) and dot(.) in cost field in form 
+
   RestrictMinus(e:any){
     if((e.code=="Minus" && e.key=="-" && e.keyCode=="189")||(e.code=="Period" && e.key=="." && e.keyCode==190)){
       e.preventDefault();

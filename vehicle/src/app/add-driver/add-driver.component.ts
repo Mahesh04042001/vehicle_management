@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
-import { ServiceService } from '../service/service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
 
 
@@ -17,7 +16,7 @@ export class AddDriverComponent implements OnInit {
   userId:any;
   mindate:any;
 
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private ser:ServiceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
 
   ngOnInit(): void {
     this.driverform=this.formbuilder.group({
@@ -32,9 +31,9 @@ export class AddDriverComponent implements OnInit {
       userId:['']
     })
     this.get();
-    for (const iterator of this.ser.storeCredentials) {
-      this.userId=iterator._id;
-    }
+    let parsed:any =localStorage.getItem("currentUser");
+    this.userId= JSON.parse(parsed);
+    this.userId=this.userId._id;
     this.setdate();
   }
 

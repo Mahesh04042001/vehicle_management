@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
-import { ServiceService } from '../service/service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
 
 @Component({
@@ -16,7 +15,7 @@ export class TripComponent implements OnInit {
   userId:any;
   storeDrobdownDriver:any=[];
   mindate:any;
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private ser:ServiceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
 
   ngOnInit(): void {
     this.tripform=this.formbuilder.group({
@@ -36,9 +35,9 @@ export class TripComponent implements OnInit {
     })
     this.setValueInDropdown();
     this.get();
-    for (const iterator of this.ser.storeCredentials) {
-      this.userId=iterator._id;
-    }
+    let parsed:any =localStorage.getItem("currentUser");
+    this.userId= JSON.parse(parsed);
+    this.userId=this.userId._id;
     this.setdate();
   }
 
@@ -284,35 +283,4 @@ get(){
       alert("can not update....."+rej);
     })
   }
-
-// //Vehicle database check using Chasis number
-
-//   vehicleCheck(formvalue:any){
-//     this.share.showAdd=false;
-//     this.api.getVehicleData().subscribe(res=>{
-//       this.share.allIdObj=res;
-//       this.share.allIdObj=this.share.allIdObj.docs;
-//       for (const key of this.share.allIdObj) {
-//         this.share.storeValidation.push(key);
-//         for (const iterator of this.share.storeValidation) {
-//           if(iterator.chasisno==formvalue.chasisno || (iterator.vehiclenumber==formvalue.vehiclenumber && iterator.vehicletype==formvalue.vehicletype)){
-//             this.share.primaryCheck=1;
-//           }
-//         }
-//       }
-//       setTimeout(()=>{
-//         if(this.share.primaryCheck==1){
-//           alert("your vehicle details already exist try new one!");
-//           this.share.store=[];
-//           this.get();
-//           this.share.primaryCheck=0;
-//         }else{
-//           this.add(formvalue);
-//           this.share.store=[];
-//         }
-//       },1000);
-//     },rej=>{
-//       console.log("error",rej);
-//     })
-//   }
 }

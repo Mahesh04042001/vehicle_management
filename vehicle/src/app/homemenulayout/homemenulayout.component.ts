@@ -11,14 +11,14 @@ import { SharedserviceService } from '../service/sharedservice.service';
 })
 export class HomemenulayoutComponent implements OnInit {
 
-  constructor(public api:ApiService,private share:SharedserviceService,private route:Router,public ser:ServiceService) { }
+  constructor(public api:ApiService,private share:SharedserviceService,private route:Router,public service:ServiceService) { }
 
   ngOnInit(): void {
   }
 
   //user logout function
   logout(){
-    this.ser.showTag=true;
+    this.service.showTag=true;
     localStorage.removeItem('currentUser');
     this.route.navigate(['..']);
   }
