@@ -77,7 +77,7 @@ app.post("/postUser", (request, response) => {
 //To get details using query with type from database
 
 app.get("/getUser", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "user",
     },
@@ -204,7 +204,7 @@ app.post("/postDriver", (request, response) => {
 //To get details using query with type from database
 
 app.get("/getDriver", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "driver",
     },
@@ -212,7 +212,10 @@ app.get("/getDriver", (request, response) => {
   controller
     .Get(data)
     .then((res) => {
+      console.log("driver_get");
+      console.log(res);
       response.send(res);
+      console.log("driver_get end");
       logger.logger.log(
         "info",
         `get_driver list of the user's  _id send to the angular ${res}`
@@ -331,7 +334,7 @@ app.post("/postVehicle", (request, response) => {
 
 //To get details using query with type from database
 app.get("/getVehicle", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "vehicle",
     },
@@ -455,7 +458,7 @@ app.post("/postFuel", (request, response) => {
 
 //To get details using query with type from database
 app.get("/getFuel", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "fuel",
     },
@@ -577,7 +580,7 @@ app.post("/postInsurance", (request, response) => {
 //To get details using query with type from database
 
 app.get("/getInsurance", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "insurance",
     },
@@ -701,7 +704,7 @@ app.post("/postMaintanence", (request, response) => {
 //To get details using query with type from database
 
 app.get("/getMaintanence", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "maintanence",
     },
@@ -825,7 +828,7 @@ app.post("/postTrip", (request, response) => {
 
 //To get details using query with type from database
 app.get("/getTrip", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "trip",
     },

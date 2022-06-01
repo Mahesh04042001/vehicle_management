@@ -10,24 +10,31 @@ var Post = async (object) => {
     var result = await database
       .insert(object, "project_db")
       .then((data) => {
+        const status = {
+          status: 201,
+          message: "Data was post successfully into database",
+          data: data,
+        };
         logger.logger.log(
           "info",
-          `diver controller ,success response from insert database ${data}`
+          `status_code:${status.status} message:${status.message}`
         );
-        return data;
+        return status;
       })
       .catch((err) => {
+        const err_status = {
+          status: 409,
+          message: "Cannot post data into database",
+          data: err,
+        };
         logger.logger.error(
           "error",
-          `diver controller ,error response from insert database ${err}`
+          `status_code:${err_status.status} message:${err_status.message}`
         );
-        return err;
+        return err_status;
       });
   } catch (error) {
-    logger.logger.error(
-      "error",
-      `diver controller ,error  occured in catch block ${error}`
-    );
+    logger.logger.error("error", `error  occured in post catch block ${error}`);
   }
   return result;
 };
@@ -39,24 +46,43 @@ var Get = async (query) => {
     var result = await database
       .get(query, "project_db")
       .then((data) => {
+        if (data.bookmark == "nil") {
+          const status = {
+            status: 404,
+            message: "Data was not found in database",
+            data: data,
+          };
+          logger.logger.error(
+            "error",
+            `status_code:${status.status} message:${status.message}`
+          );
+          return status;
+        }
+        const status = {
+          status: 200,
+          message: "Data was get successfully form database",
+          data: data,
+        };
         logger.logger.log(
           "info",
-          `diver controller ,success response from database from get database method ${data}`
+          `status_code:${status.status} message:${status.message}`
         );
-        return data;
+        return status;
       })
       .catch((err) => {
+        const err_status = {
+          status: 404,
+          message: "Data not found",
+          data: err,
+        };
         logger.logger.error(
           "error",
-          `diver controller ,error response from get method of database ${err}`
+          `status_code:${err_status.status} message:${err_status.message}`
         );
-        return err;
+        return err_status;
       });
   } catch (error) {
-    logger.logger.error(
-      "error",
-      `diver controller ,error occured in catch block ${error}`
-    );
+    logger.logger.error("error", `error occured in get catch block ${error}`);
   }
   return result;
 };
@@ -68,23 +94,45 @@ var GetParticularDetails = async (id) => {
     var result = await database
       .getAll(id, "project_db")
       .then((data) => {
+        if (data.bookmark == "nil") {
+          const status = {
+            status: 404,
+            message: "Data was not found in database",
+            data: data,
+          };
+          logger.logger.error(
+            "error",
+            `status_code:${status.status} message:${status.message}`
+          );
+          return status;
+        }
+        const status = {
+          status: 200,
+          message: "Data was get successfully form database",
+          data: data,
+        };
         logger.logger.log(
           "info",
-          `diver controller ,success response from database from getall database method ${data}`
+          `status_code:${status.status} message:${status.message}`
         );
-        return data;
+        return status;
       })
       .catch((err) => {
+        const err_status = {
+          status: 404,
+          message: "Data not found",
+          data: err,
+        };
         logger.logger.error(
           "error",
-          `diver controller ,error response from getall method of database ${err}`
+          `status_code:${err_status.status} message:${err_status.message}`
         );
-        return err;
+        return err_status;
       });
   } catch (error) {
     logger.logger.error(
       "error",
-      `diver controller ,error occured in catch block ${error}`
+      `error occured in get particular catch block ${error}`
     );
   }
   return result;
@@ -97,23 +145,33 @@ var DeleteDetails = async (id, rev) => {
     var result = await database
       .deleted(id, rev, "project_db")
       .then((data) => {
+        const status = {
+          status: 200,
+          message: "Data was deleted successfully from database",
+          data: data,
+        };
         logger.logger.log(
           "info",
-          `diver controller ,success response from database from delete details database method ${data}`
+          `status_code:${status.status} message:${status.message}`
         );
-        return data;
+        return status;
       })
       .catch((err) => {
+        const err_status = {
+          status: 409,
+          message: "Cannot delete data from database",
+          data: err,
+        };
         logger.logger.error(
           "error",
-          `diver controller ,error response from delete details method of database ${err}`
+          `status_code:${err_status.status} message:${err_status.message}`
         );
-        return err;
+        return err_status;
       });
   } catch (error) {
     logger.logger.error(
       "error",
-      `diver controller ,error  occured in catch block ${error}`
+      `error  occured in delete catch block ${error}`
     );
   }
   return result;
@@ -126,23 +184,33 @@ var UpdateDetails = async (objectValue) => {
     var result = await database
       .update(objectValue, "project_db")
       .then((data) => {
+        const status = {
+          status: 201,
+          message: "Data was updated successfully in database",
+          data: data,
+        };
         logger.logger.log(
           "info",
-          `diver controller ,success response from database from update  database method ${data}`
+          `status_code:${status.status} message:${status.message}`
         );
-        return data;
+        return status;
       })
       .catch((err) => {
+        const err_status = {
+          status: 409,
+          message: "Cannot update data in database",
+          data: err,
+        };
         logger.logger.error(
           "error",
-          `diver controller ,error response from update details method of database ${err}`
+          `status_code:${err_status.status} message:${err_status.message}`
         );
-        return err;
+        return err_status;
       });
   } catch (error) {
     logger.logger.error(
       "error",
-      `diver controller ,error  occured in catch block ${error}`
+      `error  occured in update catch block ${error}`
     );
   }
   return result;

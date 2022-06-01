@@ -1,6 +1,6 @@
 //import required npm
 
-var nano = require("nano");
+const nano = require("nano");
 const val = require("../config/config");
 
 // configure cloudant database using URL,USERNAME,PASSWORD
