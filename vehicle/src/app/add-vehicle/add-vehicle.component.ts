@@ -91,7 +91,7 @@ export class AddVehicleComponent implements OnInit {
   get(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.store.push(key);
       }
@@ -149,7 +149,7 @@ export class AddVehicleComponent implements OnInit {
     this.share.showAdd=false;
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.storeValidation.push(key);
         for (const iterator of this.share.storeValidation) {

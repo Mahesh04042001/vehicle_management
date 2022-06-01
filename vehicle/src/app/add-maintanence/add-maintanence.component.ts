@@ -61,6 +61,7 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.entryCheck=0;
     this.api.getAllVehicleData(val.target.value).subscribe(res=>{
       this.share.storeFieldObj=res;
+      this.share.storeFieldObj=this.share.storeFieldObj.data;
       this.maintanenceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
       this.maintanenceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
     })
@@ -71,7 +72,7 @@ export class AddMaintanenceComponent implements OnInit {
   setValueInDropdown(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.storeDrobdownObj.push(key);
       }
@@ -86,7 +87,7 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.showAdd=false;
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         if(key.vehiclenumber==formvalue.vehiclenumber && key.vehicletype==formvalue.vehicletype){
           this.share.Vehiclecheck=1;
@@ -129,7 +130,7 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.arr=[];
     this.api.getMaintanenceData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.arr.push(key);
       }
@@ -137,6 +138,7 @@ export class AddMaintanenceComponent implements OnInit {
         for (const key of this.share.arr) {
           this.api.getAllVehicleData(key.vehicle).subscribe(res => {
             this.share.storeVehicleData = res;
+            this.share.storeVehicleData = this.share.storeVehicleData.data;
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
               vehicletype: this.share.storeVehicleData.vehicletype,
@@ -194,7 +196,7 @@ export class AddMaintanenceComponent implements OnInit {
       this.share.store=[];
       this.get();
     },rej=>{
-      console.log("can not update.....",rej);
+      alert("can not update....."+rej);
     })
   }
 }

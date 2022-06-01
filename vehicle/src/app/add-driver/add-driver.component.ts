@@ -86,7 +86,7 @@ export class AddDriverComponent implements OnInit {
   get(){
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.store.push(key);
       }
@@ -144,7 +144,7 @@ export class AddDriverComponent implements OnInit {
     this.share.showAdd=false;
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.storeValidation.push(key);
         for (const iterator of this.share.storeValidation) {

@@ -71,7 +71,7 @@ export class TripComponent implements OnInit {
     this.share.Vehiclecheck=0;
     this.api.getTripData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const iterator of this.share.allIdObj) {
         if(iterator.vehicle_id==val.target.value){
           this.share.Vehiclecheck=1;
@@ -87,8 +87,8 @@ export class TripComponent implements OnInit {
       }else{
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.data.vehiclenumber);
+          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.data.vehicletype);
         })
       }
     }, 300);
@@ -100,7 +100,7 @@ export class TripComponent implements OnInit {
     this.share.entryCheck=0;
     this.api.getTripData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const iterator of this.share.allIdObj) {
         if(iterator.driver_id==val.target.value){
           this.share.entryCheck=1;
@@ -115,7 +115,7 @@ export class TripComponent implements OnInit {
       }else{
         this.api.getAllDriverData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.tripform.controls['drivername'].setValue(this.share.storeFieldObj.drivername);
+          this.tripform.controls['drivername'].setValue(this.share.storeFieldObj.data.drivername);
         })
       }
     }, 200);
@@ -126,7 +126,7 @@ export class TripComponent implements OnInit {
   setValueInDropdown(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.share.storeDrobdownObj.push(key);
       }
@@ -135,7 +135,7 @@ export class TripComponent implements OnInit {
     });
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         this.storeDrobdownDriver.push(key);
       }
@@ -150,12 +150,12 @@ export class TripComponent implements OnInit {
     this.share.showAdd=false;
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.docs;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
         if(key.vehiclenumber==formvalue.vehiclenumber && key.vehicletype==formvalue.vehicletype){
           this.api.getDriverData().subscribe(res=>{
             this.share.allIdObj=res;
-            this.share.allIdObj=this.share.allIdObj.docs;
+            this.share.allIdObj=this.share.allIdObj.data.docs;
             for (const iterator of this.share.allIdObj) {
               if(iterator.drivername==formvalue.drivername){
                 var obj={
@@ -193,14 +193,16 @@ get(){
   this.api.getTripData().subscribe(res=>{
     this.share.arr=[];
     this.share.allIdObj=res;
-    this.share.allIdObj=this.share.allIdObj.docs;
+    this.share.allIdObj=this.share.allIdObj.data.docs;
     for (const key of this.share.allIdObj) {
       this.share.arr.push(key);
     }
     setTimeout(()=>{
       for(const key of this.share.arr) {
         this.api.getAllVehicleData(key.vehicle_id).subscribe(res => {
-          this.share.storeVehicleArr.push(res);
+          this.share.storeVehicleData=res;
+          this.share.storeVehicleData=this.share.storeVehicleData.data;
+          this.share.storeVehicleArr.push(this.share.storeVehicleData);
           this.share.allIdObj=res;
         });
       }
@@ -212,6 +214,7 @@ get(){
             if(key.vehicle_id==iterator._id){
               this.api.getAllDriverData(key.driver_id).subscribe(res=>{
                 this.share.storeVehicleData=res;
+                this.share.storeVehicleData=this.share.storeVehicleData.data;
                 this.share.createObj = {
                   vehiclenumber: iterator.vehiclenumber,
                   vehicletype: iterator.vehicletype,
