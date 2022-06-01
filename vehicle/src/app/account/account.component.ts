@@ -81,9 +81,8 @@ export class AccountComponent implements OnInit {
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
-      // this.getuser();
     },rej=>{
-      console.log("can not update.....",rej);
+      alert("can not update....."+rej);
     })
   }
 

@@ -1,9 +1,12 @@
 <!--Search bar-->
+
 <mat-form-field appearance="standard" class="searchBar">
     <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
+
 <!-- Add button -->
+
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
     (click)="showOrHide()">
     Add Fuel Details
@@ -11,6 +14,7 @@
 
 
 <!--table-->
+
 <table class="table">
     <thead class="myTable">
         <tr>
@@ -48,6 +52,7 @@
 </table>
 
 <!-- popup form -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

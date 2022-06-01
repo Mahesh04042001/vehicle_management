@@ -206,7 +206,7 @@ export class AddInsuranceComponent implements OnInit {
       this.share.store=[];
       this.get();
     },rej=>{
-      console.log("can not update.....",rej);
+      alert("can not update....."+rej);
     })
   }
 

@@ -45,6 +45,8 @@ export class AddUserComponent implements OnInit {
     }
     this.maxdate = currentyear-18 + "-" + currentmonth + "-" + currentdate;
   }
+  
+  //Show or hide the add and update button
 
   showOrHide(){
     this.userform.reset();
@@ -90,7 +92,7 @@ export class AddUserComponent implements OnInit {
       this.share.store=[];
       this.getuser();
     },rej=>{
-      alert("oops can not delete"+rej);
+      alert("oops! can not delete"+rej);
     })
   }
   
@@ -122,7 +124,7 @@ export class AddUserComponent implements OnInit {
       this.share.store=[];
       this.getuser();
     },rej=>{
-      console.log("can not update.....",rej);
+      alert("can not update....."+rej);
     })
   }
 
