@@ -23,7 +23,6 @@ import { HomemenulayoutComponent } from './homemenulayout/homemenulayout.compone
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { AddMaintanenceComponent } from './add-maintanence/add-maintanence.component';
@@ -49,7 +48,6 @@ import { TripComponent } from './trip/trip.component';
     LoginComponent,
     HomeComponent,
     ContactUsComponent,
-    AdminpageComponent,
     DashboardComponent,
     AddVehicleComponent,
     AddMaintanenceComponent,

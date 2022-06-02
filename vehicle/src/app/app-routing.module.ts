@@ -8,7 +8,6 @@ import { AddInsuranceComponent } from './add-insurance/add-insurance.component';
 import { AddMaintanenceComponent } from './add-maintanence/add-maintanence.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
       {path:'',redirectTo:'home',pathMatch:'full'},
       {path:'home',component:HomeComponent},
       {path:'aboutus',component:AboutProductComponent},
-      {path:'adminpage',component:AdminpageComponent},
       {path:'contactus',component:ContactUsComponent},
       {path:'aboutus',component:AboutProductComponent},
       {path:'account',component:AccountComponent},
