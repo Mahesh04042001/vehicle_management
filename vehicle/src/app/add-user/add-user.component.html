@@ -94,7 +94,7 @@
                             User Name:
                         </label>
                         <input type="text" class="form-control" id="username" formControlName="username" minlength="4"
-                            placeholder="Enter User Name" pattern="[a-zA-Z0-9]*">
+                            placeholder="Enter User Name" pattern="([a-z].*[0-9])">
                         <span class="text-danger"
                             *ngIf="userform.controls['username'].dirty && userform.hasError('required','username')">*User
                             Name
@@ -129,7 +129,7 @@
                         <label for="mobile" class="form-label">
                             Mobile:
                         </label>
-                        <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
+                        <input type="text" class="form-control" id="mobile" pattern="[789][0-9]{9}"
                             formControlName="mobile" placeholder="Enter Mobile Number">
                         <span class="text-danger"
                             *ngIf="userform.controls['mobile'].dirty && userform.hasError('required','mobile')">*Mobile

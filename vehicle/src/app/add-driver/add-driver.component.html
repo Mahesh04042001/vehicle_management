@@ -86,7 +86,7 @@
                         <label for="mobile" class="form-label">
                             Mobile:
                         </label>
-                        <input type="number" class="form-control" id="mobile" pattern="[789][0-9]{9}"
+                        <input type="text" class="form-control" id="mobile" pattern="[789][0-9]{9}"
                             formControlName="mobile" placeholder="Enter Mobile Number">
                         <span class="text-danger"
                             *ngIf="driverform.controls['mobile'].dirty && driverform.hasError('required','mobile')">*Mobile

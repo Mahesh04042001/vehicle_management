@@ -76,11 +76,18 @@ export class AddVehicleComponent implements OnInit {
       userId:this.userId
     }
     this.api.addVehicleData(formvalue).subscribe(res=>{
-      this.get();
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.vehicleform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was posted successfully!");
       this.vehicleform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
+      this.share.store=[];
+      this.get();
     },rej=>{
       alert("opps! Can not post data"+rej);
     });
@@ -132,6 +139,12 @@ export class AddVehicleComponent implements OnInit {
 
   update(formvalue:NgForm){
     this.api.updateVehicleData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.vehicleform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.vehicleform.reset();
       let cancel=document.getElementById("cancel");
@@ -167,6 +180,7 @@ export class AddVehicleComponent implements OnInit {
         }else{
           this.add(formvalue);
           this.share.store=[];
+          this.get();
         }
       },1000);
     })

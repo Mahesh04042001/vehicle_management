@@ -58,6 +58,13 @@ export class AddUserComponent implements OnInit {
 
   adduser(formvalue:any){
     this.api.addUser(formvalue).subscribe(res=>{
+      console.log(res);
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.userform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was posted successfully!");
       this.userform.reset();
       let cancel=document.getElementById("cancel");
@@ -117,6 +124,12 @@ export class AddUserComponent implements OnInit {
   // To update the exisisting one
   update(formvalue:NgForm){
     this.api.updateUser(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.userform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.userform.reset();
       let cancel=document.getElementById("cancel");

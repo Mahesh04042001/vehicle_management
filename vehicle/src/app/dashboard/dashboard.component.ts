@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
   getAdmin(){
     this.api.getUserData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       this.noOfAdmin=this.share.store.length;
     })
   }
@@ -51,11 +51,11 @@ export class DashboardComponent implements OnInit {
   getDriver(){
     this.api.getDriverData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       this.noOfDriver=this.share.store.length;
       this.api.getTripData().subscribe(res=>{
         this.share.store=res;
-        this.share.store=this.share.store.docs;
+        this.share.store=this.share.store.data.docs;
         this.driverAssigned=this.share.store.length;
         this.driverAvailable=this.noOfDriver-this.driverAssigned;
       })
@@ -67,11 +67,11 @@ export class DashboardComponent implements OnInit {
   getVehicle(){
     this.api.getVehicleData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       this.noOfVehicle=this.share.store.length;
       this.api.getTripData().subscribe(res=>{
         this.share.store=res;
-        this.share.store=this.share.store.docs;
+        this.share.store=this.share.store.data.docs;
         this.vehicleAssigned=this.share.store.length;
         this.vehicleAvailable=this.noOfVehicle-this.vehicleAssigned;
       })
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
   getinsuranceExp(){
     this.api.getInsuranceData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       for (const key of this.share.store) {
         this.insuranceExp+=key.cost;
       }
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
   getMaintanenceExp(){
     this.api.getMaintanenceData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       for (const key of this.share.store) {
         this.maintanenceExp+=key.cost;
       }
@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit {
   getfuelExp(){
     this.api.getFuleData().subscribe(res=>{
       this.share.store=res;
-      this.share.store=this.share.store.docs;
+      this.share.store=this.share.store.data.docs;
       for (const key of this.share.store) {
         this.fuelExp+=key.cost;
       }

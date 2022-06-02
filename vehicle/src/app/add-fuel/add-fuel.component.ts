@@ -122,11 +122,17 @@ export class AddFuelComponent implements OnInit {
   //update existing form value
   update(formvalue:any){
     this.api.updateFuelData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.fuelform.reset();
+        this.get();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.fuelform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
-      this.share.store=[]
       this.get();
     },rej=>{
       alert("can not update....."+rej);
@@ -145,6 +151,13 @@ export class AddFuelComponent implements OnInit {
     vehicle_Id:formvalue.vehicle_Id,
     };
     this.api.addFuelData(obj).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.fuelform.reset();
+        this.get();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was posted successfully!");
       this.fuelform.reset();
       let cancel=document.getElementById("cancel");
@@ -171,6 +184,7 @@ export class AddFuelComponent implements OnInit {
 
   //get the fuel data from the databese
   get(){
+    this.share.store=[]
     this.share.arr=[];
     this.api.getFuleData().subscribe(res=>{
       this.share.allIdObj=res;

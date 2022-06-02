@@ -71,6 +71,12 @@ export class AddDriverComponent implements OnInit {
       userId:this.userId
     }
     this.api.addDriverData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.driverform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was posted successfully!");
       this.driverform.reset();
       let cancel=document.getElementById("cancel");
@@ -125,6 +131,12 @@ export class AddDriverComponent implements OnInit {
   //update the existing form
   update(formvalue:any){
     this.api.updateDriverData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.driverform.reset();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.driverform.reset();
       let cancel=document.getElementById("cancel");

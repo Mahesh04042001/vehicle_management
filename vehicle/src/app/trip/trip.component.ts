@@ -167,6 +167,13 @@ export class TripComponent implements OnInit {
                   userId:this.userId
                 };
                 this.api.addTripData(obj).subscribe(res=>{
+                  this.share.allIdObj=res;
+                  this.share.allIdObj=this.share.allIdObj.success;
+                  if(this.share.allIdObj==0){
+                    this.tripform.reset();
+                    this.get();
+                    return alert("opps! Can not post data, try again!");
+                  }
                   alert("Your data was posted successfully!");
                   this.tripform.reset();
                   this.get();
@@ -276,6 +283,13 @@ get(){
 //To update existing form values OR modified existing  
   update(formvalue:any){
     this.api.updateTripData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.tripform.reset();
+        this.get();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.tripform.reset();
       let cancel=document.getElementById("cancel");

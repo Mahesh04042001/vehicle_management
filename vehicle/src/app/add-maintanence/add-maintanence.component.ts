@@ -98,7 +98,12 @@ export class AddMaintanenceComponent implements OnInit {
             vehicle:key._id,
           };
           this.api.addMaintanenceData(obj).subscribe(res=>{
-            console.log(res);
+            this.share.allIdObj=res;
+            this.share.allIdObj=this.share.allIdObj.success;
+            if(this.share.allIdObj==0){
+              this.maintanenceform.reset();
+              return alert("opps! Can not post data, try again!");
+            }
             alert("Your data was posted successfully!");
             this.maintanenceform.reset();
             let cancel=document.getElementById("cancel");
@@ -189,6 +194,14 @@ export class AddMaintanenceComponent implements OnInit {
 
   update(formvalue:NgForm){
     this.api.updateMaintanenceData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.maintanenceform.reset();
+        this.share.store=[];
+        this.get();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.maintanenceform.reset();
       let cancel=document.getElementById("cancel");

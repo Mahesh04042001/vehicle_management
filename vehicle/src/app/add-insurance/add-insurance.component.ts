@@ -108,6 +108,12 @@ export class AddInsuranceComponent implements OnInit {
             vehicle:key._id,
           };
           this.api.addInsuranceData(obj).subscribe(res=>{
+            this.share.allIdObj=res;
+            this.share.allIdObj=this.share.allIdObj.success;
+            if(this.share.allIdObj==0){
+              this.insuranceform.reset();
+              return alert("opps! Can not post data, try again!");
+            }
             alert("Your data was posted successfully!");
             this.insuranceform.reset();
             let cancel=document.getElementById("cancel");
@@ -201,6 +207,14 @@ export class AddInsuranceComponent implements OnInit {
   // To update the existing values
   update(formvalue:NgForm){
     this.api.updateInsuranceData(formvalue).subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.success;
+      if(this.share.allIdObj==0){
+        this.insuranceform.reset();
+        this.share.store=[];
+        this.get();
+        return alert("opps! Can not post data, try again!");
+      }
       alert("Your data was updated successfully!");
       this.insuranceform.reset();
       let cancel=document.getElementById("cancel");
