@@ -95,6 +95,7 @@ export class AddUserComponent implements OnInit {
   
   delete(data:any){
     this.api.deleteUser(data._id,data._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.getuser();

@@ -105,6 +105,7 @@ export class AddDriverComponent implements OnInit {
   //delete the particular record
   delete(data:any){
     this.api.deleteDriverData(data._id,data._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.get();

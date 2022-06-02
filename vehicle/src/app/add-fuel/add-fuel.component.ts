@@ -93,6 +93,7 @@ export class AddFuelComponent implements OnInit {
   //to delete the particular table field
   delete(data:any){
     this.api.deleteFuelData(data._id,data._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.get();
@@ -194,7 +195,8 @@ export class AddFuelComponent implements OnInit {
       }
       setTimeout(()=>{
         for (const key of this.share.arr) {
-          this.api.getAllTripData(key.vehicle_Id).subscribe(res => {
+          this.api.getAllTripData(key.vehicle_Id).subscribe(response => {
+            console.log(response);
             this.share.storeVehicleData = res;
             this.share.storeVehicleData=this.share.storeVehicleData.data;
             this.share.createObj = {

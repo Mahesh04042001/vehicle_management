@@ -97,8 +97,8 @@ export class AddMaintanenceComponent implements OnInit {
             description:formvalue.description,
             vehicle:key._id,
           };
-          this.api.addMaintanenceData(obj).subscribe(res=>{
-            this.share.allIdObj=res;
+          this.api.addMaintanenceData(obj).subscribe(response=>{
+            this.share.allIdObj=response;
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
               this.maintanenceform.reset();
@@ -141,8 +141,8 @@ export class AddMaintanenceComponent implements OnInit {
       }
       setTimeout(()=>{
         for (const key of this.share.arr) {
-          this.api.getAllVehicleData(key.vehicle).subscribe(res => {
-            this.share.storeVehicleData = res;
+          this.api.getAllVehicleData(key.vehicle).subscribe(response => {
+            this.share.storeVehicleData = response;
             this.share.storeVehicleData = this.share.storeVehicleData.data;
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
@@ -167,6 +167,7 @@ export class AddMaintanenceComponent implements OnInit {
   //To delete the particular details
   delete(data:any){
     this.api.deleteMaintanenceData(data._id,data._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.get();

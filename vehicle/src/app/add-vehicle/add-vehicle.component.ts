@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
-import { ServiceService } from '../service/service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
 
 @Component({
@@ -111,6 +110,7 @@ export class AddVehicleComponent implements OnInit {
 
   delete(data:any){
     this.api.deleteVehicleData(data._id,data._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.get();

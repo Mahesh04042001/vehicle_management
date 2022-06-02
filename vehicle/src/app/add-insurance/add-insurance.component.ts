@@ -107,8 +107,8 @@ export class AddInsuranceComponent implements OnInit {
             cost:formvalue.cost,
             vehicle:key._id,
           };
-          this.api.addInsuranceData(obj).subscribe(res=>{
-            this.share.allIdObj=res;
+          this.api.addInsuranceData(obj).subscribe(response=>{
+            this.share.allIdObj=response;
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
               this.insuranceform.reset();
@@ -152,8 +152,8 @@ export class AddInsuranceComponent implements OnInit {
       }
       setTimeout(()=>{
         for (const key of this.share.arr) {
-          this.api.getAllVehicleData(key.vehicle).subscribe(res => {
-            this.share.storeVehicleData = res;
+          this.api.getAllVehicleData(key.vehicle).subscribe(response => {
+            this.share.storeVehicleData = response;
             this.share.storeVehicleData = this.share.storeVehicleData.data;
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
@@ -178,6 +178,7 @@ export class AddInsuranceComponent implements OnInit {
   //to delete the particular table field
   delete(data:any,data1:any){
     this.api.deleteInsuranceData(data._id,data1._rev).subscribe(res=>{
+      console.log(res);
       alert("your data has deleted, please refresh the page");
       this.share.store=[];
       this.get();

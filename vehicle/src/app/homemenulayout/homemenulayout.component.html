@@ -4,12 +4,15 @@
         </i>
         <h1 class="vms-heading">Vehicle Management</h1>
         <div class="d-flex">
-            <li class="nav-list">
-                <a routerLink="/menu/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-            </li>
-            <li class="nav-list">
-                <a routerLink="/menu/aboutus" routerLinkActive="active">About</a>
-            </li>
+            <ul>
+                <li class="nav-list">
+                    <a routerLink="/menu/home" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">Home</a>
+                </li>
+                <li class="nav-list">
+                    <a routerLink="/menu/aboutus" routerLinkActive="active">About</a>
+                </li>
+            </ul>
             <div class="dropdown">
                 <a class="admin" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     Administration
@@ -62,17 +65,19 @@
                     </li>
                 </ul>
             </div>
-            <li>
-                <a routerLink="/menu/contactus" class="nav-list" style="margin-left: 85px;"
-                    routerLinkActive="active">Contact
-                    Us
-                </a>
-            </li>
-            <li>
-                <a routerLink="/login" (click)='logout()' class="nav-list">
-                    Logout
-                </a>
-            </li>
+            <ul>
+                <li>
+                    <a routerLink="/menu/contactus" class="nav-list" style="margin-left: 85px;"
+                        routerLinkActive="active">Contact
+                        Us
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/login" (click)='logout()' class="nav-list">
+                        Logout
+                    </a>
+                </li>
+            </ul>
         </div>
 
     </div>
