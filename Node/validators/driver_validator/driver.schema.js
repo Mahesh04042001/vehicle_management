@@ -7,7 +7,7 @@ const driverUpdateSchema = Joi.object({
     .regex(/^[a-zA-Z]*$/)
     .required(),
   mobile: Joi.string()
-    .regex(/[789][0-9]{9}/)
+    .regex(/[789]\d{9}/)
     .max(10)
     .required(),
   licencenumber: Joi.string()
@@ -15,7 +15,7 @@ const driverUpdateSchema = Joi.object({
     .regex(/[T][N][a-zA-Z0-9]*/)
     .required(),
   licenceenddate: Joi.string()
-    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0\d|[12]\d|3[01])$/)
     .required(),
   city: Joi.string()
     .regex(/^[a-zA-Z]*$/)
@@ -35,7 +35,7 @@ const driverPostSchema = Joi.object({
     .regex(/^[a-zA-Z]*$/)
     .required(),
   mobile: Joi.string()
-    .regex(/[789][0-9]{9}/)
+    .regex(/[789]\d{9}/)
     .max(10)
     .required(),
   licencenumber: Joi.string()
@@ -43,7 +43,7 @@ const driverPostSchema = Joi.object({
     .regex(/[T][N][a-zA-Z0-9]*/)
     .required(),
   licenceenddate: Joi.string()
-    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
     .required(),
   city: Joi.string()
     .regex(/^[a-zA-Z]*$/)

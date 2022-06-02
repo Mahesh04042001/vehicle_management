@@ -5,7 +5,7 @@ const logger = require("../config/logger");
 
 //controller post method
 
-var Post = async (object) => {
+const Post = async (object) => {
   try {
     return await database
       .insert(object, "project_db")
@@ -40,7 +40,7 @@ var Post = async (object) => {
 
 //controller get method for getting detail using type and also id
 
-var Get = async (query) => {
+const Get = async (query) => {
   try {
     return await database
       .get(query, "project_db")
@@ -88,7 +88,7 @@ var Get = async (query) => {
 
 //controller delete method
 
-var DeleteDetails = async (id, rev) => {
+const DeleteDetails = async (id, rev) => {
   try {
     return await database
       .deleted(id, rev, "project_db")

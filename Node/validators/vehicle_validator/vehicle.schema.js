@@ -5,7 +5,7 @@ const Joi = require("joi");
 const vehicleUpdateSchema = Joi.object({
   vehiclenumber: Joi.string()
     .max(10)
-    .regex(/[T][N][0-9][0-9][A-Z][A-Z][0-9][0-9][0-9][0-9][0-9]*/)
+    .regex(/[T][N]\d\d[A-Z][A-Z]\d\d\d\d\d*/)
     .required(),
   vehicletype: Joi.string()
     .min(3)
@@ -16,7 +16,7 @@ const vehicleUpdateSchema = Joi.object({
     .regex(/[a-zA-Z]*/)
     .required(),
   registerdate: Joi.string()
-    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
     .required(),
   chasisno: Joi.string()
     .regex(/[a-zA-Z0-9]*/)
@@ -32,7 +32,7 @@ const vehicleUpdateSchema = Joi.object({
 const vehiclePostSchema = Joi.object({
   vehiclenumber: Joi.string()
     .max(10)
-    .regex(/[T][N][0-9][0-9][A-Z][A-Z][0-9][0-9][0-9][0-9][0-9]*/)
+    .regex(/[T][N]\d\d[A-Z][A-Z]\d\d\d\d\d*/)
     .required(),
   vehicletype: Joi.string()
     .min(3)
@@ -43,7 +43,7 @@ const vehiclePostSchema = Joi.object({
     .regex(/[a-zA-Z]*/)
     .required(),
   registerdate: Joi.string()
-    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
     .required(),
   chasisno: Joi.string()
     .regex(/[a-zA-Z0-9]*/)

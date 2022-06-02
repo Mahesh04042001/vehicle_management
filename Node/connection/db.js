@@ -11,12 +11,12 @@ const nanodb = nano(url);
 
 //insert function
 
-var insert = function (objectValue, dbname) {
+const insert = function (objectValue, dbname) {
   return new Promise((resolve, reject) => {
     if (objectValue == undefined) {
       return reject(objectValue);
     } else {
-      var dbresult = nanodb.use(dbname).insert(objectValue);
+      const dbresult = nanodb.use(dbname).insert(objectValue);
       return resolve(dbresult);
     }
   });
@@ -24,12 +24,12 @@ var insert = function (objectValue, dbname) {
 
 //get details using find method this function from database
 
-var get = function (query, database_name) {
+const get = function (query, database_name) {
   return new Promise((resolve, reject) => {
     if (database_name == undefined) {
       return reject(database_name);
     } else {
-      var dbresult = nanodb.use(database_name).find(query);
+      const dbresult = nanodb.use(database_name).find(query);
       return resolve(dbresult);
     }
   });
@@ -37,12 +37,12 @@ var get = function (query, database_name) {
 
 //delete function using id and rev
 
-var deleted = function (_id, _rev, database_name) {
+const deleted = function (_id, _rev, database_name) {
   return new Promise((resolve, reject) => {
     if (_id == undefined || _rev == undefined) {
       return reject(id);
     } else {
-      var dbresult = nanodb.use(database_name).destroy(_id, _rev);
+      const dbresult = nanodb.use(database_name).destroy(_id, _rev);
       return resolve(dbresult);
     }
   });

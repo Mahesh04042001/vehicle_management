@@ -29,7 +29,7 @@ app.use(
 //admin user login using username and password---------------
 
 app.get("/get_login_user/:username/:password", (request, response) => {
-  var data = {
+  const data = {
     selector: {
       type: "user",
       username: request.params.username,
@@ -55,7 +55,7 @@ app.get("/get_login_user/:username/:password", (request, response) => {
 //To post the user data to the database from node
 
 app.post("/postUser", (request, response) => {
-  var object = {
+  const object = {
     name: request.body.name,
     username: request.body.username,
     password: request.body.pwd,
@@ -162,7 +162,7 @@ app.delete("/deleteUser/:id/:rev", (request, response) => {
 // To update the particular user data using id
 
 app.put("/updateUser", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     name: request.body.name,
@@ -204,7 +204,7 @@ app.put("/updateUser", (request, response) => {
 // To post the driver data to the database
 
 app.post("/postDriver", (request, response) => {
-  var object = {
+  const object = {
     drivername: request.body.drivername,
     mobile: request.body.mobile,
     licencenumber: request.body.licencenumber,
@@ -311,7 +311,7 @@ app.delete("/deleteDriver/:id/:rev", (request, response) => {
 // To update the particular driver data using id
 
 app.put("/updateDriver", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     drivername: request.body.drivername,
@@ -355,7 +355,7 @@ app.put("/updateDriver", (request, response) => {
 //Vehicle---------------------------------------------------------
 //To post the vehicle data to the database
 app.post("/postVehicle", (request, response) => {
-  var object = {
+  const object = {
     vehiclenumber: request.body.vehiclenumber,
     vehicletype: request.body.vehicletype,
     color: request.body.color,
@@ -463,7 +463,7 @@ app.delete("/deleteVehicle/:id/:rev", (request, response) => {
 // To update the particular vehicle data using id
 
 app.put("/updateVehicle", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     vehiclenumber: request.body.vehiclenumber,
@@ -506,7 +506,7 @@ app.put("/updateVehicle", (request, response) => {
 //Fuel---------------------------------------------------------
 //To post the fuel data to the database
 app.post("/postFuel", (request, response) => {
-  var object = {
+  const object = {
     fuel: request.body.fuel,
     quantity: request.body.quantity,
     fillingdate: request.body.fillingdate,
@@ -607,7 +607,7 @@ app.delete("/deleteFuel/:id/:rev", (request, response) => {
 // To update the particular fuel data using id
 
 app.put("/updateFuel", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     fuel: request.body.fuel,
@@ -647,7 +647,7 @@ app.put("/updateFuel", (request, response) => {
 //To post the insurance data to the database
 
 app.post("/postInsurance", (request, response) => {
-  var object = {
+  const object = {
     company: request.body.company,
     startdate: request.body.startdate,
     enddate: request.body.enddate,
@@ -756,7 +756,7 @@ app.delete("/deleteInsurance/:id/:rev", (request, response) => {
 // To update the particular insurance data using id
 
 app.put("/updateInsurance", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     company: request.body.company,
@@ -798,7 +798,7 @@ app.put("/updateInsurance", (request, response) => {
 //To post the maintanence data to the database
 
 app.post("/postMaintanence", (request, response) => {
-  var object = {
+  const object = {
     date: request.body.date,
     cost: request.body.cost,
     description: request.body.description,
@@ -909,7 +909,7 @@ app.delete("/deleteMaintanence/:id/:rev", (request, response) => {
 // To update the particular maintanence data using id
 
 app.put("/updateMaintanence", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     date: request.body.date,
@@ -950,7 +950,7 @@ app.put("/updateMaintanence", (request, response) => {
 //To post the Trip data to the database
 
 app.post("/postTrip", (request, response) => {
-  var object = {
+  const object = {
     from: request.body.from,
     to: request.body.to,
     date: request.body.date,
@@ -1051,7 +1051,7 @@ app.delete("/deleteTrip/:id/:rev", (request, response) => {
 // To update the particular trip data using id
 
 app.put("/updateTrip", (request, response) => {
-  var object = {
+  const object = {
     _id: request.body._id,
     _rev: request.body._rev,
     from: request.body.from,
