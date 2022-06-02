@@ -33,7 +33,7 @@
     background-color: white;
 }
 .dropdown{
-    margin: 0px 0px 0px 40px;
+    margin: 0px 90px 0px 40px;
     width: 50px;
 }
 .container-fluid{
@@ -64,4 +64,8 @@ ul{
 }
 .logo{
     display: flex;
+}
+.logo em{
+    font-size: 40px;
+    margin-left: 20px;
 }

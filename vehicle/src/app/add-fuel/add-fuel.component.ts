@@ -77,9 +77,13 @@ export class AddFuelComponent implements OnInit {
     });
     setTimeout(() => {
       if(this.share.Vehiclecheck==1){
+        console.log("setfield called");
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
+        console.log("setfield called response");
+
+          console.log(res);
           this.share.storeFieldObj=res;
-          this.share.storeFieldObj=this.share.storeFieldObj.data;
+          this.share.storeFieldObj=this.share.storeFieldObj.data.docs[0];
           this.fuelform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
           this.fuelform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
         })
@@ -196,8 +200,9 @@ export class AddFuelComponent implements OnInit {
       setTimeout(()=>{
         for (const key of this.share.arr) {
           this.api.getAllTripData(key.vehicle_Id).subscribe(response => {
+            console.log(response);
             this.share.storeVehicleData = response;
-            this.share.storeVehicleData=this.share.storeVehicleData.data;
+            this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
               vehicletype: this.share.storeVehicleData.vehicletype,

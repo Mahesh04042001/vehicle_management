@@ -87,8 +87,8 @@ export class TripComponent implements OnInit {
       }else{
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.data.vehiclenumber);
-          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.data.vehicletype);
+          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.data.docs[0].vehiclenumber);
+          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.data.docs[0].vehicletype);
         })
       }
     }, 300);
@@ -114,8 +114,9 @@ export class TripComponent implements OnInit {
         alert("driver is already in trip, try new driver");
       }else{
         this.api.getAllDriverData(val.target.value).subscribe(res=>{
+          console.log(res);
           this.share.storeFieldObj=res;
-          this.tripform.controls['drivername'].setValue(this.share.storeFieldObj.data.drivername);
+          this.tripform.controls['drivername'].setValue(this.share.storeFieldObj.data.docs[0].drivername);
         })
       }
     }, 200);
@@ -197,6 +198,7 @@ export class TripComponent implements OnInit {
 //To get all data from database to show in table
   
 get(){
+  this.share.store=[];
   this.api.getTripData().subscribe(res=>{
     this.share.arr=[];
     this.share.allIdObj=res;
@@ -208,7 +210,7 @@ get(){
       for(const key of this.share.arr) {
         this.api.getAllVehicleData(key.vehicle_id).subscribe(response => {
           this.share.storeVehicleData=response;
-          this.share.storeVehicleData=this.share.storeVehicleData.data;
+          this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
           this.share.storeVehicleArr.push(this.share.storeVehicleData);
           this.share.allIdObj=res;
         });
@@ -221,7 +223,7 @@ get(){
             if(key.vehicle_id==iterator._id){
               this.api.getAllDriverData(key.driver_id).subscribe(result=>{
                 this.share.storeVehicleData=result;
-                this.share.storeVehicleData=this.share.storeVehicleData.data;
+                this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
                 this.share.createObj = {
                   vehiclenumber: iterator.vehiclenumber,
                   vehicletype: iterator.vehicletype,
@@ -255,7 +257,6 @@ get(){
     this.api.deleteVehicleData(data._id,data._rev).subscribe(res=>{
       console.log(res);
       alert("your data has deleted, please refresh the page");
-      this.share.store=[];
       this.get();
     },rej=>{
       alert("oops can not delete"+rej);

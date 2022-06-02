@@ -143,7 +143,7 @@ export class AddMaintanenceComponent implements OnInit {
         for (const key of this.share.arr) {
           this.api.getAllVehicleData(key.vehicle).subscribe(response => {
             this.share.storeVehicleData = response;
-            this.share.storeVehicleData = this.share.storeVehicleData.data;
+            this.share.storeVehicleData = this.share.storeVehicleData.data.docs[0];
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
               vehicletype: this.share.storeVehicleData.vehicletype,

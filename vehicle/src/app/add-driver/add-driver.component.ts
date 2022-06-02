@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
 
@@ -148,9 +148,7 @@ export class AddDriverComponent implements OnInit {
       alert("can not update....."+rej);
     })
   }
-  getLicenceNumber(){
-    return this.driverform.get('licencenumber');
-  }
+ 
 
   //check dublicate validation using licence number
   driverCheck(formvalue:any){
