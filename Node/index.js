@@ -9,6 +9,15 @@ const port = 8000;
 const cors = require("cors");
 app.use(bodyparser.json());
 
+//validator import statement
+const userValidator = require("./validators/user_validator/user.schema");
+const driverValidator = require("./validators/driver_validator/driver.schema");
+const vehicleValidator = require("./validators/vehicle_validator/vehicle.schema");
+const tripValidator = require("./validators/trip_validator/trip.schema");
+const fuelValidator = require("./validators/fuel_validator/fuel.schema");
+const maintanenceValidator = require("./validators/maintanence_validator/maintanence.schema");
+const insuranceValidator = require("./validators/insurance_validator/insurance.schema");
+
 //allow the given origin port in node
 
 app.use(
@@ -56,22 +65,30 @@ app.post("/postUser", (request, response) => {
     state: request.body.state,
     type: "user",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_user response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post the user's details from node ");
-      logger.logger.error(
-        "error",
-        `can not post the user's details from node ${err}`
-      );
+  const value = userValidator.userSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_user response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post the user's details from node ");
+        logger.logger.error(
+          "error",
+          `can not post the user's details from node ${err}`
+        );
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -151,22 +168,30 @@ app.put("/updateUser", (request, response) => {
     state: request.body.state,
     type: "user",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_user response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not delete details of users data ");
-      logger.logger.error(
-        "error",
-        `can not delete details of users data ${err}`
-      );
+  const value = userValidator.userSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_user response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not delete details of users data ");
+        logger.logger.error(
+          "error",
+          `can not delete details of users data ${err}`
+        );
+      });
+  }
 });
 
 // Driver-----------------------------------------------------------
@@ -183,22 +208,30 @@ app.post("/postDriver", (request, response) => {
     userId: request.body.userId,
     type: "driver",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_driver response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of drivers data ");
-      logger.logger.error(
-        "error",
-        `can not post details of drivers data ${err}`
-      );
+  const value = driverValidator.driverPostSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_driver response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of drivers data ");
+        logger.logger.error(
+          "error",
+          `can not post details of drivers data ${err}`
+        );
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -212,10 +245,7 @@ app.get("/getDriver", (request, response) => {
   controller
     .Get(data)
     .then((res) => {
-      console.log("driver_get");
-      console.log(res);
       response.send(res);
-      console.log("driver_get end");
       logger.logger.log(
         "info",
         `get_driver list of the user's  _id send to the angular ${res}`
@@ -281,22 +311,30 @@ app.put("/updateDriver", (request, response) => {
     userId: request.body.userId,
     type: "driver",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_driver response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not update details of driver data");
-      logger.logger.error(
-        "error",
-        `can not update details of driver data ${err}`
-      );
+  const value = driverValidator.driverUpdateSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_driver response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not update details of driver data");
+        logger.logger.error(
+          "error",
+          `can not update details of driver data ${err}`
+        );
+      });
+  }
 });
 
 //----------------------------------------------------------------
@@ -314,22 +352,30 @@ app.post("/postVehicle", (request, response) => {
     userId: request.body.userId,
     type: "vehicle",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_vehicle response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the vehicle");
-      logger.logger.error(
-        "error",
-        `can not post details of the vehicle ${err}`
-      );
+  const value = vehicleValidator.vehiclePostSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_vehicle response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the vehicle");
+        logger.logger.error(
+          "error",
+          `can not post details of the vehicle ${err}`
+        );
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -410,22 +456,30 @@ app.put("/updateVehicle", (request, response) => {
     userId: request.body.userId,
     type: "vehicle",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_vehicle response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the vehicle ");
-      logger.logger.error(
-        "error",
-        `can not update details of the vehicle ${err}`
-      );
+  const value = vehicleValidator.vehicleUpdateSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_vehicle response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the vehicle ");
+        logger.logger.error(
+          "error",
+          `can not update details of the vehicle ${err}`
+        );
+      });
+  }
 });
 
 //-------------------------
@@ -441,19 +495,27 @@ app.post("/postFuel", (request, response) => {
     vehicle_Id: request.body.vehicle_Id,
     type: "fuel",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_fuel response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the fuel");
-      logger.logger.error("error", `can not post details of the fuel ${err}`);
+  const value = fuelValidator.fuelPostSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_fuel response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the fuel");
+        logger.logger.error("error", `can not post details of the fuel ${err}`);
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -530,19 +592,28 @@ app.put("/updateFuel", (request, response) => {
     vehicle_Id: request.body.vehicle_Id,
     type: "fuel",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_fuel response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not update details of the fuel");
-      logger.logger.error("error", `can not post details of the fuel ${err}`);
+  const value = fuelValidator.fuelUpdateSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+    console.log("user validation");
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_fuel response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not update details of the fuel");
+        logger.logger.error("error", `can not post details of the fuel ${err}`);
+      });
+  }
 });
 
 //----------------------------------------------------------
@@ -559,22 +630,31 @@ app.post("/postInsurance", (request, response) => {
     vehicle: request.body.vehicle,
     type: "insurance",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_insurance response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the insurance");
-      logger.logger.error(
-        "error",
-        `can not post details of the insurance ${err}`
-      );
+  const value = insuranceValidator.insurancePostSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+    console.log("user validation");
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_insurance response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the insurance");
+        logger.logger.error(
+          "error",
+          `can not post details of the insurance ${err}`
+        );
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -655,22 +735,30 @@ app.put("/updateInsurance", (request, response) => {
     vehicle: request.body.vehicle,
     type: "insurance",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_insurance response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not update details of the insurance");
-      logger.logger.log(
-        "info",
-        `can not update details of the insurance ${err}`
-      );
+  const value = insuranceValidator.insuranceUpdateSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_insurance response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not update details of the insurance");
+        logger.logger.log(
+          "info",
+          `can not update details of the insurance ${err}`
+        );
+      });
+  }
 });
 
 //----------------------------------------------------------
@@ -686,19 +774,29 @@ app.post("/postMaintanence", (request, response) => {
     vehicle: request.body.vehicle,
     type: "maintanence",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_maintanence response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the maintanence");
-      logger.logger.error("error", "can not post details of the maintanence");
+  const value = maintanenceValidator.maintanencePostSchema.validate(
+    request.body
+  );
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_maintanence response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the maintanence");
+        logger.logger.error("error", "can not post details of the maintanence");
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -780,22 +878,32 @@ app.put("/updateMaintanence", (request, response) => {
     vehicle: request.body.vehicle,
     type: "maintanence",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_maintanence response send to the angular from node ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not update details of the maintanence");
-      logger.logger.log(
-        "error",
-        `can not update details of the maintanence ${err}`
-      );
+  const value = maintanenceValidator.maintanenceUpdateSchema.validate(
+    request.body
+  );
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_maintanence response send to the angular from node ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not update details of the maintanence");
+        logger.logger.log(
+          "error",
+          `can not update details of the maintanence ${err}`
+        );
+      });
+  }
 });
 
 //Trip---------------------------------------------------------
@@ -811,19 +919,27 @@ app.post("/postTrip", (request, response) => {
     userId: request.body.userId,
     type: "trip",
   };
-  controller
-    .Post(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `post_trip response send to the angular ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not post details of the trip");
-      logger.logger.error("error", "can not post details of the trip");
+  const value = tripValidator.tripPostSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .Post(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `post_trip response send to the angular ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not post details of the trip");
+        logger.logger.error("error", "can not post details of the trip");
+      });
+  }
 });
 
 //To get details using query with type from database
@@ -900,19 +1016,27 @@ app.put("/updateTrip", (request, response) => {
     userId: request.body.userId,
     type: "trip",
   };
-  controller
-    .UpdateDetails(object)
-    .then((res) => {
-      response.send(res);
-      logger.logger.log(
-        "info",
-        `update_trip response send to the angular from node ${res}`
-      );
-    })
-    .catch((err) => {
-      response.send("can not update details of the trip");
-      logger.logger.log("error", `can not update details of the trip ${err}`);
+  const value = tripValidator.tripUpdateSchema.validate(request.body);
+  if (value.error) {
+    response.json({
+      success: 0,
+      message: value.error.details[0].message,
     });
+  } else {
+    controller
+      .UpdateDetails(object)
+      .then((res) => {
+        response.send(res);
+        logger.logger.log(
+          "info",
+          `update_trip response send to the angular from node ${res}`
+        );
+      })
+      .catch((err) => {
+        response.send("can not update details of the trip");
+        logger.logger.log("error", `can not update details of the trip ${err}`);
+      });
+  }
 });
 
 //----------------------------------------------------------

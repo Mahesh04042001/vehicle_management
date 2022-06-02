@@ -1,4 +1,3 @@
-const winston = require("winston");
 const { createLogger, transports, format } = require("winston");
 
 //create logger and store successfull response in info.log file and
@@ -13,7 +12,7 @@ const logger = createLogger({
         format.json()
       ),
     }),
-    new winston.transports.File({
+    new transports.File({
       filename: "errors.log",
       level: "error",
       format: format.combine(
