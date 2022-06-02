@@ -35,10 +35,10 @@ export class AddMaintanenceComponent implements OnInit {
 
   //set date in date field in form
   setdate(){
-    var date = new Date();
-    var currentdate:any = date.getDate();
-    var currentmonth:any = date.getMonth() + 1;
-    var currentyear:any = date.getFullYear();
+    let date = new Date();
+    let currentdate:any = date.getDate();
+    let currentmonth:any = date.getMonth() + 1;
+    let currentyear:any = date.getFullYear();
     if (currentdate < 10){
       currentdate = "0" + currentdate;
     }
@@ -61,7 +61,7 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.entryCheck=0;
     this.api.getAllVehicleData(val.target.value).subscribe(res=>{
       this.share.storeFieldObj=res;
-      this.share.storeFieldObj=this.share.storeFieldObj.data;
+      this.share.storeFieldObj=this.share.storeFieldObj.data.docs[0];
       this.maintanenceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
       this.maintanenceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
     })
@@ -91,7 +91,7 @@ export class AddMaintanenceComponent implements OnInit {
       for (const key of this.share.allIdObj) {
         if(key.vehiclenumber==formvalue.vehiclenumber && key.vehicletype==formvalue.vehicletype){
           this.share.Vehiclecheck=1;
-          var obj={
+          let obj={
             date:formvalue.date,
             cost:formvalue.cost,
             description:formvalue.description,

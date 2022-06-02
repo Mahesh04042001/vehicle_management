@@ -39,10 +39,10 @@ export class AddDriverComponent implements OnInit {
 
   //set date in calender field in form
   setdate(){
-    var date = new Date();
-    var currentdate:any = date.getDate();
-    var currentmonth:any = date.getMonth() + 1;
-    var currentyear:any = date.getFullYear();
+    let date = new Date();
+    let currentdate:any = date.getDate();
+    let currentmonth:any = date.getMonth() + 1;
+    let currentyear:any = date.getFullYear();
     if (currentdate < 10){
       currentdate = "0" + currentdate;
     }

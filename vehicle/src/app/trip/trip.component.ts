@@ -44,10 +44,10 @@ export class TripComponent implements OnInit {
 
   //set date in date field in form
   setdate(){
-    var date = new Date();
-    var currentdate:any = date.getDate();
-    var currentmonth:any = date.getMonth() + 1;
-    var currentyear:any = date.getFullYear();
+    let date = new Date();
+    let currentdate:any = date.getDate();
+    let currentmonth:any = date.getMonth() + 1;
+    let currentyear:any = date.getFullYear();
     if (currentdate < 10){
       currentdate = "0" + currentdate;
     }
@@ -159,7 +159,7 @@ export class TripComponent implements OnInit {
             this.share.allIdObj=this.share.allIdObj.data.docs;
             for (const iterator of this.share.allIdObj) {
               if(iterator.drivername==formvalue.drivername){
-                var obj={
+                let obj={
                   from:formvalue.from,
                   to:formvalue.to,
                   date:formvalue.date,
@@ -199,14 +199,15 @@ export class TripComponent implements OnInit {
   
 get(){
   this.share.store=[];
+  this.share.arr=[];
   this.api.getTripData().subscribe(res=>{
-    this.share.arr=[];
     this.share.allIdObj=res;
     this.share.allIdObj=this.share.allIdObj.data.docs;
     for (const key of this.share.allIdObj) {
       this.share.arr.push(key);
     }
     setTimeout(()=>{
+      this.share.storeVehicleArr=[];
       for(const key of this.share.arr) {
         this.api.getAllVehicleData(key.vehicle_id).subscribe(response => {
           this.share.storeVehicleData=response;
@@ -244,7 +245,6 @@ get(){
             }
           }
         } 
-        this.share.storeVehicleArr=[];
     }, 1000);
   },rej=>{
     console.log("error",rej);
