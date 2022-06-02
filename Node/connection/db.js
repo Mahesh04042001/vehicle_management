@@ -22,7 +22,7 @@ var insert = function (objectValue, dbname) {
   });
 };
 
-//get details using find this function from database
+//get details using find method this function from database
 
 var get = function (query, database_name) {
   return new Promise((resolve, reject) => {
@@ -35,20 +35,8 @@ var get = function (query, database_name) {
   });
 };
 
-//get all details about the particular id
-
-var getAll = function (id, database_name) {
-  return new Promise((resolve, reject) => {
-    if (id == undefined) {
-      return reject(id);
-    } else {
-      var dbresult = nanodb.use(database_name).get(id);
-      return resolve(dbresult);
-    }
-  });
-};
-
 //delete function using id and rev
+
 var deleted = function (_id, _rev, database_name) {
   return new Promise((resolve, reject) => {
     if (_id == undefined || _rev == undefined) {
@@ -60,25 +48,10 @@ var deleted = function (_id, _rev, database_name) {
   });
 };
 
-//update the existing details
-
-var update = function (objectValue, dbname) {
-  return new Promise((resolve, reject) => {
-    if (objectValue == undefined) {
-      return reject(objectValue);
-    } else {
-      var dbresult = nanodb.use(dbname).insert(objectValue);
-      return resolve(dbresult);
-    }
-  });
-};
-
 //export the funtions
 
 module.exports = {
   insert,
   get,
-  getAll,
   deleted,
-  update,
 };

@@ -28,6 +28,7 @@ const driverUpdateSchema = Joi.object({
   userId: Joi.optional(),
 });
 
+//Post schema for driver data
 const driverPostSchema = Joi.object({
   drivername: Joi.string()
     .min(3)

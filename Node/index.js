@@ -93,7 +93,7 @@ app.post("/postUser", (request, response) => {
 
 //To get details using query with type from database
 
-app.get("/getUser", (request, response) => {
+app.get("/getUser", (_request, response) => {
   const data = {
     selector: {
       type: "user",
@@ -117,8 +117,14 @@ app.get("/getUser", (request, response) => {
 //To get the all user data value using id from database
 
 app.get("/getUser/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "user",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -176,7 +182,7 @@ app.put("/updateUser", (request, response) => {
     });
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -236,7 +242,7 @@ app.post("/postDriver", (request, response) => {
 
 //To get details using query with type from database
 
-app.get("/getDriver", (request, response) => {
+app.get("/getDriver", (_request, response) => {
   const data = {
     selector: {
       type: "driver",
@@ -260,8 +266,14 @@ app.get("/getDriver", (request, response) => {
 //To get the all driver data value using id from database
 
 app.get("/getDriver/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "driver",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -317,9 +329,10 @@ app.put("/updateDriver", (request, response) => {
       success: 0,
       message: value.error.details[0].message,
     });
+    console.log("err", value.error);
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -379,7 +392,7 @@ app.post("/postVehicle", (request, response) => {
 });
 
 //To get details using query with type from database
-app.get("/getVehicle", (request, response) => {
+app.get("/getVehicle", (_request, response) => {
   const data = {
     selector: {
       type: "vehicle",
@@ -402,8 +415,14 @@ app.get("/getVehicle", (request, response) => {
 
 //To get the all vehicle's data using id from database
 app.get("/getVehicle/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "vehicle",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -464,7 +483,7 @@ app.put("/updateVehicle", (request, response) => {
     });
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -519,7 +538,7 @@ app.post("/postFuel", (request, response) => {
 });
 
 //To get details using query with type from database
-app.get("/getFuel", (request, response) => {
+app.get("/getFuel", (_request, response) => {
   const data = {
     selector: {
       type: "fuel",
@@ -543,8 +562,14 @@ app.get("/getFuel", (request, response) => {
 //To get the all fuel's data using id from database
 
 app.get("/getFuel/:id", (request, response) => {
+  const data = {
+    selector: {
+      id: request.params.id,
+      type: "fuel",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -601,7 +626,7 @@ app.put("/updateFuel", (request, response) => {
     console.log("user validation");
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -659,7 +684,7 @@ app.post("/postInsurance", (request, response) => {
 
 //To get details using query with type from database
 
-app.get("/getInsurance", (request, response) => {
+app.get("/getInsurance", (_request, response) => {
   const data = {
     selector: {
       type: "insurance",
@@ -683,8 +708,14 @@ app.get("/getInsurance", (request, response) => {
 //To get the all insurance's data using id from database
 
 app.get("/getInsurance/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "insurance",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -743,7 +774,7 @@ app.put("/updateInsurance", (request, response) => {
     });
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -794,14 +825,17 @@ app.post("/postMaintanence", (request, response) => {
       })
       .catch((err) => {
         response.send("can not post details of the maintanence");
-        logger.logger.error("error", "can not post details of the maintanence");
+        logger.logger.error(
+          "error",
+          `can not post details of the maintanence${err}`
+        );
       });
   }
 });
 
 //To get details using query with type from database
 
-app.get("/getMaintanence", (request, response) => {
+app.get("/getMaintanence", (_request, response) => {
   const data = {
     selector: {
       type: "maintanence",
@@ -827,8 +861,14 @@ app.get("/getMaintanence", (request, response) => {
 
 //To get the all maintanence's data using id from database
 app.get("/getMaintanence/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "maintanence",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -888,7 +928,7 @@ app.put("/updateMaintanence", (request, response) => {
     });
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -937,13 +977,13 @@ app.post("/postTrip", (request, response) => {
       })
       .catch((err) => {
         response.send("can not post details of the trip");
-        logger.logger.error("error", "can not post details of the trip");
+        logger.logger.error("error", `can not post details of the trip ${err}`);
       });
   }
 });
 
 //To get details using query with type from database
-app.get("/getTrip", (request, response) => {
+app.get("/getTrip", (_request, response) => {
   const data = {
     selector: {
       type: "trip",
@@ -966,8 +1006,14 @@ app.get("/getTrip", (request, response) => {
 
 //To get the all trip's data using id from database
 app.get("/getTrip/:id", (request, response) => {
+  const data = {
+    selector: {
+      _id: request.params.id,
+      type: "vehicle",
+    },
+  };
   controller
-    .GetParticularDetails(request.params.id)
+    .Get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -1024,7 +1070,7 @@ app.put("/updateTrip", (request, response) => {
     });
   } else {
     controller
-      .UpdateDetails(object)
+      .Post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
