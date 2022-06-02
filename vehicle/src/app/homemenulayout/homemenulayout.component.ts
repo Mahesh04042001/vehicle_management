@@ -13,8 +13,7 @@ export class HomemenulayoutComponent implements OnInit {
 
   constructor(public api:ApiService,private share:SharedserviceService,private route:Router,public service:ServiceService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { /* TODO document why this method 'ngOnInit' is empty */ }
 
   //user logout function
   logout(){

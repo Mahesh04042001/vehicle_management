@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthenticationGuard implements CanActivate {
   constructor(public router:Router){}
   canActivate(
-    route: ActivatedRouteSnapshot,
+    _route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(localStorage.getItem('currentUser')){
         return true;

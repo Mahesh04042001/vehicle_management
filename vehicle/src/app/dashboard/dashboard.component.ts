@@ -53,8 +53,8 @@ export class DashboardComponent implements OnInit {
       this.share.store=res;
       this.share.store=this.share.store.data.docs;
       this.noOfDriver=this.share.store.length;
-      this.api.getTripData().subscribe(res=>{
-        this.share.store=res;
+      this.api.getTripData().subscribe(response=>{
+        this.share.store=response;
         this.share.store=this.share.store.data.docs;
         this.driverAssigned=this.share.store.length;
         this.driverAvailable=this.noOfDriver-this.driverAssigned;
@@ -69,8 +69,8 @@ export class DashboardComponent implements OnInit {
       this.share.store=res;
       this.share.store=this.share.store.data.docs;
       this.noOfVehicle=this.share.store.length;
-      this.api.getTripData().subscribe(res=>{
-        this.share.store=res;
+      this.api.getTripData().subscribe(response=>{
+        this.share.store=response;
         this.share.store=this.share.store.data.docs;
         this.vehicleAssigned=this.share.store.length;
         this.vehicleAvailable=this.noOfVehicle-this.vehicleAssigned;
