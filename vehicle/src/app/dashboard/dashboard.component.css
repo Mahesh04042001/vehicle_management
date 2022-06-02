@@ -1,7 +1,7 @@
 .about-card{
     align-items: center;
     background-color: white;
-    background-color: linear-gradient(rgb(174, 26, 174),rgb(41, 3, 41));
+    background: linear-gradient(rgb(174, 26, 174),rgb(41, 3, 41));
     border: 2px solid rgb(236, 232, 232);
     border-radius: 30px;
     box-shadow: 5px 10px 20px grey;

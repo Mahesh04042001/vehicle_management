@@ -3,35 +3,37 @@
     cursor: pointer;
     font-weight: bold;
     list-style: none;
-    margin-left: 50px;
+    margin-left: 40px;
     text-decoration: none;
 }
 .nav-list1{
     list-style: none;
 }
 .vms-heading{
-    margin-left: -100px;
+    margin-left: 30px;
 }
 .fas,.vms-heading,.admin{
     color: white;
 }
-a{
+.dropdown div a{
     cursor: pointer;
     font-weight: bold;
     margin-left: 30px;
-    text-decoration: none;
-}
-.dropdown button{
-    border-style: none;
-    font-size: 17px;
-    font-weight: bold;
+    text-decoration: none!important;
+    list-style: none;
 }
 .dropdown-item{
     border-bottom: 1px solid black;
     margin-right: 100px;
 }
+
+.dropdown-menu a:hover{
+    color: black;
+    border-top-left-radius:20px;
+    background-color: white;
+}
 .dropdown{
-    margin: 0px 40px;
+    margin: 0px 50px 0px 40px;
     width: 50px;
 }
 .container-fluid{
@@ -48,11 +50,22 @@ a{
     width: 230px;
 }
 li a:hover,.admin:hover{
-    background-color: white;
-    border-radius: 12px;
-    color: black;
-    padding: 8px 8px;
+    /* background-color: white; */
+    color: white;
+    /* border-radius: 12px; */
+    /* color: black; */
+    /* padding: 5px 5px; */
+    border-bottom: 3px solid white;
+}
+li{
+    list-style: none;
 }
 .active{
     color:rgb(41, 192, 41);
+}
+ul{
+    display: inline-flex;
+}
+.logo{
+    display: flex;
 }

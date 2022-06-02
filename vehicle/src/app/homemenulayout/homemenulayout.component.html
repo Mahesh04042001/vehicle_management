@@ -1,10 +1,12 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-        <em style="font-size: 40px;margin-left: 20px;" class="fas fa-shipping-fast">
-        </em>
-        <h1 class="vms-heading">Vehicle Management</h1>
-        <div class="d-flex">
-            <ul>
+        <div class="logo">
+            <em style="font-size: 40px;margin-left: 20px;" class="fas fa-shipping-fast">
+            </em>
+            <h1 class="vms-heading">Vehicle Management</h1>
+        </div>
+        <div>
+            <ul class="d-flex">
                 <li class="nav-list">
                     <a routerLink="/menu/home" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">Home</a>
@@ -12,73 +14,52 @@
                 <li class="nav-list">
                     <a routerLink="/menu/aboutus" routerLinkActive="active">About</a>
                 </li>
-            </ul>
-            <div class="dropdown">
-                <a class="admin" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administration
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
+                <li class="dropdown">
+                    <a class="admin" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                    </a>
+                    <div class="dropdown-menu">
                         <a class="dropdown-item " routerLink="/menu/account">
                             My Account
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item " routerLink="/menu/adduser">
                             Add New System User
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/adddriver">
-                            Add Driver Details
+                            Add New Driver
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/addvehicle">
-                            Add Vehicle Details
+                            Add New Vehicle
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/addtrip">
                             Add New Trip
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/addfuel">
                             Add Fuel
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/addmaintain">
                             Add Maintanence
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/addinsurance">
                             Add Insurance
                         </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" routerLink="/menu/dash_board">
                             Dashboard
                         </a>
-                    </li>
-                </ul>
-            </div>
-            <ul>
-                <li>
-                    <a routerLink="/menu/contactus" class="nav-list" style="margin-left: 85px;"
-                        routerLinkActive="active">Contact
+                    </div>
+                </li>
+                <li class="nav-list">
+                    <a routerLink="/menu/contactus" style="margin-left: 85px;" routerLinkActive="active">Contact
                         Us
                     </a>
                 </li>
-                <li>
-                    <a routerLink="/login" (click)='logout()' class="nav-list">
-                        Logout
+                <li class="nav-list">
+                    <a routerLink="/login" (click)='logout()'>Logout
                     </a>
                 </li>
             </ul>
         </div>
+
 
     </div>
 </nav>

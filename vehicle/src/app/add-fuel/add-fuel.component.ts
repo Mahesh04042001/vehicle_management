@@ -195,8 +195,8 @@ export class AddFuelComponent implements OnInit {
       }
       setTimeout(()=>{
         for (const key of this.share.arr) {
-          this.api.getAllTripData(key.vehicle_Id).subscribe(response => {
-            console.log(response);
+          this.api.getAllTripData(key.vehicle_Id).subscribe(res => {
+            console.log(res);
             this.share.storeVehicleData = res;
             this.share.storeVehicleData=this.share.storeVehicleData.data;
             this.share.createObj = {
