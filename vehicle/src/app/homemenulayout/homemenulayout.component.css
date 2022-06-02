@@ -33,7 +33,7 @@
     background-color: white;
 }
 .dropdown{
-    margin: 0px 50px 0px 40px;
+    margin: 0px 0px 0px 40px;
     width: 50px;
 }
 .container-fluid{
@@ -50,12 +50,8 @@
     width: 230px;
 }
 li a:hover,.admin:hover{
-    /* background-color: white; */
-    color: white;
-    /* border-radius: 12px; */
-    /* color: black; */
-    /* padding: 5px 5px; */
     border-bottom: 3px solid white;
+    color: white;
 }
 li{
     list-style: none;

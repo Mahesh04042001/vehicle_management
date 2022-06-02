@@ -34,5 +34,6 @@ hr{
 }
 .social_media a{
     border-style: none;
+    color: rgb(56, 56, 228);
     text-decoration: none;
 }
