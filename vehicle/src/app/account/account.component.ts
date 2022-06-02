@@ -76,6 +76,7 @@ export class AccountComponent implements OnInit {
   // To update the exisisting one
   update(formvalue:any){
     this.api.updateUser(formvalue).subscribe(res=>{
+      console.log(res);
       alert("Your data was updated successfully!");
       this.adminform.reset();
       let cancel=document.getElementById("cancel");
