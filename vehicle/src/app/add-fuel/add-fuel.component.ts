@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-add-fuel',
@@ -18,7 +19,7 @@ export class AddFuelComponent implements OnInit {
   mindate:any;
   maxdate:any;
 
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.fuelform=this.formbuilder.group({
@@ -77,19 +78,14 @@ export class AddFuelComponent implements OnInit {
     });
     setTimeout(() => {
       if(this.share.Vehiclecheck==1){
-        console.log("setfield called");
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
-        console.log("setfield called response");
-
-          console.log(res);
           this.share.storeFieldObj=res;
-          this.share.storeFieldObj=this.share.storeFieldObj.data.docs[0];
           this.fuelform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
           this.fuelform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
         })
       }else{
         this.fuelform.reset();
-        alert("Add the vehicle in trip then insert fuel info!!!");
+        this.toastar.showError("Error","Add the vehicle in trip then insert fuel info!!!");
       }
     }, 300);
   }
@@ -98,18 +94,17 @@ export class AddFuelComponent implements OnInit {
   delete(data:any){
     this.api.deleteFuelData(data._id,data._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess("Success","your data has deleted successfully!");
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("oops can not delete"+rej);
+      this.toastar.showError(rej,"oops can not delete!");
     })
   }
   
 
   //setValue in form
   onEdit(row:any){
-    console.log(row);
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.share.setFieldShow=false;
@@ -132,15 +127,15 @@ export class AddFuelComponent implements OnInit {
       if(this.share.allIdObj==0){
         this.fuelform.reset();
         this.get();
-        return alert("opps! Can not post data, try again!");
+        return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.fuelform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.get();
     },rej=>{
-      alert("can not update....."+rej);
+      this.toastar.showError(rej,"oops! can not update!");
     });
   }
   
@@ -161,16 +156,17 @@ export class AddFuelComponent implements OnInit {
       if(this.share.allIdObj==0){
         this.fuelform.reset();
         this.get();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
-      alert("Your data was posted successfully!");
+      this.toastar.showSuccess("Success","your data was posted successfully!");
       this.fuelform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];  
       this.get();
     },rej=>{
-      alert("opps! Can not post data"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Can not post data, try again!");
     });
   }
 
@@ -183,7 +179,7 @@ export class AddFuelComponent implements OnInit {
         this.share.storeDrobdownObj.push(key);
       }
     },rej=>{
-      alert("opps! Somthing went wrong"+rej);
+      this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
 
@@ -200,7 +196,6 @@ export class AddFuelComponent implements OnInit {
       setTimeout(()=>{
         for (const key of this.share.arr) {
           this.api.getAllTripData(key.vehicle_Id).subscribe(response => {
-            console.log(response);
             this.share.storeVehicleData = response;
             this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
             this.share.createObj = {
@@ -219,7 +214,8 @@ export class AddFuelComponent implements OnInit {
         }
       },500);
     },rej=>{
-      console.log("error",rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Something went wrong!");
     })
   }
 }

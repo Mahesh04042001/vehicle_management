@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-add-maintanence',
@@ -14,7 +15,7 @@ export class AddMaintanenceComponent implements OnInit {
   maintanenceform!:FormGroup;
   mindate:any;
   maxdate:any;
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.maintanenceform=this.formbuilder.group({
@@ -61,7 +62,6 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.entryCheck=0;
     this.api.getAllVehicleData(val.target.value).subscribe(res=>{
       this.share.storeFieldObj=res;
-      this.share.storeFieldObj=this.share.storeFieldObj.data.docs[0];
       this.maintanenceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
       this.maintanenceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
     })
@@ -77,7 +77,7 @@ export class AddMaintanenceComponent implements OnInit {
         this.share.storeDrobdownObj.push(key);
       }
     },rej=>{
-      alert("opps! Somthing went wrong"+rej);
+      this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
 
@@ -102,26 +102,28 @@ export class AddMaintanenceComponent implements OnInit {
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
               this.maintanenceform.reset();
-              return alert("opps! Can not post data, try again!");
+              return this.toastar.showError("Error","oops! Can not post data, try again!");
             }
-            alert("Your data was posted successfully!");
+            this.toastar.showSuccess("Success","your data was posted successfully!");
             this.maintanenceform.reset();
             let cancel=document.getElementById("cancel");
             cancel?.click();
           },rej=>{
-            alert("opps! Can not post data"+rej);
+            console.log(rej);
+            this.toastar.showError("Error","oops! Can not post data, try again!");
           });
         }
       }
     },rej=>{
-        alert("opps! Somthing went wrong"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Something went wrong!");
     })
     setTimeout(():any=>{
       if(this.share.Vehiclecheck==1){
         this.share.store=[];
         this.get();
       }else{
-        alert("Pleae register your vehicle in Add new vehicle from!");
+        this.toastar.showError("Error","Pleae register your vehicle in Add new vehicle from!");
         this.maintanenceform.reset();
         let cancel=document.getElementById("cancel");
         cancel?.click();
@@ -143,7 +145,6 @@ export class AddMaintanenceComponent implements OnInit {
         for (const key of this.share.arr) {
           this.api.getAllVehicleData(key.vehicle).subscribe(response => {
             this.share.storeVehicleData = response;
-            this.share.storeVehicleData = this.share.storeVehicleData.data.docs[0];
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
               vehicletype: this.share.storeVehicleData.vehicletype,
@@ -159,7 +160,8 @@ export class AddMaintanenceComponent implements OnInit {
         }
       },500);
     },rej=>{
-      console.log("error",rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Something went wrong!");
     })
   }
 
@@ -168,11 +170,11 @@ export class AddMaintanenceComponent implements OnInit {
   delete(data:any){
     this.api.deleteMaintanenceData(data._id,data._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess("Success","your data has deleted successfully!");
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("oops can not delete"+rej);
+      this.toastar.showError(rej,"oops can not delete!");
     })
   }
   
@@ -201,16 +203,17 @@ export class AddMaintanenceComponent implements OnInit {
         this.maintanenceform.reset();
         this.share.store=[];
         this.get();
-        return alert("opps! Can not post data, try again!");
+        return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.maintanenceform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("can not update....."+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! can not update!");
     })
   }
 }

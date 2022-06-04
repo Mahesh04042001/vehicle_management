@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,8 +22,12 @@ export class DashboardComponent implements OnInit {
   driverAvailable:any;
   vehicleAssigned:any;
   vehicleAvailable:any;
+  mindate:any;
+  maxdate:any;
+  endingMinDate:any;
+  checkdate:any;
 
-  constructor(private api:ApiService,public share:SharedserviceService) { }
+  constructor(private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.getfuelExp();
@@ -32,6 +37,8 @@ export class DashboardComponent implements OnInit {
       this.getVehicle();
       this.getAdmin();
       this.getDriver();
+      this.setdate();
+      this.checkDate();
     }, 1000);
     this.getTotal();
   }
@@ -120,5 +127,45 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.totalExp=this.insuranceExp+this.maintanenceExp+this.fuelExp;
     },1000);
+  }
+
+  //set date in date field in form
+  setdate(){
+    let date = new Date();
+    let currentdate:any = date.getDate();
+    let currentmonth:any = date.getMonth() + 1;
+    let currentyear:any = date.getFullYear();
+    let checkcurrentDate:any;
+    if (currentdate < 10){
+      checkcurrentDate=currentdate;
+      currentdate = "0" + currentdate;
+    }
+    if(currentmonth < 10){
+      currentmonth = "0" + currentmonth;
+    }
+    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.checkdate=currentyear + "-" + currentmonth + "-" + `0${(1+checkcurrentDate)}`;
+    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
+    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + currentdate;
+  }
+
+  //check end date
+
+  checkDate(){
+    setTimeout(() => {
+      this.api.getInsuranceData().subscribe(res=>{
+        console.log(res);
+        this.share.allIdObj=res;
+        this.share.allIdObj=this.share.allIdObj.data.docs;
+        for (const key of this.share.allIdObj) {
+          if(key.enddate==this.checkdate){
+            this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
+              this.share.allIdObj=response;
+              this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance was expired tomorrow!` );
+            })
+          }
+        }
+      })
+    }, 2000);
   }
 }

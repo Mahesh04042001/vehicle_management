@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-trip',
@@ -15,7 +16,8 @@ export class TripComponent implements OnInit {
   userId:any;
   storeDrobdownDriver:any=[];
   mindate:any;
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
+  resObj!:any;
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.tripform=this.formbuilder.group({
@@ -33,12 +35,14 @@ export class TripComponent implements OnInit {
       _rev:[''],
       userId:['']
     })
-    this.setValueInDropdown();
-    this.get();
     let parsed:any =localStorage.getItem("currentUser");
     this.userId= JSON.parse(parsed);
     this.userId=this.userId._id;
-    this.setdate();
+    this.get();
+    setTimeout(() => {
+      this.setValueInDropdown();
+      this.setdate();
+    }, 1000);
   }
 
 
@@ -75,7 +79,7 @@ export class TripComponent implements OnInit {
       for (const iterator of this.share.allIdObj) {
         if(iterator.vehicle_id==val.target.value){
           this.share.Vehiclecheck=1;
-          alert("your vehicle is already in trip, try another");
+          this.toastar.showError("Error","your vehicle is already in trip, try another!");
         }
       }
     });
@@ -87,8 +91,8 @@ export class TripComponent implements OnInit {
       }else{
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.data.docs[0].vehiclenumber);
-          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.data.docs[0].vehicletype);
+          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
         })
       }
     }, 300);
@@ -111,7 +115,7 @@ export class TripComponent implements OnInit {
       if(this.share.entryCheck==1){
         this.tripform.controls['driname'].reset();
         this.tripform.controls['drivername'].reset();
-        alert("driver is already in trip, try new driver");
+        this.toastar.showError("Error","driver is already in trip, try another driver!");
       }else{
         this.api.getAllDriverData(val.target.value).subscribe(res=>{
           console.log(res);
@@ -132,7 +136,7 @@ export class TripComponent implements OnInit {
         this.share.storeDrobdownObj.push(key);
       }
     },rej=>{
-      alert("opps! Somthing went wrong"+rej);
+      this.toastar.showError(rej,"opps! Something went wrong!");
     });
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
@@ -141,7 +145,8 @@ export class TripComponent implements OnInit {
         this.storeDrobdownDriver.push(key);
       }
     },rej=>{
-      alert("opps! Somthing went wrong"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","opps! Something went wrong!");
     })
   }
   
@@ -173,25 +178,28 @@ export class TripComponent implements OnInit {
                   if(this.share.allIdObj==0){
                     this.tripform.reset();
                     this.get();
-                    return alert("opps! Can not post data, try again!");
+                    return this.toastar.showError("Error","opps! Can not post data, try again!");
                   }
-                  alert("Your data was posted successfully!");
+                  this.toastar.showSuccess("Success","Your data was updated successfully!");
                   this.tripform.reset();
                   this.get();
                   let cancel=document.getElementById("cancel");
                   cancel?.click();
                 },rej=>{
-                  alert("opps! Can not post data"+rej);
+                  console.log(rej);
+                  this.toastar.showError("Error","opps! Can not post data, try again!");
                 });
               }
             }
           },rej=>{
-            console.log("error",rej);
+            console.log(rej);
+            this.toastar.showError("Error","opps! Something went wrong!");
           })
         }
       }
     },rej=>{
-      console.log("error",rej);
+      console.log(rej);
+      this.toastar.showError("Error","opps! Something went wrong!");
     })
   }
 
@@ -200,55 +208,55 @@ export class TripComponent implements OnInit {
 get(){
   this.share.store=[];
   this.share.arr=[];
+  this.share.storeVehicleArr=[];
   this.api.getTripData().subscribe(res=>{
     this.share.allIdObj=res;
     this.share.allIdObj=this.share.allIdObj.data.docs;
     for (const key of this.share.allIdObj) {
       this.share.arr.push(key);
     }
-    setTimeout(()=>{
-      this.share.storeVehicleArr=[];
-      for(const key of this.share.arr) {
-        this.api.getAllVehicleData(key.vehicle_id).subscribe(response => {
-          this.share.storeVehicleData=response;
-          this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
-          this.share.storeVehicleArr.push(this.share.storeVehicleData);
-          this.share.allIdObj=res;
-        });
-      }
-    },500);
-    setTimeout(() => {
-      this.share.store=[];
-        for (const key of this.share.arr) {
-          for (const iterator of this.share.storeVehicleArr) {
-            if(key.vehicle_id==iterator._id){
-              this.api.getAllDriverData(key.driver_id).subscribe(result=>{
-                this.share.storeVehicleData=result;
-                this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
-                this.share.createObj = {
-                  vehiclenumber: iterator.vehiclenumber,
-                  vehicletype: iterator.vehicletype,
-                  drivername:this.share.storeVehicleData.drivername,
-                  from: key.from,
-                  to: key.to,
-                  date: key.date,
-                  _id: key._id,
-                  _rev: key._rev,
-                  userId:key.userId,
-                  driver_id:key.driver_id,
-                  vehicle_id:key.vehicle_id
-                };
-                this.share.store.push(this.share.createObj);
-              },rej=>{
-                console.log("error",rej)
-              })
-            }
-          }
-        } 
-    }, 1000);
+    
   },rej=>{
-    console.log("error",rej);
-  })
+    console.log(rej);
+    this.toastar.showError("Error","opps! Something went wrong!");
+  });
+  setTimeout(()=>{
+    for(const key of this.share.arr) {
+      this.api.getAllVehicleData(key.vehicle_id).subscribe(response => {
+        this.share.storeVehicleData=response;
+        this.share.storeVehicleArr.push(this.share.storeVehicleData);
+      });
+    }
+  },500);
+  setTimeout(() => {
+      for (const key of this.share.arr) {
+        for (const iterator of this.share.storeVehicleArr) {
+          if(key.vehicle_id==iterator._id){
+            this.api.getAllDriverData(key.driver_id).subscribe(result=>{
+              this.share.storeVehicleData=result;
+              this.share.storeVehicleData=this.share.storeVehicleData.data.docs[0];
+              this.share.createObj = {
+                vehiclenumber: iterator.vehiclenumber,
+                vehicletype: iterator.vehicletype,
+                drivername:this.share.storeVehicleData.drivername,
+                from: key.from,
+                to: key.to,
+                date: key.date,
+                _id: key._id,
+                _rev: key._rev,
+                userId:key.userId,
+                driver_id:key.driver_id,
+                vehicle_id:key.vehicle_id
+              };
+              this.share.store.push(this.share.createObj);
+            },rej=>{
+              console.log(rej)
+              this.toastar.showError("Error","opps! Something went wrong!");
+            })
+          }
+        }
+      } 
+  }, 1000);
 }
 
 //To delete particular values
@@ -256,14 +264,15 @@ get(){
   delete(data:any){
     this.api.deleteVehicleData(data._id,data._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess("Success","your data has deleted successfully!");
       this.get();
     },rej=>{
-      alert("oops can not delete"+rej);
+      console.log(rej);
+      this.toastar.showError("error","oops can not delete!");
     })
   }
 
-//To eset values in table fields  
+//To reset values in table fields  
 
   onEdit(row:any){
     this.share.showAdd=false;
@@ -290,16 +299,16 @@ get(){
       if(this.share.allIdObj==0){
         this.tripform.reset();
         this.get();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("error","oops can not post data, try again!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","your data has updated successfully!");
       this.tripform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
-      this.share.store=[];
       this.get();
       },rej=>{
-      alert("can not update....."+rej);
+        console.log(rej);
+        this.toastar.showError("Error","oops can not update!");
     })
   }
 }

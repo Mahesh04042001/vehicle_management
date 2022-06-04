@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-add-user',
@@ -13,7 +14,7 @@ export class AddUserComponent implements OnInit {
   hide=true;
   userform!:FormGroup;
   maxdate:any;
-  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService ) { }
+  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService,private toastar:ToastarService ) { }
 
   ngOnInit(): void {
     this.userform=this.formbuilder.group({
@@ -63,21 +64,21 @@ export class AddUserComponent implements OnInit {
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
         this.userform.reset();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("Error","opps! Can not post data, try again!");
       }
-      alert("Your data was posted successfully!");
+      this.toastar.showSuccess("Success","Your data was posted successfully!");
       this.userform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
       this.getuser();
     },rej=>{
-      alert("opps! Can not post data"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","opps! Can not post data, try again!");
     });
   }
 
   //Get user details and show in table
-
 
   getuser(){
     this.api.getUserData().subscribe(res=>{
@@ -87,7 +88,8 @@ export class AddUserComponent implements OnInit {
         this.share.store.push(key);
       }
     },rej=>{
-        alert("opps! Somthing went wrong"+rej);
+      console.log(rej);
+      this.toastar.showError(rej,"oops! Something went wrong");
     })
   }
 
@@ -96,11 +98,12 @@ export class AddUserComponent implements OnInit {
   delete(data:any){
     this.api.deleteUser(data._id,data._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess('Success',"your data was deleted successfully!");
       this.share.store=[];
       this.getuser();
     },rej=>{
-      alert("oops! can not delete"+rej);
+      console.log(rej);
+      this.toastar.showError(rej,"oops! can not delete");
     })
   }
   
@@ -129,16 +132,17 @@ export class AddUserComponent implements OnInit {
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
         this.userform.reset();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("Error","opps! Can not post data, try again!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.userform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
       this.getuser();
     },rej=>{
-      alert("can not update....."+rej);
+      console.log(rej);
+      this.toastar.showError("Error","can not update.....!");
     })
   }
 
@@ -159,7 +163,7 @@ export class AddUserComponent implements OnInit {
       }
       setTimeout(()=>{
         if(this.share.primaryCheck==1){
-          alert("Username and Password already in use try another one!");
+          this.toastar.showError("Error","Username and Password already in use try another one!");
           this.share.store=[];
           this.getuser();
           this.share.primaryCheck=0;

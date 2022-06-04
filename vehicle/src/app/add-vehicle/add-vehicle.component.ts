@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -16,7 +17,7 @@ export class AddVehicleComponent implements OnInit {
   mindate:any;
   maxdate:any;
   
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.vehicleform=this.formbuilder.group({
@@ -79,22 +80,23 @@ export class AddVehicleComponent implements OnInit {
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
         this.vehicleform.reset();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
-      alert("Your data was posted successfully!");
+      this.toastar.showSuccess("Success","Your data was posted successfully!");
       this.vehicleform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
-      this.share.store=[];
       this.get();
     },rej=>{
-      alert("opps! Can not post data"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Can not post data, try again!");
     });
   }
 
   //To get all data from database to show in table
   
   get(){
+    this.share.store=[];
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.data.docs;
@@ -102,7 +104,8 @@ export class AddVehicleComponent implements OnInit {
         this.share.store.push(key);
       }
     },rej=>{
-        alert("opps! Somthing went wrong"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! something went wrong");
     })
   }
 
@@ -111,11 +114,12 @@ export class AddVehicleComponent implements OnInit {
   delete(data:any){
     this.api.deleteVehicleData(data._id,data._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess("Success","Your data was deleted successfully!");
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("oops can not delete"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Can not delete data, try again!");
     })
   }
 
@@ -143,16 +147,17 @@ export class AddVehicleComponent implements OnInit {
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
         this.vehicleform.reset();
-        return alert("opps! Can not post data, try again!");
+        return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.vehicleform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
       this.get();
       },rej=>{
-      alert("can not update....."+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! can not update.....");
     })
   }
 
@@ -173,14 +178,12 @@ export class AddVehicleComponent implements OnInit {
       }
       setTimeout(()=>{
         if(this.share.primaryCheck==1){
-          alert("your vehicle chasis number already exist try new one!");
+          this.toastar.showError("Error","your vehicle chasis number already exist try another one!");
           this.share.store=[];
           this.get();
           this.share.primaryCheck=0;
         }else{
           this.add(formvalue);
-          this.share.store=[];
-          this.get();
         }
       },1000);
     })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -18,9 +19,10 @@ export class AddInsuranceComponent implements OnInit {
   mindate:any;
   maxdate:any;
   endingMinDate:any;
+  checkdate:any;
 
 
-  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService) { }
+  constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.insuranceform=this.formbuilder.group({
@@ -36,8 +38,12 @@ export class AddInsuranceComponent implements OnInit {
       vehicle:['']
     })
     this.get();
-    this.setValueInDropdown();
-    this.setdate();
+    setTimeout(() => {
+      this.setValueInDropdown();
+      this.setdate();
+      this.checkDate();
+    }, 500);
+    
   }
 
   //set date in date field in form
@@ -46,13 +52,16 @@ export class AddInsuranceComponent implements OnInit {
     let currentdate:any = date.getDate();
     let currentmonth:any = date.getMonth() + 1;
     let currentyear:any = date.getFullYear();
+    let checkcurrentDate:any;
     if (currentdate < 10){
+      checkcurrentDate=currentdate;
       currentdate = "0" + currentdate;
     }
     if(currentmonth < 10){
       currentmonth = "0" + currentmonth;
     }
     this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.checkdate=currentyear + "-" + currentmonth + "-" + `0${(1+checkcurrentDate)}`;
     this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
     this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + currentdate;
   }
@@ -69,12 +78,32 @@ export class AddInsuranceComponent implements OnInit {
 
   setField(val:any){
     this.share.entryCheck=0;
-    this.api.getAllVehicleData(val.target.value).subscribe(res=>{
-      this.share.storeFieldObj=res;
-      this.share.storeFieldObj=this.share.storeFieldObj.data.docs[0];
-      this.insuranceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-      this.insuranceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
-    })
+    this.api.getInsuranceData().subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
+      for (const iterator of this.share.allIdObj) {
+        if(iterator.vehicle==val.target.value){
+          this.share.entryCheck=1;
+        }
+      }
+    });
+    setTimeout(() => {
+      if(this.share.entryCheck==1){
+        this.insuranceform.controls['vinNumber'].reset();
+        this.insuranceform.controls['vehiclenumber'].reset();
+        this.insuranceform.controls['vehicletype'].reset();
+        this.toastar.showError("Error","Already provide insurance for this vehicle,try another one or can edit!");
+      }else{
+        this.api.getAllDriverData(val.target.value).subscribe(res=>{
+          console.log(res);
+          this.api.getAllVehicleData(val.target.value).subscribe(response=>{
+            this.share.storeFieldObj=response;
+            this.insuranceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+            this.insuranceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+          })        
+        })
+      }
+    }, 300);
   }
 
   //set value in drobdown of select vehicle
@@ -86,7 +115,7 @@ export class AddInsuranceComponent implements OnInit {
         this.share.storeDrobdownObj.push(key);
       }
     },rej=>{
-      alert("opps! Somthing went wrong"+rej);
+      this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
 
@@ -112,26 +141,28 @@ export class AddInsuranceComponent implements OnInit {
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
               this.insuranceform.reset();
-              return alert("opps! Can not post data, try again!");
+              return this.toastar.showError("Error","oops! Can not post data, try again!");
             }
-            alert("Your data was posted successfully!");
+            this.toastar.showSuccess("Success","your data was posted successfully!");
             this.insuranceform.reset();
             let cancel=document.getElementById("cancel");
             cancel?.click();
           },rej=>{
-            alert("opps! Can not post data"+rej);
+            console.log(rej);
+            this.toastar.showError("Error","oops! Can not post data, try again!");
           });
         }
       }
     },rej=>{
-        alert("opps! Somthing went wrong"+rej);
+      console.log(rej);
+      this.toastar.showError("Error","oops! Something went wrong!");
     })
     setTimeout(():any=>{
       if(this.share.Vehiclecheck==1){
         this.share.store=[];
         this.get();
       }else{
-        alert("Pleae register your vehicle in Add new vehicle from!");
+        this.toastar.showError("Error","Pleae register your vehicle in Add new vehicle from!");
         this.insuranceform.reset();
         let cancel=document.getElementById("cancel");
         cancel?.click();
@@ -139,6 +170,22 @@ export class AddInsuranceComponent implements OnInit {
     },500);
   }
 
+  //check end date
+
+  checkDate(){
+    this.api.getInsuranceData().subscribe(res=>{
+      this.share.allIdObj=res;
+      this.share.allIdObj=this.share.allIdObj.data.docs;
+      for (const key of this.share.allIdObj) {
+        if(key.enddate==this.checkdate){
+          this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
+            this.share.allIdObj=response;
+            this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance was expired tomorrow!` );
+          })
+        }
+      }
+    })
+  }
 
   //to get the all forms details
 
@@ -154,7 +201,6 @@ export class AddInsuranceComponent implements OnInit {
         for (const key of this.share.arr) {
           this.api.getAllVehicleData(key.vehicle).subscribe(response => {
             this.share.storeVehicleData = response;
-            this.share.storeVehicleData = this.share.storeVehicleData.data.docs[0];
             this.share.createObj = {
               vehiclenumber: this.share.storeVehicleData.vehiclenumber,
               vehicletype: this.share.storeVehicleData.vehicletype,
@@ -171,7 +217,7 @@ export class AddInsuranceComponent implements OnInit {
         }
       },500);
     },rej=>{
-      console.log("error",rej);
+      this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
 
@@ -179,11 +225,11 @@ export class AddInsuranceComponent implements OnInit {
   delete(data:any,data1:any){
     this.api.deleteInsuranceData(data._id,data1._rev).subscribe(res=>{
       console.log(res);
-      alert("your data has deleted, please refresh the page");
+      this.toastar.showSuccess("Success","your data has deleted successfully!");
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("oops can not delete"+rej);
+      this.toastar.showError(rej,"oops can not delete!");
     })
   }
   
@@ -214,18 +260,16 @@ export class AddInsuranceComponent implements OnInit {
         this.insuranceform.reset();
         this.share.store=[];
         this.get();
-        return alert("opps! Can not post data, try again!");
+        return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.insuranceform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
       this.get();
     },rej=>{
-      alert("can not update....."+rej);
+      this.toastar.showError(rej,"oops! can not update!");
     })
   }
-
-
 }

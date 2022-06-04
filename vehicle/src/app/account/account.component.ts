@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service.service';
 import { SharedserviceService } from '../service/sharedservice.service';
+import { ToastarService } from '../toastar.service';
 
 @Component({
   selector: 'app-account',
@@ -12,7 +13,7 @@ export class AccountComponent implements OnInit {
   adminform!:FormGroup;
   maxdate:any;
   storeCredential:any;
-  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService) { }
+  constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
     this.adminform=this.formbuilder.group({
@@ -76,13 +77,13 @@ export class AccountComponent implements OnInit {
   update(formvalue:any){
     this.api.updateUser(formvalue).subscribe(res=>{
       console.log(res);
-      alert("Your data was updated successfully!");
+      this.toastar.showSuccess("Success","Your data was updated successfully!");
       this.adminform.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
     },rej=>{
-      alert("can not update....."+rej);
+      this.toastar.showError(rej,"can not update.....!");
     })
   }
 

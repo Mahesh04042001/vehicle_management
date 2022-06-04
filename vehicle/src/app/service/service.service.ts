@@ -7,5 +7,5 @@ export class ServiceService {
 
   showTag:any=true;
 
-  constructor() { /* TODO document why this constructor is empty */  }
+  constructor() { /* document why this constructor is empty */  }
 }
