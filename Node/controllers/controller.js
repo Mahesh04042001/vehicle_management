@@ -23,13 +23,13 @@ const Post = async (object) => {
       })
       .catch((err) => {
         const err_status = {
-          status: 409,
-          message: "Cannot post data into database",
-          data: err,
+          status: err.statusCode,
+          message: err.error,
+          reason: err.reason,
         };
         logger.logger.error(
           "error",
-          `status_code:${err_status.status} message:${err_status.message}`
+          `status_code:${err_status.status} message:${err_status.message} reason${err_status.reason}`
         );
         return err_status;
       });
@@ -70,13 +70,13 @@ const Get = async (query) => {
       })
       .catch((err) => {
         const err_status = {
-          status: 404,
-          message: "Data not found",
-          data: err,
+          status: err.statusCode,
+          message: err.error,
+          reason: err.reason,
         };
-        logger.logger.error(
-          "error",
-          `status_code:${err_status.status} message:${err_status.message}`
+        logger.logger.log(
+          "info",
+          `status_code:${err_status.status} message:${err_status.message} reason:${err_status.reason}`
         );
         return err_status;
       });
@@ -106,13 +106,13 @@ const DeleteDetails = async (id, rev) => {
       })
       .catch((err) => {
         const err_status = {
-          status: 409,
-          message: "Cannot delete data from database",
-          data: err,
+          status: err.statusCode,
+          message: err.error,
+          reason: err.reason,
         };
         logger.logger.error(
           "error",
-          `status_code:${err_status.status} message:${err_status.message}`
+          `status_code:${err_status.status} message:${err_status.message} reason:${err_status.reason}`
         );
         return err_status;
       });

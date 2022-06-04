@@ -10,13 +10,13 @@ const cors = require("cors");
 app.use(bodyparser.json());
 
 //validator import statement
-const userValidator = require("./validators/user_validator/user.schema");
-const driverValidator = require("./validators/driver_validator/driver.schema");
-const vehicleValidator = require("./validators/vehicle_validator/vehicle.schema");
-const tripValidator = require("./validators/trip_validator/trip.schema");
-const fuelValidator = require("./validators/fuel_validator/fuel.schema");
-const maintanenceValidator = require("./validators/maintanence_validator/maintanence.schema");
-const insuranceValidator = require("./validators/insurance_validator/insurance.schema");
+const userValidator = require("./controllers/validators/user_validator/user.schema");
+const driverValidator = require("./controllers/validators/driver_validator/driver.schema");
+const vehicleValidator = require("./controllers/validators/vehicle_validator/vehicle.schema");
+const tripValidator = require("./controllers/validators/trip_validator/trip.schema");
+const fuelValidator = require("./controllers/validators/fuel_validator/fuel.schema");
+const maintanenceValidator = require("./controllers/validators/maintanence_validator/maintanence.schema");
+const insuranceValidator = require("./controllers/validators/insurance_validator/insurance.schema");
 
 //allow the given origin port in node
 
@@ -423,8 +423,10 @@ app.get("/getVehicle/:id", (request, response) => {
   };
   controller
     .Get(data)
-    .then((res) => {
-      response.send(res);
+    .then(async (res) => {
+      let returnResponse = await res;
+      returnResponse = returnResponse.data.docs[0];
+      response.send(returnResponse);
       logger.logger.log(
         "info",
         `get_vehicle details of the user's from  _id send to the angular ${res}`
