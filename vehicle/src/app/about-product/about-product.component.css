@@ -49,5 +49,8 @@ p{
 }
 .about-product{
     background-color: #f7f7f7;
-    margin:10px;
+    height: 110vh;
+    padding-top: 10px;
+    width: 98.7vw;
+    /* margin:10px; */
 }
