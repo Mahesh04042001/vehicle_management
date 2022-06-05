@@ -14,11 +14,8 @@ import { CommonModule } from '@angular/common';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { HomemenulayoutComponent } from './homemenulayout/homemenulayout.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -31,10 +28,6 @@ import { AboutProductComponent } from './about-product/about-product.component';
 import { AddFuelComponent } from './add-fuel/add-fuel.component';
 import { AddDriverComponent } from './add-driver/add-driver.component';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatListModule} from '@angular/material/list';
-import {MatDividerModule} from '@angular/material/divider';
 import { AccountComponent } from './account/account.component';
 import { TripComponent } from './trip/trip.component';
 
@@ -62,20 +55,13 @@ import { TripComponent } from './trip/trip.component';
     AppRoutingModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
-    MatMenuModule,
-    MatListModule,
-    MatDividerModule,
     CommonModule,
     ToastrModule.forRoot()
   ],
