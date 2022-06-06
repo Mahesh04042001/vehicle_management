@@ -15,7 +15,6 @@ export class AddDriverComponent implements OnInit {
 
   driverForm!:FormGroup;
   userId:any;
-  minDate:any;
 
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
@@ -35,24 +34,9 @@ export class AddDriverComponent implements OnInit {
     let parsed:any =localStorage.getItem("currentUser");
     this.userId= JSON.parse(parsed);
     this.userId=this.userId._id;
-    this.setDate();
+    this.share.setDate();
   }
-
-  //set date in calender field in form
-  setDate(){
-    let date = new Date();
-    let currentDate:any = date.getDate();
-    let currentMonth:any = date.getMonth() + 1;
-    let currentYear:any = date.getFullYear();
-    if (currentDate < 10){
-      currentDate = "0" + currentDate;
-    }
-    if(currentMonth < 10){
-      currentMonth = "0" + currentMonth;
-    }
-    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
-  }
-
+  
   //show add and hide update button
   showOrHide(){
     this.driverForm.reset();

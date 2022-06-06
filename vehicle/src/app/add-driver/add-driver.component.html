@@ -126,7 +126,7 @@
                             Licence End Date:
                         </label>
                         <input type="date" class="form-control" id="licenceenddate" formControlName="licenceenddate"
-                            placeholder="Enter Licence End Date" min="{{minDate}}">
+                            placeholder="Enter Licence End Date" min="{{this.share.minDate}}">
                         <span class="text-danger"
                             *ngIf="driverForm.controls['licenceenddate'].dirty && driverForm.hasError('required','licenceenddate')">*Licence
                             end date

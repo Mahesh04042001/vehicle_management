@@ -25,6 +25,11 @@ export class SharedserviceService {
   storeMaintanenceObj:any;
   storeAllMaintObj:any;
   storeVehicleArr:any=[];
+  minDate:any;
+  maxDate:any;
+  currentDate:any;
+  currentMonth:any;
+  currentYear:any;
 
   constructor() { /* document why this constructor is empty */  }
 
@@ -37,4 +42,19 @@ export class SharedserviceService {
     }
   }
   
+  //Set date
+  setDate(){
+    let date = new Date();
+    this.currentDate = date.getDate();
+    this.currentMonth = date.getMonth() + 1;
+    this.currentYear = date.getFullYear();
+    if (this.currentDate < 10){
+      this.currentDate = "0" + this.currentDate;
+    }
+    if(this.currentMonth < 10){
+      this.currentMonth = "0" + this.currentMonth;
+    }
+    this.minDate = this.currentYear + "-" + this.currentMonth + "-" + this.currentDate;
+    this.maxDate=this.currentYear + "-" + this.currentMonth + "-" + this.currentDate;
+  }
 }

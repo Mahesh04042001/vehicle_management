@@ -13,8 +13,6 @@ import { ToastarService } from '../toastar.service';
 export class AddMaintanenceComponent implements OnInit {
 
   maintanenceForm!:FormGroup;
-  minDate:any;
-  maxDate:any;
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
@@ -31,25 +29,9 @@ export class AddMaintanenceComponent implements OnInit {
     })
     this.get();
     this.setValueInDropdown();
-    this.setDate();
+    this.share.setDate();
   }
-
-  //set date in date field in form
-  setDate(){
-    let date = new Date();
-    let currentDate:any = date.getDate();
-    let currentMonth:any = date.getMonth() + 1;
-    let currentYear:any = date.getFullYear();
-    if (currentDate < 10){
-      currentDate = "0" + currentDate;
-    }
-    if(currentMonth < 10){
-      currentMonth = "0" + currentMonth;
-    }
-    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
-    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
-  }
-
+  
   //To show add and hide update button function
   showOrHide(){
     this.maintanenceForm.reset();

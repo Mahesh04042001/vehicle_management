@@ -104,8 +104,8 @@
                         <label for="date" class="form-label">
                             Maintanence Date:
                         </label>
-                        <input type="date" class="form-control" id="date" formControlName="date" min="{{minDate}}"
-                            max="{{maxDate}}">
+                        <input type="date" class="form-control" id="date" formControlName="date"
+                            min="{{this.share.minDate}}" max="{{this.share.maxDate}}">
                         <span class="text-danger"
                             *ngIf="maintanenceForm.controls['date'].dirty && maintanenceForm.hasError('required','date')">*Start
                             date

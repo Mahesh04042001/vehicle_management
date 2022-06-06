@@ -15,7 +15,6 @@ export class TripComponent implements OnInit {
   tripForm!:FormGroup;
   userId:any;
   storeDrobdownDriver:any=[];
-  minDate:any;
   resObj!:any;
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
@@ -41,26 +40,10 @@ export class TripComponent implements OnInit {
     this.get();
     setTimeout(() => {
       this.setValueInDropdown();
-      this.setDate();
+      this.share.setDate();
     }, 1000);
   }
-
-
-  //set date in date field in form
-  setDate(){
-    let date = new Date();
-    let currentDate:any = date.getDate();
-    let currentMonth:any = date.getMonth() + 1;
-    let currentYear:any = date.getFullYear();
-    if (currentDate < 10){
-      currentDate = "0" + currentDate;
-    }
-    if(currentMonth < 10){
-      currentMonth = "0" + currentMonth;
-    }
-    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
-  }
-
+  
   //This functioin is used when add
   showOrHide(){
     this.tripForm.reset();

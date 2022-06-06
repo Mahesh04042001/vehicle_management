@@ -16,8 +16,6 @@ export class AddFuelComponent implements OnInit {
   storeFuelObj:any;
   storeAllFuelObj:any;
   storeFuelData:any;
-  minDate:any;
-  maxDate:any;
 
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
@@ -36,25 +34,8 @@ export class AddFuelComponent implements OnInit {
     })
     this.setValueInDropdown();
     this.get();
-    this.setdate();
+    this.share.setDate();
   }
-
-  //set date in date field in form
-  setdate(){
-    let date = new Date();
-    let currentDate:any = date.getDate();
-    let currentMonth:any = date.getMonth() + 1;
-    let currentYear:any = date.getFullYear();
-    if (currentDate < 10){
-      currentDate = "0" + currentDate;
-    }
-    if(currentMonth < 10){
-      currentMonth = "0" + currentMonth;
-    }
-    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
-    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
-  }
-
   
   //To show add and hide update button
   showOrHide(){

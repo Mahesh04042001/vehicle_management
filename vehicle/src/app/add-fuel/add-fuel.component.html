@@ -134,7 +134,7 @@
                             Filling Date:
                         </label>
                         <input type="date" class="form-control" id="fillingdate" formControlName="fillingdate"
-                            min="{{minDate}}" max="{{maxDate}}">
+                            min="{{this.share.minDate}}" max="{{this.share.maxDate}}">
                         <span class="text-danger"
                             *ngIf="fuelForm.controls['fillingdate'].dirty && fuelForm.hasError('required','fillingdate')">*Filling
                             date

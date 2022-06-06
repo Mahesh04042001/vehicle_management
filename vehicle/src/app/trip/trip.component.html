@@ -157,7 +157,8 @@
                         <label for="date" class="form-label">
                             Trip Date:
                         </label>
-                        <input type="date" class="form-control" id="date" formControlName="date" min="{{minDate}}">
+                        <input type="date" class="form-control" id="date" formControlName="date"
+                            min="{{this.share.minDate}}">
                         <span class="text-danger"
                             *ngIf="tripForm.controls['date'].dirty && tripForm.hasError('required','date')">*
                             date
