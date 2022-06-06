@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit {
   minDate:any;
   maxDate:any;
   endingMinDate:any;
-  checkdate:any;
 
   constructor(private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
@@ -38,7 +37,8 @@ export class DashboardComponent implements OnInit {
       this.getAdmin();
       this.getDriver();
       this.setDate();
-      this.checkDate();
+      this.share.checkDate();
+      console.log(this.share.checkdate);
     }, 1000);
     this.getTotal();
   }
@@ -144,28 +144,10 @@ export class DashboardComponent implements OnInit {
       currentMonth = "0" + currentMonth;
     }
     this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
-    this.checkdate=currentYear + "-" + currentMonth + "-" + `0${(1+checkCurrentDate)}`;
+    this.share.checkdate=currentYear + "-" + currentMonth + "-" + `0${(1+checkCurrentDate)}`;
     this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
     this.endingMinDate=currentYear+1 + "-" + currentMonth + "-" + currentDate;
   }
 
-  //check end date
-
-  checkDate(){
-    setTimeout(() => {
-      this.api.getInsuranceData().subscribe(res=>{
-        console.log(res);
-        this.share.allIdObj=res;
-        this.share.allIdObj=this.share.allIdObj.data.docs;
-        for (const key of this.share.allIdObj) {
-          if(key.enddate==this.checkdate){
-            this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
-              this.share.allIdObj=response;
-              this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance expiring tomorrow!` );
-            })
-          }
-        }
-      })
-    }, 2000);
-  }
+  
 }

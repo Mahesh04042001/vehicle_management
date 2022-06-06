@@ -32,6 +32,7 @@ export class SharedserviceService {
   currentDate:any;
   currentMonth:any;
   currentYear:any;
+  checkdate:any;
 
   constructor(private api:ApiService,private toastar:ToastarService) { /* document why this constructor is empty */  }
 
@@ -72,4 +73,25 @@ export class SharedserviceService {
       this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
+
+  //check end date
+
+  checkDate(){
+    setTimeout(() => {
+      this.api.getInsuranceData().subscribe(res=>{
+        console.log(res);
+        this.allIdObj=res;
+        this.allIdObj=this.allIdObj.data.docs;
+        for (const key of this.allIdObj) {
+          if(key.enddate==this.checkdate){
+            this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
+              this.allIdObj=response;
+              this.toastar.showError("Expired",`oops! ${this.allIdObj.vehiclenumber}-${this.allIdObj.vehicletype} insurance expiring tomorrow!` );
+            })
+          }
+        }
+      })
+    }, 2000);
+  }
+
 }
