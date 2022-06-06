@@ -9,7 +9,7 @@ const userSchema = Joi.object({
     .required(),
   username: Joi.string()
     .min(3)
-    .regex(/([a-zA-Z].*\d)/)
+    .regex(/^([a-zA-Z].*\d)/)
     .required(),
   pwd: Joi.string()
     .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
