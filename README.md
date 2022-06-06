@@ -1,6 +1,4 @@
-# Title
-
-Vehicle Management System (VMS)
+# Title: Vehicle Management System (VMS)
 
 # Description
 
