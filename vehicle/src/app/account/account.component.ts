@@ -10,13 +10,13 @@ import { ToastarService } from '../toastar.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  adminform!:FormGroup;
-  maxdate:any;
+  adminForm!:FormGroup;
+  maxDate:any;
   storeCredential:any;
   constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.adminform=this.formbuilder.group({
+    this.adminForm=this.formbuilder.group({
       name:['',Validators.required],
       username:['',Validators.required],
       pwd:['',Validators.required],
@@ -27,31 +27,31 @@ export class AccountComponent implements OnInit {
       _id:[''],
       _rev:[''],
     });
-    this.setdate();
+    this.setDate();
     let parsed:any =localStorage.getItem("currentUser");
     this.storeCredential= JSON.parse(parsed);
   }
 
   //show or hide add and update
   showOrHide(){
-    this.adminform.reset();
+    this.adminForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
   }
   
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.maxdate = currentyear-18 + "-" + currentmonth + "-" + currentdate;
+    this.maxDate = currentYear-18 + "-" + currentMonth + "-" + currentDate;
   }
 
 
@@ -61,24 +61,24 @@ export class AccountComponent implements OnInit {
   onEdit(row:any){
     this.share.showAdd=false;
     this.share.showUpdate=true;
-    this.adminform.controls['name'].setValue(row.name);
-    this.adminform.controls['username'].setValue(row.username);
-    this.adminform.controls['pwd'].setValue(row.pwd);
-    this.adminform.controls['mobile'].setValue(row.mobile);
-    this.adminform.controls['dob'].setValue(row.dob);
-    this.adminform.controls['city'].setValue(row.city);
-    this.adminform.controls['state'].setValue(row.state);
-    this.adminform.controls['_id'].setValue(row._id);
-    this.adminform.controls['_rev'].setValue(row._rev);
+    this.adminForm.controls['name'].setValue(row.name);
+    this.adminForm.controls['username'].setValue(row.username);
+    this.adminForm.controls['pwd'].setValue(row.pwd);
+    this.adminForm.controls['mobile'].setValue(row.mobile);
+    this.adminForm.controls['dob'].setValue(row.dob);
+    this.adminForm.controls['city'].setValue(row.city);
+    this.adminForm.controls['state'].setValue(row.state);
+    this.adminForm.controls['_id'].setValue(row._id);
+    this.adminForm.controls['_rev'].setValue(row._rev);
   }
 
 
   // To update the exisisting one
-  update(formvalue:any){
-    this.api.updateUser(formvalue).subscribe(res=>{
+  update(formValue:any){
+    this.api.updateUser(formValue).subscribe(res=>{
       console.log(res);
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.adminform.reset();
+      this.adminForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];

@@ -1,5 +1,4 @@
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
@@ -56,7 +55,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="tripform" autocomplete="off">
+                <form [formGroup]="tripForm" autocomplete="off">
                     <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
                         Select Vehicle Number:
                     </label>
@@ -84,7 +83,7 @@
                         <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
                             placeholder="Enter Vehicle Number">
                         <span class="text-danger"
-                            *ngIf="tripform.controls['vehiclenumber'].dirty && tripform.hasError('required','vehiclenumber')">*Vehicle
+                            *ngIf="tripForm.controls['vehiclenumber'].dirty && tripForm.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
@@ -96,12 +95,12 @@
                         <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
                             placeholder="Enter Vehicle Type" minlength="3">
                         <span class="text-danger"
-                            *ngIf="tripform.controls['vehicletype'].dirty && tripform.hasError('required','vehicletype')">*Vehicle
+                            *ngIf="tripForm.controls['vehicletype'].dirty && tripForm.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="tripform.hasError('minlength','vehicletype')">*Vehicle
+                            <span class="text-danger" *ngIf="tripForm.hasError('minlength','vehicletype')">*Vehicle
                                 type must have atleast 3 characters!!
                             </span>
                         </div>
@@ -113,7 +112,7 @@
                         <input type="text" class="form-control" id="drivername" formControlName="drivername"
                             placeholder="Enter Driver Name">
                         <span class="text-danger"
-                            *ngIf="tripform.controls['drivername'].dirty && tripform.hasError('required','drivername')">*Drive
+                            *ngIf="tripForm.controls['drivername'].dirty && tripForm.hasError('required','drivername')">*Drive
                             name
                             is required!!
                         </span>
@@ -132,7 +131,7 @@
                             <option value="Thirunelveli">Thirunelveli</option>
                         </select>
                         <span class="text-danger"
-                            *ngIf="tripform.controls['from'].dirty && tripform.hasError('required','from')">*From
+                            *ngIf="tripForm.controls['from'].dirty && tripForm.hasError('required','from')">*From
                             is required!!
                         </span>
                     </div>
@@ -150,7 +149,7 @@
                             <option value="Thirunelveli">Thirunelveli</option>
                         </select>
                         <span class="text-danger"
-                            *ngIf="tripform.controls['to'].dirty && tripform.hasError('required','to')">*To
+                            *ngIf="tripForm.controls['to'].dirty && tripForm.hasError('required','to')">*To
                             is required!!
                         </span>
                     </div>
@@ -158,9 +157,9 @@
                         <label for="date" class="form-label">
                             Trip Date:
                         </label>
-                        <input type="date" class="form-control" id="date" formControlName="date" min="{{mindate}}">
+                        <input type="date" class="form-control" id="date" formControlName="date" min="{{minDate}}">
                         <span class="text-danger"
-                            *ngIf="tripform.controls['date'].dirty && tripform.hasError('required','date')">*
+                            *ngIf="tripForm.controls['date'].dirty && tripForm.hasError('required','date')">*
                             date
                             is required!!
                         </span>
@@ -171,12 +170,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" [disabled]="!tripform.valid" *ngIf="this.share.showAdd"
-                    (click)="add(this.tripform.value)">
+                <button type="button" class="btn btn-primary" [disabled]="!tripForm.valid" *ngIf="this.share.showAdd"
+                    (click)="add(this.tripForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!tripform.valid"
-                    (click)="update(this.tripform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!tripForm.valid"
+                    (click)="update(this.tripForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

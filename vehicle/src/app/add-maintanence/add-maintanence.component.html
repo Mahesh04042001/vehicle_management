@@ -1,11 +1,11 @@
 <!--Search-->
 
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
 <!--Add Button-->
+
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
     (click)="showOrHide()">
@@ -63,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="maintanenceform" autocomplete="off">
+                <form [formGroup]="maintanenceForm" autocomplete="off">
                     <div>
                         <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
                             Select Vehicle Number:
@@ -83,7 +83,7 @@
                         <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
                             placeholder="Enter Vehicle Number">
                         <span class="text-danger"
-                            *ngIf="maintanenceform.controls['vehiclenumber'].dirty && maintanenceform.hasError('required','vehiclenumber')">*Vehicle
+                            *ngIf="maintanenceForm.controls['vehiclenumber'].dirty && maintanenceForm.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
@@ -95,7 +95,7 @@
                         <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
                             placeholder="Enter Vehicle Type">
                         <span class="text-danger"
-                            *ngIf="maintanenceform.controls['vehicletype'].dirty && maintanenceform.hasError('required','vehicletype')">*Vehicle
+                            *ngIf="maintanenceForm.controls['vehicletype'].dirty && maintanenceForm.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
@@ -104,23 +104,23 @@
                         <label for="date" class="form-label">
                             Maintanence Date:
                         </label>
-                        <input type="date" class="form-control" id="date" formControlName="date" min="{{mindate}}"
-                            max="{{maxdate}}">
+                        <input type="date" class="form-control" id="date" formControlName="date" min="{{minDate}}"
+                            max="{{maxDate}}">
                         <span class="text-danger"
-                            *ngIf="maintanenceform.controls['date'].dirty && maintanenceform.hasError('required','date')">*Start
+                            *ngIf="maintanenceForm.controls['date'].dirty && maintanenceForm.hasError('required','date')">*Start
                             date
                             is required!!
                         </span>
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost:
+                            Total Cost(in price):
                         </label>
                         <input type="number" class="form-control" id="cost" formControlName="cost"
                             placeholder="Enter Maintanence Cost" pattern="[0-9]{9}*"
                             (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
-                            *ngIf="maintanenceform.controls['cost'].dirty && maintanenceform.hasError('required','cost')">*Cost
+                            *ngIf="maintanenceForm.controls['cost'].dirty && maintanenceForm.hasError('required','cost')">*Cost
                             is required!!
                         </span>
                     </div>
@@ -131,7 +131,7 @@
                         <input type="text" class="form-control" id="description" formControlName="description"
                             placeholder="Enter Comments Here..">
                         <span class="text-danger"
-                            *ngIf="maintanenceform.controls['description'].dirty && maintanenceform.hasError('required','description')">*Description
+                            *ngIf="maintanenceForm.controls['description'].dirty && maintanenceForm.hasError('required','description')">*Description
                             is required!!
                         </span>
                     </div>
@@ -141,12 +141,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!maintanenceform.valid"
-                    *ngIf="this.share.showAdd" (click)="add(this.maintanenceform.value)">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!maintanenceForm.valid"
+                    *ngIf="this.share.showAdd" (click)="add(this.maintanenceForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!maintanenceform.valid"
-                    (click)="update(this.maintanenceform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!maintanenceForm.valid"
+                    (click)="update(this.maintanenceForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

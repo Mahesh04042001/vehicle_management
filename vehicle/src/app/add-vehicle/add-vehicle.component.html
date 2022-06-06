@@ -1,8 +1,6 @@
 <!--search field-->
-
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
+    <input matInput placeholder="search text with any keyword" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
 <!-- Button trigger modal -->
@@ -59,7 +57,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="vehicleform" autocomplete="off">
+                <form [formGroup]="vehicleForm" autocomplete="off">
                     <div>
                         <label for="vehiclenumber" class="form-label">
                             Vehicle Number:
@@ -68,12 +66,12 @@
                             placeholder="Enter Vehicle Number"
                             pattern="[T][N][0-9][0-9][A-Z][A-Z][0-9][0-9][0-9][0-9][0-9]*" maxlength="10">
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['vehiclenumber'].dirty && vehicleform.hasError('required','vehiclenumber')">*Vehicle
+                            *ngIf="vehicleForm.controls['vehiclenumber'].dirty && vehicleForm.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','vehiclenumber')">*Vehicle
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('pattern','vehiclenumber')">*Vehicle
                                 number must start with 'TN' and format is 'TN76JJ5676'!!
                             </span>
                         </div>
@@ -85,17 +83,17 @@
                         <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
                             placeholder="Enter Vehicle Type" minlength="3" pattern="[a-zA-Z]*">
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['vehicletype'].dirty && vehicleform.hasError('required','vehicletype')">*Vehicle
+                            *ngIf="vehicleForm.controls['vehicletype'].dirty && vehicleForm.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('minlength','vehicletype')">*Vehicle
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('minlength','vehicletype')">*Vehicle
                                 type must have atleast 3 characters!!
                             </span>
                         </div>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','vehicletype')">
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('pattern','vehicletype')">
                                 *Vehicle type
                                 must be in letters only!!
                             </span>
@@ -108,16 +106,16 @@
                         <input type="text" class="form-control" id="color" formControlName="color"
                             placeholder="Enter Color" minlength="3" pattern="[a-zA-Z]*">
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['color'].dirty && vehicleform.hasError('required','color')">*Color
+                            *ngIf="vehicleForm.controls['color'].dirty && vehicleForm.hasError('required','color')">*Color
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('minlength','color')">*Color
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('minlength','color')">*Color
                                 must be more than 3 letters!!
                             </span>
                         </div>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','color')">
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('pattern','color')">
                                 *Color
                                 must be in letters only!!
                             </span>
@@ -128,9 +126,9 @@
                             Current Date:
                         </label>
                         <input type="date" class="form-control" id="registerdate" formControlName="registerdate"
-                            min="{{mindate}}" max="{{maxdate}}">
+                            min="{{minDate}}" max="{{maxDate}}">
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['registerdate'].dirty && vehicleform.hasError('required','registerdate')">*Registration
+                            *ngIf="vehicleForm.controls['registerdate'].dirty && vehicleForm.hasError('required','registerdate')">*Registration
                             date
                             is required!!
                         </span>
@@ -142,12 +140,12 @@
                         <input type="text" class="form-control" id="chasisno" formControlName="chasisno"
                             placeholder="Enter Chasis Number" pattern="[a-zA-Z0-9]*">
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['chasisno'].dirty && vehicleform.hasError('required','chasisno')">*Chasis
+                            *ngIf="vehicleForm.controls['chasisno'].dirty && vehicleForm.hasError('required','chasisno')">*Chasis
                             number
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="vehicleform.hasError('pattern','chasisno')">
+                            <span class="text-danger" *ngIf="vehicleForm.hasError('pattern','chasisno')">
                                 *Chasis number
                                 must be in letters only!!
                             </span>
@@ -155,13 +153,13 @@
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost:
+                            Total Cost(in price):
                         </label>
                         <input type="number" class="form-control" id="cost" formControlName="cost"
                             placeholder="Enter Vehicle Cost" pattern="[0-9]{9}*"
                             (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
-                            *ngIf="vehicleform.controls['cost'].dirty && vehicleform.hasError('required','cost')">*Cost
+                            *ngIf="vehicleForm.controls['cost'].dirty && vehicleForm.hasError('required','cost')">*Cost
                             is required!!
                         </span>
                     </div>
@@ -171,12 +169,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" [disabled]="!vehicleform.valid" *ngIf="this.share.showAdd"
-                    (click)="vehicleCheck(this.vehicleform.value)">
+                <button type="button" class="btn btn-primary" [disabled]="!vehicleForm.valid" *ngIf="this.share.showAdd"
+                    (click)="vehicleCheck(this.vehicleForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!vehicleform.valid"
-                    (click)="update(this.vehicleform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!vehicleForm.valid"
+                    (click)="update(this.vehicleForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

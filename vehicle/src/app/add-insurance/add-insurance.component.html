@@ -1,7 +1,6 @@
 <!--Search Bar-->
 
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
@@ -64,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="insuranceform" autocomplete="off">
+                <form [formGroup]="insuranceForm" autocomplete="off">
                     <div>
                         <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
                             Select Vehicle Number:
@@ -84,7 +83,7 @@
                         <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
                             placeholder="Enter Vehicle Number">
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['vehiclenumber'].dirty && insuranceform.hasError('required','vehiclenumber')">*Vehicle
+                            *ngIf="insuranceForm.controls['vehiclenumber'].dirty && insuranceForm.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
@@ -96,7 +95,7 @@
                         <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
                             placeholder="Enter Vehicle Type">
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['vehicletype'].dirty && insuranceform.hasError('required','vehicletype')">*Vehicle
+                            *ngIf="insuranceForm.controls['vehicletype'].dirty && insuranceForm.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
@@ -113,7 +112,7 @@
                             </option>
                         </select>
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['company'].dirty && insuranceform.hasError('required','company')">*Insurance
+                            *ngIf="insuranceForm.controls['company'].dirty && insuranceForm.hasError('required','company')">*Insurance
                             company
                             is required!!
                         </span>
@@ -123,9 +122,9 @@
                             Start Date:
                         </label>
                         <input type="date" class="form-control" id="startdate" formControlName="startdate"
-                            min="{{mindate}}" max="{{maxdate}}">
+                            min="{{minDate}}" max="{{maxDate}}">
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['startdate'].dirty && insuranceform.hasError('required','startdate')">*Start
+                            *ngIf="insuranceForm.controls['startdate'].dirty && insuranceForm.hasError('required','startdate')">*Start
                             date
                             is required!!
                         </span>
@@ -137,19 +136,19 @@
                         <input type="date" class="form-control" id="enddate" formControlName="enddate"
                             min="{{endingMinDate}}">
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['enddate'].dirty && insuranceform.hasError('required','enddate')">*End
+                            *ngIf="insuranceForm.controls['enddate'].dirty && insuranceForm.hasError('required','enddate')">*End
                             date
                             is required!!
                         </span>
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost:
+                            Total Cost(in price):
                         </label>
                         <input type="number" class="form-control" id="cost" formControlName="cost"
                             placeholder="Enter Cost" pattern="[0-9]{9}*" (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
-                            *ngIf="insuranceform.controls['cost'].dirty && insuranceform.hasError('required','cost')">*Cost
+                            *ngIf="insuranceForm.controls['cost'].dirty && insuranceForm.hasError('required','cost')">*Cost
                             is required!!
                         </span>
                     </div>
@@ -159,12 +158,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceform.valid"
-                    *ngIf="this.share.showAdd" (click)="add(this.insuranceform.value)">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceForm.valid"
+                    *ngIf="this.share.showAdd" (click)="add(this.insuranceForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceform.valid"
-                    (click)="update(this.insuranceform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!insuranceForm.valid"
+                    (click)="update(this.insuranceForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

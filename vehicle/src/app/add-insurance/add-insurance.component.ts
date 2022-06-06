@@ -12,12 +12,12 @@ import { ToastarService } from '../toastar.service';
 })
 export class AddInsuranceComponent implements OnInit {
 
-  insuranceform!:FormGroup;
+  insuranceForm!:FormGroup;
   storeInsureData:any;
   storeInsuranceObj:any;
   storeAllInsuranceObj:any;
-  mindate:any;
-  maxdate:any;
+  minDate:any;
+  maxDate:any;
   endingMinDate:any;
   checkdate:any;
 
@@ -25,7 +25,7 @@ export class AddInsuranceComponent implements OnInit {
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.insuranceform=this.formbuilder.group({
+    this.insuranceForm=this.formbuilder.group({
       vinNumber:[''],
       vehiclenumber:['',Validators.required],
       vehicletype:['',Validators.required],
@@ -40,35 +40,35 @@ export class AddInsuranceComponent implements OnInit {
     this.get();
     setTimeout(() => {
       this.setValueInDropdown();
-      this.setdate();
+      this.setDate();
       this.checkDate();
     }, 500);
     
   }
 
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
     let checkcurrentDate:any;
-    if (currentdate < 10){
-      checkcurrentDate=currentdate;
-      currentdate = "0" + currentdate;
+    if (currentDate < 10){
+      checkcurrentDate=currentDate;
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
-    this.checkdate=currentyear + "-" + currentmonth + "-" + `0${(1+checkcurrentDate)}`;
-    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
-    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
+    this.checkdate=currentYear + "-" + currentMonth + "-" + `0${(1+checkcurrentDate)}`;
+    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
+    this.endingMinDate=currentYear+1 + "-" + currentMonth + "-" + currentDate;
   }
 
   //To show add and hide update button
   showOrHide(){
-    this.insuranceform.reset();
+    this.insuranceForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
     this.share.setFieldShow=true;
@@ -89,17 +89,17 @@ export class AddInsuranceComponent implements OnInit {
     });
     setTimeout(() => {
       if(this.share.entryCheck==1){
-        this.insuranceform.controls['vinNumber'].reset();
-        this.insuranceform.controls['vehiclenumber'].reset();
-        this.insuranceform.controls['vehicletype'].reset();
+        this.insuranceForm.controls['vinNumber'].reset();
+        this.insuranceForm.controls['vehiclenumber'].reset();
+        this.insuranceForm.controls['vehicletype'].reset();
         this.toastar.showError("Error","Already provide insurance for this vehicle,try another one or can edit!");
       }else{
         this.api.getAllDriverData(val.target.value).subscribe(res=>{
           console.log(res);
           this.api.getAllVehicleData(val.target.value).subscribe(response=>{
             this.share.storeFieldObj=response;
-            this.insuranceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-            this.insuranceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+            this.insuranceForm.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+            this.insuranceForm.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
           })        
         })
       }
@@ -140,11 +140,11 @@ export class AddInsuranceComponent implements OnInit {
             this.share.allIdObj=response;
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
-              this.insuranceform.reset();
+              this.insuranceForm.reset();
               return this.toastar.showError("Error","oops! Can not post data, try again!");
             }
             this.toastar.showSuccess("Success","your data was posted successfully!");
-            this.insuranceform.reset();
+            this.insuranceForm.reset();
             let cancel=document.getElementById("cancel");
             cancel?.click();
           },rej=>{
@@ -163,7 +163,7 @@ export class AddInsuranceComponent implements OnInit {
         this.get();
       }else{
         this.toastar.showError("Error","Pleae register your vehicle in Add new vehicle from!");
-        this.insuranceform.reset();
+        this.insuranceForm.reset();
         let cancel=document.getElementById("cancel");
         cancel?.click();
       }
@@ -180,7 +180,7 @@ export class AddInsuranceComponent implements OnInit {
         if(key.enddate==this.checkdate){
           this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
             this.share.allIdObj=response;
-            this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance was expired tomorrow!` );
+            this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance expiring tomorrow!` );
           })
         }
       }
@@ -239,15 +239,15 @@ export class AddInsuranceComponent implements OnInit {
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.share.setFieldShow=false;
-    this.insuranceform.controls['vehiclenumber'].setValue(row.vehiclenumber);
-    this.insuranceform.controls['vehicletype'].setValue(row.vehicletype);
-    this.insuranceform.controls['company'].setValue(row.company);
-    this.insuranceform.controls['startdate'].setValue(row.startdate);
-    this.insuranceform.controls['enddate'].setValue(row.enddate);
-    this.insuranceform.controls['cost'].setValue(row.cost);
-    this.insuranceform.controls['_id'].setValue(row._id);
-    this.insuranceform.controls['_rev'].setValue(row._rev);
-    this.insuranceform.controls['vehicle'].setValue(row.vehicle);
+    this.insuranceForm.controls['vehiclenumber'].setValue(row.vehiclenumber);
+    this.insuranceForm.controls['vehicletype'].setValue(row.vehicletype);
+    this.insuranceForm.controls['company'].setValue(row.company);
+    this.insuranceForm.controls['startdate'].setValue(row.startdate);
+    this.insuranceForm.controls['enddate'].setValue(row.enddate);
+    this.insuranceForm.controls['cost'].setValue(row.cost);
+    this.insuranceForm.controls['_id'].setValue(row._id);
+    this.insuranceForm.controls['_rev'].setValue(row._rev);
+    this.insuranceForm.controls['vehicle'].setValue(row.vehicle);
   }
 
 
@@ -257,13 +257,13 @@ export class AddInsuranceComponent implements OnInit {
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.insuranceform.reset();
+        this.insuranceForm.reset();
         this.share.store=[];
         this.get();
         return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.insuranceform.reset();
+      this.insuranceForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];

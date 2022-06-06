@@ -1,7 +1,6 @@
 <!--Search bar-->
 
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
@@ -66,7 +65,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="fuelform" autocomplete="off">
+                <form [formGroup]="fuelForm" autocomplete="off">
                     <div>
                         <label for="vinNumber" *ngIf="this.share.setFieldShow" class="form-label">
                             Select Vehicle Number:
@@ -86,7 +85,7 @@
                         <input type="text" class="form-control" id="vehiclenumber" formControlName="vehiclenumber"
                             placeholder="Enter Vehicle Number">
                         <span class="text-danger"
-                            *ngIf="fuelform.controls['vehiclenumber'].dirty && fuelform.hasError('required','vehiclenumber')">*Vehicle
+                            *ngIf="fuelForm.controls['vehiclenumber'].dirty && fuelForm.hasError('required','vehiclenumber')">*Vehicle
                             number
                             is required!!
                         </span>
@@ -98,7 +97,7 @@
                         <input type="text" class="form-control" id="vehicletype" formControlName="vehicletype"
                             placeholder="Enter Vehicle Type">
                         <span class="text-danger"
-                            *ngIf="fuelform.controls['vehicletype'].dirty && fuelform.hasError('required','vehicletype')">*Vehicle
+                            *ngIf="fuelForm.controls['vehicletype'].dirty && fuelForm.hasError('required','vehicletype')">*Vehicle
                             type
                             is required!!
                         </span>
@@ -126,7 +125,7 @@
                             placeholder="Enter quantity in litres" pattern="[0-9]{9}*"
                             (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
-                            *ngIf="fuelform.controls['quantity'].dirty && fuelform.hasError('required','quantity')">*Quantity
+                            *ngIf="fuelForm.controls['quantity'].dirty && fuelForm.hasError('required','quantity')">*Quantity
                             is required!!
                         </span>
                     </div>
@@ -135,22 +134,22 @@
                             Filling Date:
                         </label>
                         <input type="date" class="form-control" id="fillingdate" formControlName="fillingdate"
-                            min="{{mindate}}" max="{{maxdate}}">
+                            min="{{minDate}}" max="{{maxDate}}">
                         <span class="text-danger"
-                            *ngIf="fuelform.controls['fillingdate'].dirty && fuelform.hasError('required','fillingdate')">*Filling
+                            *ngIf="fuelForm.controls['fillingdate'].dirty && fuelForm.hasError('required','fillingdate')">*Filling
                             date
                             is required!!
                         </span>
                     </div>
                     <div>
                         <label for="cost" class="form-label">
-                            Total Cost:
+                            Total Cost(in price):
                         </label>
                         <input type="number" class="form-control" id="cost" formControlName="cost"
                             placeholder="Enter Fuel Cost" pattern="[0-9]{9}*"
                             (keydown)=this.share.RestrictMinus($event)>
                         <span class="text-danger"
-                            *ngIf="fuelform.controls['cost'].dirty && fuelform.hasError('required','cost')">*Cost
+                            *ngIf="fuelForm.controls['cost'].dirty && fuelForm.hasError('required','cost')">*Cost
                             is required!!
                         </span>
                     </div>
@@ -160,12 +159,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" [disabled]="!fuelform.valid" *ngIf="this.share.showAdd"
-                    (click)="add(this.fuelform.value)">
+                <button type="button" class="btn btn-primary" [disabled]="!fuelForm.valid" *ngIf="this.share.showAdd"
+                    (click)="add(this.fuelForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!fuelform.valid"
-                    (click)="update(this.fuelform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!fuelForm.valid"
+                    (click)="update(this.fuelForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

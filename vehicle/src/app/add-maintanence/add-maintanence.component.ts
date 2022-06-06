@@ -12,13 +12,13 @@ import { ToastarService } from '../toastar.service';
 })
 export class AddMaintanenceComponent implements OnInit {
 
-  maintanenceform!:FormGroup;
-  mindate:any;
-  maxdate:any;
+  maintanenceForm!:FormGroup;
+  minDate:any;
+  maxDate:any;
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.maintanenceform=this.formbuilder.group({
+    this.maintanenceForm=this.formbuilder.group({
       vinNumber:[''],
       vehiclenumber:['',Validators.required],
       vehicletype:['',Validators.required],
@@ -31,28 +31,28 @@ export class AddMaintanenceComponent implements OnInit {
     })
     this.get();
     this.setValueInDropdown();
-    this.setdate();
+    this.setDate();
   }
 
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
-    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
+    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
   }
 
   //To show add and hide update button function
   showOrHide(){
-    this.maintanenceform.reset();
+    this.maintanenceForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
     this.share.setFieldShow=true;
@@ -62,8 +62,8 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.entryCheck=0;
     this.api.getAllVehicleData(val.target.value).subscribe(res=>{
       this.share.storeFieldObj=res;
-      this.maintanenceform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-      this.maintanenceform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+      this.maintanenceForm.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+      this.maintanenceForm.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
     })
   }
 
@@ -101,11 +101,11 @@ export class AddMaintanenceComponent implements OnInit {
             this.share.allIdObj=response;
             this.share.allIdObj=this.share.allIdObj.success;
             if(this.share.allIdObj==0){
-              this.maintanenceform.reset();
+              this.maintanenceForm.reset();
               return this.toastar.showError("Error","oops! Can not post data, try again!");
             }
             this.toastar.showSuccess("Success","your data was posted successfully!");
-            this.maintanenceform.reset();
+            this.maintanenceForm.reset();
             let cancel=document.getElementById("cancel");
             cancel?.click();
           },rej=>{
@@ -124,7 +124,7 @@ export class AddMaintanenceComponent implements OnInit {
         this.get();
       }else{
         this.toastar.showError("Error","Pleae register your vehicle in Add new vehicle from!");
-        this.maintanenceform.reset();
+        this.maintanenceForm.reset();
         let cancel=document.getElementById("cancel");
         cancel?.click();
       }
@@ -183,14 +183,14 @@ export class AddMaintanenceComponent implements OnInit {
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.share.setFieldShow=false;
-    this.maintanenceform.controls['vehiclenumber'].setValue(row.vehiclenumber);
-    this.maintanenceform.controls['vehicletype'].setValue(row.vehicletype);
-    this.maintanenceform.controls['date'].setValue(row.date);
-    this.maintanenceform.controls['cost'].setValue(row.cost);
-    this.maintanenceform.controls['description'].setValue(row.description);
-    this.maintanenceform.controls['_id'].setValue(row._id);
-    this.maintanenceform.controls['_rev'].setValue(row._rev);
-    this.maintanenceform.controls['vehicle'].setValue(row.vehicle);
+    this.maintanenceForm.controls['vehiclenumber'].setValue(row.vehiclenumber);
+    this.maintanenceForm.controls['vehicletype'].setValue(row.vehicletype);
+    this.maintanenceForm.controls['date'].setValue(row.date);
+    this.maintanenceForm.controls['cost'].setValue(row.cost);
+    this.maintanenceForm.controls['description'].setValue(row.description);
+    this.maintanenceForm.controls['_id'].setValue(row._id);
+    this.maintanenceForm.controls['_rev'].setValue(row._rev);
+    this.maintanenceForm.controls['vehicle'].setValue(row.vehicle);
   }
 
   //To update the existing values in database
@@ -200,13 +200,13 @@ export class AddMaintanenceComponent implements OnInit {
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.maintanenceform.reset();
+        this.maintanenceForm.reset();
         this.share.store=[];
         this.get();
         return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.maintanenceform.reset();
+      this.maintanenceForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];

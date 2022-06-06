@@ -13,14 +13,14 @@ import { ToastarService } from '../toastar.service';
 })
 export class AddDriverComponent implements OnInit {
 
-  driverform!:FormGroup;
+  driverForm!:FormGroup;
   userId:any;
-  mindate:any;
+  minDate:any;
 
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.driverform=this.formbuilder.group({
+    this.driverForm=this.formbuilder.group({
       drivername:['',Validators.required],
       mobile:['',Validators.required],
       licencenumber:['',Validators.required],
@@ -35,51 +35,51 @@ export class AddDriverComponent implements OnInit {
     let parsed:any =localStorage.getItem("currentUser");
     this.userId= JSON.parse(parsed);
     this.userId=this.userId._id;
-    this.setdate();
+    this.setDate();
   }
 
   //set date in calender field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
   }
 
   //show add and hide update button
   showOrHide(){
-    this.driverform.reset();
+    this.driverForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
   }
   
   //add record to the database
-  add(formvalue:any){
-    formvalue={
-      drivername:formvalue.drivername,
-      mobile:formvalue.mobile,
-      licencenumber:formvalue.licencenumber,
-      licenceenddate:formvalue.licenceenddate,
-      city:formvalue.city,
-      state:formvalue.state,
+  add(formValue:any){
+    formValue={
+      drivername:formValue.drivername,
+      mobile:formValue.mobile,
+      licencenumber:formValue.licencenumber,
+      licenceenddate:formValue.licenceenddate,
+      city:formValue.city,
+      state:formValue.state,
       userId:this.userId
     }
-    this.api.addDriverData(formvalue).subscribe(res=>{
+    this.api.addDriverData(formValue).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.driverform.reset();
+        this.driverForm.reset();
         return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
       this.toastar.showSuccess("Success","Your data was posted successfully!");
-      this.driverform.reset();
+      this.driverForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
@@ -120,28 +120,28 @@ export class AddDriverComponent implements OnInit {
   onEdit(row:any){
     this.share.showAdd=false;
     this.share.showUpdate=true;
-    this.driverform.controls['drivername'].setValue(row.drivername);
-    this.driverform.controls['mobile'].setValue(row.mobile);
-    this.driverform.controls['licencenumber'].setValue(row.licencenumber);
-    this.driverform.controls['licenceenddate'].setValue(row.licenceenddate);
-    this.driverform.controls['city'].setValue(row.city);
-    this.driverform.controls['state'].setValue(row.state);
-    this.driverform.controls['_id'].setValue(row._id);
-    this.driverform.controls['_rev'].setValue(row._rev);
-    this.driverform.controls['userId'].setValue(row.userId);
+    this.driverForm.controls['drivername'].setValue(row.drivername);
+    this.driverForm.controls['mobile'].setValue(row.mobile);
+    this.driverForm.controls['licencenumber'].setValue(row.licencenumber);
+    this.driverForm.controls['licenceenddate'].setValue(row.licenceenddate);
+    this.driverForm.controls['city'].setValue(row.city);
+    this.driverForm.controls['state'].setValue(row.state);
+    this.driverForm.controls['_id'].setValue(row._id);
+    this.driverForm.controls['_rev'].setValue(row._rev);
+    this.driverForm.controls['userId'].setValue(row.userId);
   }
 
   //update the existing form
-  update(formvalue:any){
-    this.api.updateDriverData(formvalue).subscribe(res=>{
+  update(formValue:any){
+    this.api.updateDriverData(formValue).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.driverform.reset();
+        this.driverForm.reset();
         return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.driverform.reset();
+      this.driverForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
@@ -153,7 +153,7 @@ export class AddDriverComponent implements OnInit {
  
 
   //check dublicate validation using licence number
-  driverCheck(formvalue:any){
+  driverCheck(formValue:any){
     this.share.showAdd=false;
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
@@ -161,7 +161,7 @@ export class AddDriverComponent implements OnInit {
       for (const key of this.share.allIdObj) {
         this.share.storeValidation.push(key);
         for (const iterator of this.share.storeValidation) {
-          if(iterator.licencenumber==formvalue.licencenumber){
+          if(iterator.licencenumber==formValue.licencenumber){
             this.share.primaryCheck=1;
           }
         }
@@ -173,7 +173,7 @@ export class AddDriverComponent implements OnInit {
           this.get();
           this.share.primaryCheck=0;
         }else{
-          this.add(formvalue);
+          this.add(formValue);
         }
       },1000);
     })

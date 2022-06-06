@@ -2,5 +2,6 @@ select {
     height: 35px;
     width: 100%;
 }
-        
-
+mat-form-field input{
+    border-bottom: 1px solid grey;
+}

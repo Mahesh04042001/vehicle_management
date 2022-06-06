@@ -1,7 +1,6 @@
 <!--Search Bar-->
 
 <mat-form-field appearance="standard" class="searchBar">
-    <mat-label>Search</mat-label>
     <input matInput placeholder="search text with any keyword" name="search" [(ngModel)]="this.share.searchText">
 </mat-form-field>
 
@@ -67,7 +66,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="userform" autocomplete="off">
+                <form [formGroup]="userForm" autocomplete="off">
                     <div>
                         <label for="name" class="form-label">
                             Name:
@@ -75,18 +74,18 @@
                         <input type="text" class="form-control" id="name" formControlName="name" minlength="3"
                             placeholder="Enter Name" pattern="[a-zA-Z]*">
                         <span class="text-danger"
-                            *ngIf="userform.controls['name'].dirty && userform.hasError('required','name')">*
+                            *ngIf="userForm.controls['name'].dirty && userForm.hasError('required','name')">*
                             Name
                             is required!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="userform.hasError('minlength','name')">
+                            <span class="text-danger" *ngIf="userForm.hasError('minlength','name')">
                                 *Name
                                 must be more than 3 letters!!
                             </span>
                         </div>
                         <div>
-                            <span class="text-danger" *ngIf="userform.hasError('pattern','name')">
+                            <span class="text-danger" *ngIf="userForm.hasError('pattern','name')">
                                 *Name
                                 must be in letters only!!
                             </span>
@@ -99,16 +98,16 @@
                         <input type="text" class="form-control" id="username" formControlName="username" minlength="4"
                             placeholder="Enter User Name" pattern="([a-z].*[0-9])">
                         <span class="text-danger"
-                            *ngIf="userform.controls['username'].dirty && userform.hasError('required','username')">*User
+                            *ngIf="userForm.controls['username'].dirty && userForm.hasError('required','username')">*User
                             Name
                             is required!!
                         </span>
-                        <span class="text-danger" *ngIf="userform.hasError('minlength','username')">*User
+                        <span class="text-danger" *ngIf="userForm.hasError('minlength','username')">*User
                             Name
                             must be more than 4 letters!!
                         </span>
                         <div>
-                            <span class="text-danger" *ngIf="userform.hasError('pattern','username')">
+                            <span class="text-danger" *ngIf="userForm.hasError('pattern','username')">
                                 *User name
                                 must be in letters and numbers only!!
                             </span>
@@ -121,10 +120,10 @@
                         <input type="password" class="form-control" id="pwd" formControlName="pwd" minlength="8"
                             pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Enter Password">
                         <span class="text-danger"
-                            *ngIf="userform.controls['pwd'].dirty && userform.hasError('required','pwd')">*password
+                            *ngIf="userForm.controls['pwd'].dirty && userForm.hasError('required','pwd')">*password
                             is required!!
                         </span>
-                        <span class="text-danger" *ngIf="userform.hasError('pattern','pwd')">
+                        <span class="text-danger" *ngIf="userForm.hasError('pattern','pwd')">
                             *password must have letter's and should have 1 digit and password also contain 8 character!
                         </span>
                     </div>
@@ -135,11 +134,11 @@
                         <input type="text" class="form-control" id="mobile" pattern="[789][0-9]{9}"
                             formControlName="mobile" placeholder="Enter Mobile Number">
                         <span class="text-danger"
-                            *ngIf="userform.controls['mobile'].dirty && userform.hasError('required','mobile')">*Mobile
+                            *ngIf="userForm.controls['mobile'].dirty && userForm.hasError('required','mobile')">*Mobile
                             number
                             is required!!
                         </span>
-                        <span class="text-danger" *ngIf="userform.controls['mobile'].errors?.pattern">*Mobile Number
+                        <span class="text-danger" *ngIf="userForm.controls['mobile'].errors?.pattern">*Mobile Number
                             Should be 10
                             Digit!!
                         </span>
@@ -148,9 +147,9 @@
                         <label for="dob" class="form-label">
                             Date Of Birth:
                         </label>
-                        <input type="date" class="form-control" id="dob" formControlName="dob" max="{{maxdate}}">
+                        <input type="date" class="form-control" id="dob" formControlName="dob" max="{{maxDate}}">
                         <span class="text-danger"
-                            *ngIf="userform.controls['dob'].dirty && userform.hasError('required','dob')">*
+                            *ngIf="userForm.controls['dob'].dirty && userForm.hasError('required','dob')">*
                             Date of birth
                             is required!!
                         </span>
@@ -169,7 +168,7 @@
                             <option value="Thirunelveli">Thirunelveli</option>
                         </select>
                         <span class="text-danger"
-                            *ngIf="userform.controls['city'].touched && userform.hasError('required','city')">*City
+                            *ngIf="userForm.controls['city'].touched && userForm.hasError('required','city')">*City
                             is required
                         </span>
                     </div>
@@ -182,7 +181,7 @@
                             <option value="TamilNadu">TamilNadu</option>
                         </select>
                         <span class="text-danger"
-                            *ngIf="userform.controls['state'].dirty && userform.hasError('required','state')">*State
+                            *ngIf="userForm.controls['state'].dirty && userForm.hasError('required','state')">*State
                             is
                             required
                         </span>
@@ -193,12 +192,12 @@
                 <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" [disabled]="!userform.valid" *ngIf="this.share.showAdd"
-                    (click)="userCheck(this.userform.value)">
+                <button type="button" class="btn btn-primary" [disabled]="!userForm.valid" *ngIf="this.share.showAdd"
+                    (click)="userCheck(this.userForm.value)">
                     Add
                 </button>
-                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!userform.valid"
-                    (click)="update(this.userform.value)" *ngIf="this.share.showUpdate">
+                <button type="button" id="cancel" class="btn btn-primary" [disabled]="!userForm.valid"
+                    (click)="update(this.userForm.value)" *ngIf="this.share.showUpdate">
                     Update
                 </button>
             </div>

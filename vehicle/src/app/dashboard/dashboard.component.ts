@@ -22,8 +22,8 @@ export class DashboardComponent implements OnInit {
   driverAvailable:any;
   vehicleAssigned:any;
   vehicleAvailable:any;
-  mindate:any;
-  maxdate:any;
+  minDate:any;
+  maxDate:any;
   endingMinDate:any;
   checkdate:any;
 
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
       this.getVehicle();
       this.getAdmin();
       this.getDriver();
-      this.setdate();
+      this.setDate();
       this.checkDate();
     }, 1000);
     this.getTotal();
@@ -130,23 +130,23 @@ export class DashboardComponent implements OnInit {
   }
 
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    let checkcurrentDate:any;
-    if (currentdate < 10){
-      checkcurrentDate=currentdate;
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    let checkCurrentDate:any;
+    if (currentDate < 10){
+      checkCurrentDate=currentDate;
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
-    this.checkdate=currentyear + "-" + currentmonth + "-" + `0${(1+checkcurrentDate)}`;
-    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
-    this.endingMinDate=currentyear+1 + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
+    this.checkdate=currentYear + "-" + currentMonth + "-" + `0${(1+checkCurrentDate)}`;
+    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
+    this.endingMinDate=currentYear+1 + "-" + currentMonth + "-" + currentDate;
   }
 
   //check end date
@@ -161,7 +161,7 @@ export class DashboardComponent implements OnInit {
           if(key.enddate==this.checkdate){
             this.api.getAllVehicleData(key.vehicle).subscribe(response=>{
               this.share.allIdObj=response;
-              this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance was expired tomorrow!` );
+              this.toastar.showError("Expired",`oops! ${this.share.allIdObj.vehiclenumber}-${this.share.allIdObj.vehicletype} insurance expiring tomorrow!` );
             })
           }
         }

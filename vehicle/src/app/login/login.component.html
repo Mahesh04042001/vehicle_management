@@ -7,7 +7,7 @@
                         Login
                     </h1>
                 </div>
-                <form [formGroup]="loginform" autocomplete="off">
+                <form [formGroup]="loginForm" autocomplete="off">
                     <div class="mb-3" class="form-group">
                         <label for="username" class="form-label">
                             User Name
@@ -15,7 +15,7 @@
                         <input type="text" class="form-control" formControlName="username" id="username"
                             aria-describedby="emailHelp" placeholder="Enter Username">
                         <span class="text-danger"
-                            *ngIf="loginform.controls['username'].dirty && loginform.hasError('required','username')">
+                            *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required','username')">
                             *Username is required!!
                         </span>
                     </div>
@@ -26,7 +26,7 @@
                         <input type="password" class="form-control" id="Password" formControlName="password"
                             placeholder="Enter Password">
                         <span class="text-danger"
-                            *ngIf="loginform.controls['password'].dirty && loginform.hasError('required','password')">
+                            *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
                             *Username is required!!
                         </span>
                     </div>
@@ -34,7 +34,7 @@
                         We'll never share your credentials.
                     </div>
                     <button type="submit" class="btn btn-primary" *ngIf="loginBtnDisable">
-                        <a (click)="login(this.loginform.value)">
+                        <a (click)="login(this.loginForm.value)">
                             Login
                         </a>
                     </button>

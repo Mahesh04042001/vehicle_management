@@ -12,15 +12,15 @@ import { ToastarService } from '../toastar.service';
 })
 export class TripComponent implements OnInit {
 
-  tripform!:FormGroup;
+  tripForm!:FormGroup;
   userId:any;
   storeDrobdownDriver:any=[];
-  mindate:any;
+  minDate:any;
   resObj!:any;
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.tripform=this.formbuilder.group({
+    this.tripForm=this.formbuilder.group({
       vinNumber:[''],
       driname:[''],
       vehiclenumber:['',Validators.required],
@@ -41,29 +41,29 @@ export class TripComponent implements OnInit {
     this.get();
     setTimeout(() => {
       this.setValueInDropdown();
-      this.setdate();
+      this.setDate();
     }, 1000);
   }
 
 
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
   }
 
   //This functioin is used when add
   showOrHide(){
-    this.tripform.reset();
+    this.tripForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
     this.share.setFieldShow=true;
@@ -85,14 +85,14 @@ export class TripComponent implements OnInit {
     });
     setTimeout(() => {
       if(this.share.Vehiclecheck==1){
-        this.tripform.controls['vinNumber'].reset();
-        this.tripform.controls['vehiclenumber'].reset();
-        this.tripform.controls['vehicletype'].reset();
+        this.tripForm.controls['vinNumber'].reset();
+        this.tripForm.controls['vehiclenumber'].reset();
+        this.tripForm.controls['vehicletype'].reset();
       }else{
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.tripform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-          this.tripform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+          this.tripForm.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+          this.tripForm.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
         })
       }
     }, 300);
@@ -113,14 +113,14 @@ export class TripComponent implements OnInit {
     });
     setTimeout(() => {
       if(this.share.entryCheck==1){
-        this.tripform.controls['driname'].reset();
-        this.tripform.controls['drivername'].reset();
+        this.tripForm.controls['driname'].reset();
+        this.tripForm.controls['drivername'].reset();
         this.toastar.showError("Error","driver is already in trip, try another driver!");
       }else{
         this.api.getAllDriverData(val.target.value).subscribe(res=>{
           console.log(res);
           this.share.storeFieldObj=res;
-          this.tripform.controls['drivername'].setValue(this.share.storeFieldObj.data.docs[0].drivername);
+          this.tripForm.controls['drivername'].setValue(this.share.storeFieldObj.data.docs[0].drivername);
         })
       }
     }, 200);
@@ -152,22 +152,22 @@ export class TripComponent implements OnInit {
   
 //Add function to add form value
 
-  add(formvalue: any){
+  add(formValue: any){
     this.share.showAdd=false;
     this.api.getVehicleData().subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.data.docs;
       for (const key of this.share.allIdObj) {
-        if(key.vehiclenumber==formvalue.vehiclenumber && key.vehicletype==formvalue.vehicletype){
+        if(key.vehiclenumber==formValue.vehiclenumber && key.vehicletype==formValue.vehicletype){
           this.api.getDriverData().subscribe(response=>{
             this.share.allIdObj=response;
             this.share.allIdObj=this.share.allIdObj.data.docs;
             for (const iterator of this.share.allIdObj) {
-              if(iterator.drivername==formvalue.drivername){
+              if(iterator.drivername==formValue.drivername){
                 let obj={
-                  from:formvalue.from,
-                  to:formvalue.to,
-                  date:formvalue.date,
+                  from:formValue.from,
+                  to:formValue.to,
+                  date:formValue.date,
                   driver_id:iterator._id,
                   vehicle_id:key._id,
                   userId:this.userId
@@ -176,12 +176,12 @@ export class TripComponent implements OnInit {
                   this.share.allIdObj=Res;
                   this.share.allIdObj=this.share.allIdObj.success;
                   if(this.share.allIdObj==0){
-                    this.tripform.reset();
+                    this.tripForm.reset();
                     this.get();
                     return this.toastar.showError("Error","opps! Can not post data, try again!");
                   }
                   this.toastar.showSuccess("Success","Your data was updated successfully!");
-                  this.tripform.reset();
+                  this.tripForm.reset();
                   this.get();
                   let cancel=document.getElementById("cancel");
                   cancel?.click();
@@ -278,31 +278,31 @@ get(){
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.share.setFieldShow=false;
-    this.tripform.controls['_id'].setValue(row._id);
-    this.tripform.controls['_rev'].setValue(row._rev);
-    this.tripform.controls['vehiclenumber'].setValue(row.vehiclenumber);
-    this.tripform.controls['vehicletype'].setValue(row.vehicletype);
-    this.tripform.controls['drivername'].setValue(row.drivername);
-    this.tripform.controls['from'].setValue(row.from);
-    this.tripform.controls['to'].setValue(row.to);
-    this.tripform.controls['date'].setValue(row.date);
-    this.tripform.controls['driver_id'].setValue(row.driver_id);
-    this.tripform.controls['vehicle_id'].setValue(row.vehicle_id);
-    this.tripform.controls['userId'].setValue(row.userId);
+    this.tripForm.controls['_id'].setValue(row._id);
+    this.tripForm.controls['_rev'].setValue(row._rev);
+    this.tripForm.controls['vehiclenumber'].setValue(row.vehiclenumber);
+    this.tripForm.controls['vehicletype'].setValue(row.vehicletype);
+    this.tripForm.controls['drivername'].setValue(row.drivername);
+    this.tripForm.controls['from'].setValue(row.from);
+    this.tripForm.controls['to'].setValue(row.to);
+    this.tripForm.controls['date'].setValue(row.date);
+    this.tripForm.controls['driver_id'].setValue(row.driver_id);
+    this.tripForm.controls['vehicle_id'].setValue(row.vehicle_id);
+    this.tripForm.controls['userId'].setValue(row.userId);
   }
 
 //To update existing form values OR modified existing  
-  update(formvalue:any){
-    this.api.updateTripData(formvalue).subscribe(res=>{
+  update(formValue:any){
+    this.api.updateTripData(formValue).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.tripform.reset();
+        this.tripForm.reset();
         this.get();
         return this.toastar.showError("error","oops can not post data, try again!");
       }
       this.toastar.showSuccess("Success","your data has updated successfully!");
-      this.tripform.reset();
+      this.tripForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.get();

@@ -12,17 +12,17 @@ import { ToastarService } from '../toastar.service';
 })
 export class AddFuelComponent implements OnInit {
 
-  fuelform!:FormGroup;
+  fuelForm!:FormGroup;
   storeFuelObj:any;
   storeAllFuelObj:any;
   storeFuelData:any;
-  mindate:any;
-  maxdate:any;
+  minDate:any;
+  maxDate:any;
 
   constructor(private formbuilder:FormBuilder,private api:ApiService,public share:SharedserviceService,private toastar:ToastarService) { }
 
   ngOnInit(): void {
-    this.fuelform=this.formbuilder.group({
+    this.fuelForm=this.formbuilder.group({
       vinNumber:[''],
       vehiclenumber:['',Validators.required],
       vehicletype:['',Validators.required],
@@ -42,23 +42,23 @@ export class AddFuelComponent implements OnInit {
   //set date in date field in form
   setdate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.mindate = currentyear + "-" + currentmonth + "-" + currentdate;
-    this.maxdate=currentyear + "-" + currentmonth + "-" + currentdate;
+    this.minDate = currentYear + "-" + currentMonth + "-" + currentDate;
+    this.maxDate=currentYear + "-" + currentMonth + "-" + currentDate;
   }
 
   
   //To show add and hide update button
   showOrHide(){
-    this.fuelform.reset();
+    this.fuelForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
     this.share.setFieldShow=true;
@@ -80,11 +80,11 @@ export class AddFuelComponent implements OnInit {
       if(this.share.Vehiclecheck==1){
         this.api.getAllVehicleData(val.target.value).subscribe(res=>{
           this.share.storeFieldObj=res;
-          this.fuelform.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
-          this.fuelform.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
+          this.fuelForm.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
+          this.fuelForm.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
         })
       }else{
-        this.fuelform.reset();
+        this.fuelForm.reset();
         this.toastar.showError("Error","Add the vehicle in trip then insert fuel info!!!");
       }
     }, 300);
@@ -108,29 +108,29 @@ export class AddFuelComponent implements OnInit {
     this.share.showAdd=false;
     this.share.showUpdate=true;
     this.share.setFieldShow=false;
-    this.fuelform.controls['vehiclenumber'].setValue(row.vehiclenumber);
-    this.fuelform.controls['vehicletype'].setValue(row.vehicletype);
-    this.fuelform.controls['fuel'].setValue(row.fuel);
-    this.fuelform.controls['quantity'].setValue(row.quantity);
-    this.fuelform.controls['fillingdate'].setValue(row.fillingdate);
-    this.fuelform.controls['cost'].setValue(row.cost);
-    this.fuelform.controls['_id'].setValue(row._id);
-    this.fuelform.controls['_rev'].setValue(row._rev);
-    this.fuelform.controls['vehicle_Id'].setValue(row.vehicle_Id);
+    this.fuelForm.controls['vehiclenumber'].setValue(row.vehiclenumber);
+    this.fuelForm.controls['vehicletype'].setValue(row.vehicletype);
+    this.fuelForm.controls['fuel'].setValue(row.fuel);
+    this.fuelForm.controls['quantity'].setValue(row.quantity);
+    this.fuelForm.controls['fillingdate'].setValue(row.fillingdate);
+    this.fuelForm.controls['cost'].setValue(row.cost);
+    this.fuelForm.controls['_id'].setValue(row._id);
+    this.fuelForm.controls['_rev'].setValue(row._rev);
+    this.fuelForm.controls['vehicle_Id'].setValue(row.vehicle_Id);
   }
 
   //update existing form value
-  update(formvalue:any){
-    this.api.updateFuelData(formvalue).subscribe(res=>{
+  update(formValue:any){
+    this.api.updateFuelData(formValue).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.fuelform.reset();
+        this.fuelForm.reset();
         this.get();
         return  this.toastar.showError("Error","opps! Can not update data, try again!!");
       }
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.fuelform.reset();
+      this.fuelForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.get();
@@ -141,25 +141,25 @@ export class AddFuelComponent implements OnInit {
   
 
   //Add new record
-  add(formvalue:any){
+  add(formValue:any){
     this.share.showAdd=false;
     let obj={
-    fuel:formvalue.fuel,
-    quantity:formvalue.quantity,
-    fillingdate:formvalue.fillingdate,
-    cost:formvalue.cost,
-    vehicle_Id:formvalue.vehicle_Id,
+    fuel:formValue.fuel,
+    quantity:formValue.quantity,
+    fillingdate:formValue.fillingdate,
+    cost:formValue.cost,
+    vehicle_Id:formValue.vehicle_Id,
     };
     this.api.addFuelData(obj).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.fuelform.reset();
+        this.fuelForm.reset();
         this.get();
         return this.toastar.showError("Error","oops! Can not post data, try again!");
       }
       this.toastar.showSuccess("Success","your data was posted successfully!");
-      this.fuelform.reset();
+      this.fuelForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];  

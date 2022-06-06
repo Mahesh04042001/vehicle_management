@@ -12,12 +12,12 @@ import { ToastarService } from '../toastar.service';
 })
 export class AddUserComponent implements OnInit {
   hide=true;
-  userform!:FormGroup;
-  maxdate:any;
+  userForm!:FormGroup;
+  maxDate:any;
   constructor(private formbuilder:FormBuilder,public share:SharedserviceService,private api:ApiService,private toastar:ToastarService ) { }
 
   ngOnInit(): void {
-    this.userform=this.formbuilder.group({
+    this.userForm=this.formbuilder.group({
       name:['',Validators.required],
       username:['',Validators.required],
       pwd:['',Validators.required],
@@ -28,50 +28,50 @@ export class AddUserComponent implements OnInit {
       _id:[''],
       _rev:[''],
     });
-    this.getuser();
-    this.setdate();
+    this.getUser();
+    this.setDate();
   }
 
   //set date in date field in form
-  setdate(){
+  setDate(){
     let date = new Date();
-    let currentdate:any = date.getDate();
-    let currentmonth:any = date.getMonth() + 1;
-    let currentyear:any = date.getFullYear();
-    if (currentdate < 10){
-      currentdate = "0" + currentdate;
+    let currentDate:any = date.getDate();
+    let currentMonth:any = date.getMonth() + 1;
+    let currentYear:any = date.getFullYear();
+    if (currentDate < 10){
+      currentDate = "0" + currentDate;
     }
-    if(currentmonth < 10){
-      currentmonth = "0" + currentmonth;
+    if(currentMonth < 10){
+      currentMonth = "0" + currentMonth;
     }
-    this.maxdate = currentyear-18 + "-" + currentmonth + "-" + currentdate;
+    this.maxDate = currentYear-18 + "-" + currentMonth + "-" + currentDate;
   }
   
   //Show or hide the add and update button
 
   showOrHide(){
-    this.userform.reset();
+    this.userForm.reset();
     this.share.showAdd=true;
     this.share.showUpdate=false;
   }
 
   //Add user details function
 
-  adduser(formvalue:any){
-    this.api.addUser(formvalue).subscribe(res=>{
+  adduser(formValue:any){
+    this.api.addUser(formValue).subscribe(res=>{
       console.log(res);
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.userform.reset();
+        this.userForm.reset();
         return this.toastar.showError("Error","opps! Can not post data, try again!");
       }
       this.toastar.showSuccess("Success","Your data was posted successfully!");
-      this.userform.reset();
+      this.userForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
-      this.getuser();
+      this.getUser();
     },rej=>{
       console.log(rej);
       this.toastar.showError("Error","opps! Can not post data, try again!");
@@ -80,7 +80,7 @@ export class AddUserComponent implements OnInit {
 
   //Get user details and show in table
 
-  getuser(){
+  getUser(){
     this.api.getUserData().subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.data.docs;
@@ -100,7 +100,7 @@ export class AddUserComponent implements OnInit {
       console.log(res);
       this.toastar.showSuccess('Success',"your data was deleted successfully!");
       this.share.store=[];
-      this.getuser();
+      this.getUser();
     },rej=>{
       console.log(rej);
       this.toastar.showError(rej,"oops! can not delete");
@@ -113,33 +113,33 @@ export class AddUserComponent implements OnInit {
   onEdit(row:any){
     this.share.showAdd=false;
     this.share.showUpdate=true;
-    this.userform.controls['name'].setValue(row.name);
-    this.userform.controls['username'].setValue(row.username);
-    this.userform.controls['pwd'].setValue(row.pwd);
-    this.userform.controls['mobile'].setValue(row.mobile);
-    this.userform.controls['dob'].setValue(row.dob);
-    this.userform.controls['city'].setValue(row.city);
-    this.userform.controls['state'].setValue(row.state);
-    this.userform.controls['_id'].setValue(row._id);
-    this.userform.controls['_rev'].setValue(row._rev);
+    this.userForm.controls['name'].setValue(row.name);
+    this.userForm.controls['username'].setValue(row.username);
+    this.userForm.controls['pwd'].setValue(row.pwd);
+    this.userForm.controls['mobile'].setValue(row.mobile);
+    this.userForm.controls['dob'].setValue(row.dob);
+    this.userForm.controls['city'].setValue(row.city);
+    this.userForm.controls['state'].setValue(row.state);
+    this.userForm.controls['_id'].setValue(row._id);
+    this.userForm.controls['_rev'].setValue(row._rev);
   }
 
 
   // To update the exisisting one
-  update(formvalue:NgForm){
-    this.api.updateUser(formvalue).subscribe(res=>{
+  update(formValue:NgForm){
+    this.api.updateUser(formValue).subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.success;
       if(this.share.allIdObj==0){
-        this.userform.reset();
+        this.userForm.reset();
         return this.toastar.showError("Error","opps! Can not post data, try again!");
       }
       this.toastar.showSuccess("Success","Your data was updated successfully!");
-      this.userform.reset();
+      this.userForm.reset();
       let cancel=document.getElementById("cancel");
       cancel?.click();
       this.share.store=[];
-      this.getuser();
+      this.getUser();
     },rej=>{
       console.log(rej);
       this.toastar.showError("Error","can not update.....!");
@@ -148,7 +148,7 @@ export class AddUserComponent implements OnInit {
 
   //To check the user is already exist using username and mobile
 
-  userCheck(formvalue:any){
+  userCheck(formValue:any){
     this.share.showAdd=false;
     this.api.getUserData().subscribe(res=>{
       this.share.allIdObj=res;
@@ -156,7 +156,7 @@ export class AddUserComponent implements OnInit {
       for (const key of this.share.allIdObj) {
         this.share.storeValidation.push(key);
         for (const iterator of this.share.storeValidation) {
-          if((iterator.username==formvalue.username   && iterator.password==formvalue.pwd)){
+          if((iterator.username==formValue.username   && iterator.password==formValue.pwd)){
             this.share.primaryCheck=1;
           }
         }
@@ -165,10 +165,10 @@ export class AddUserComponent implements OnInit {
         if(this.share.primaryCheck==1){
           this.toastar.showError("Error","Username and Password already in use try another one!");
           this.share.store=[];
-          this.getuser();
+          this.getUser();
           this.share.primaryCheck=0;
         }else{
-          this.adduser(formvalue);
+          this.adduser(formValue);
         }
       },1000);
     })

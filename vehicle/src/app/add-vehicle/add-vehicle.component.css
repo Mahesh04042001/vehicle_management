@@ -3,3 +3,6 @@ label{
     font-size:large;
     font-weight:300;
 }
+mat-form-field input{
+    border-bottom: 1px solid gray;
+}
