@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
     this.loginBtnDisable=false;
     this.api.getlogindata(formvalue.username,formvalue.password).subscribe(res=>{
       this.shared.allIdObj=res;
+      console.log(this.shared.allIdObj);
       this.shared.allIdObj=this.shared.allIdObj.data.docs[0];
       this.storeCredentials=this.shared.allIdObj;
       setTimeout(()=>{
