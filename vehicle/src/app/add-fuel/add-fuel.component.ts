@@ -32,7 +32,7 @@ export class AddFuelComponent implements OnInit {
       _rev:[''],
       vehicle_Id:['']
     })
-    this.setValueInDropdown();
+    this.share.setValueInDropdown();
     this.get();
     this.share.setDate();
   }
@@ -151,18 +151,7 @@ export class AddFuelComponent implements OnInit {
     });
   }
 
-  //set velues in dropdown
-  setValueInDropdown(){
-    this.api.getVehicleData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.data.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.storeDrobdownObj.push(key);
-      }
-    },rej=>{
-      this.toastar.showError(rej,"oops! Something went wrong!");
-    })
-  }
+  
 
   //get the fuel data from the databese
   get(){

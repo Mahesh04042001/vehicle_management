@@ -28,7 +28,7 @@ export class AddMaintanenceComponent implements OnInit {
       vehicle:['']
     })
     this.get();
-    this.setValueInDropdown();
+    this.share.setValueInDropdown();
     this.share.setDate();
   }
   
@@ -46,20 +46,6 @@ export class AddMaintanenceComponent implements OnInit {
       this.share.storeFieldObj=res;
       this.maintanenceForm.controls['vehiclenumber'].setValue(this.share.storeFieldObj.vehiclenumber);
       this.maintanenceForm.controls['vehicletype'].setValue(this.share.storeFieldObj.vehicletype);
-    })
-  }
-
-  //set values in drobdown of select vehicle field
-  
-  setValueInDropdown(){
-    this.api.getVehicleData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.data.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.storeDrobdownObj.push(key);
-      }
-    },rej=>{
-      this.toastar.showError(rej,"oops! Something went wrong!");
     })
   }
 

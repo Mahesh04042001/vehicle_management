@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { ToastarService } from '../toastar.service';
+import { ApiService } from './api.service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,7 @@ export class SharedserviceService {
   currentMonth:any;
   currentYear:any;
 
-  constructor() { /* document why this constructor is empty */  }
+  constructor(private api:ApiService,private toastar:ToastarService) { /* document why this constructor is empty */  }
 
   
   //restrict minus(-) and dot(.) in cost field in form 
@@ -56,5 +58,18 @@ export class SharedserviceService {
     }
     this.minDate = this.currentYear + "-" + this.currentMonth + "-" + this.currentDate;
     this.maxDate=this.currentYear + "-" + this.currentMonth + "-" + this.currentDate;
+  }
+
+  //set value in drobdown of select vehicle
+  setValueInDropdown(){
+    this.api.getVehicleData().subscribe(res=>{
+      this.allIdObj=res;
+      this.allIdObj=this.allIdObj.data.docs;
+      for (const key of this.allIdObj) {
+        this.storeDrobdownObj.push(key);
+      }
+    },rej=>{
+      this.toastar.showError(rej,"oops! Something went wrong!");
+    })
   }
 }

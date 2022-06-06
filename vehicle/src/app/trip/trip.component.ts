@@ -39,7 +39,8 @@ export class TripComponent implements OnInit {
     this.userId=this.userId._id;
     this.get();
     setTimeout(() => {
-      this.setValueInDropdown();
+      this.share.setValueInDropdown();
+      this.setDriverValueInDropdown();
       this.share.setDate();
     }, 1000);
   }
@@ -111,16 +112,7 @@ export class TripComponent implements OnInit {
 
 
   // set the vehicle details in drobdown
-  setValueInDropdown(){
-    this.api.getVehicleData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.data.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.storeDrobdownObj.push(key);
-      }
-    },rej=>{
-      this.toastar.showError(rej,"opps! Something went wrong!");
-    });
+  setDriverValueInDropdown(){
     this.api.getDriverData().subscribe(res=>{
       this.share.allIdObj=res;
       this.share.allIdObj=this.share.allIdObj.data.docs;

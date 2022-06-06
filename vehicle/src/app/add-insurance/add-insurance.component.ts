@@ -39,7 +39,7 @@ export class AddInsuranceComponent implements OnInit {
     })
     this.get();
     setTimeout(() => {
-      this.setValueInDropdown();
+      this.share.setValueInDropdown();
       this.setDate();
       this.checkDate();
     }, 500);
@@ -106,18 +106,7 @@ export class AddInsuranceComponent implements OnInit {
     }, 300);
   }
 
-  //set value in drobdown of select vehicle
-  setValueInDropdown(){
-    this.api.getVehicleData().subscribe(res=>{
-      this.share.allIdObj=res;
-      this.share.allIdObj=this.share.allIdObj.data.docs;
-      for (const key of this.share.allIdObj) {
-        this.share.storeDrobdownObj.push(key);
-      }
-    },rej=>{
-      this.toastar.showError(rej,"oops! Something went wrong!");
-    })
-  }
+  
 
   //To add insurance setails
 
