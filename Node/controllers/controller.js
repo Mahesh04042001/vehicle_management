@@ -5,7 +5,7 @@ const logger = require("../config/logger");
 
 //controller post method
 
-const Post = async (object) => {
+const post = async (object) => {
   try {
     return await database
       .insert(object, "project_db")
@@ -22,16 +22,16 @@ const Post = async (object) => {
         return postStatus;
       })
       .catch((err) => {
-        const err_status = {
+        const errStatus = {
           status: err.statusCode,
           message: err.error,
           reason: err.reason,
         };
         logger.logger.error(
           "error",
-          `status_code:${err_status.status} message:${err_status.message} reason${err_status.reason}`
+          `status_code:${errStatus.status} message:${errStatus.message} reason${errStatus.reason}`
         );
-        return err_status;
+        return errStatus;
       });
   } catch (error) {
     logger.logger.error("error", `error  occured in post catch block ${error}`);
@@ -40,7 +40,7 @@ const Post = async (object) => {
 
 //controller get method for getting detail using type and also id
 
-const Get = async (query) => {
+const get = async (query) => {
   try {
     return await database
       .get(query, "project_db")
@@ -69,16 +69,16 @@ const Get = async (query) => {
         return status;
       })
       .catch((err) => {
-        const err_status = {
+        const errStatus = {
           status: err.statusCode,
           message: err.error,
           reason: err.reason,
         };
         logger.logger.log(
           "info",
-          `status_code:${err_status.status} message:${err_status.message} reason:${err_status.reason}`
+          `status_code:${errStatus.status} message:${errStatus.message} reason:${errStatus.reason}`
         );
-        return err_status;
+        return errStatus;
       });
   } catch (error) {
     logger.logger.error("error", `error occured in get catch block ${error}`);
@@ -88,7 +88,7 @@ const Get = async (query) => {
 
 //controller delete method
 
-const DeleteDetails = async (id, rev) => {
+const deleteDetails = async (id, rev) => {
   try {
     return await database
       .deleted(id, rev, "project_db")
@@ -105,16 +105,16 @@ const DeleteDetails = async (id, rev) => {
         return status;
       })
       .catch((err) => {
-        const err_status = {
+        const errStatus = {
           status: err.statusCode,
           message: err.error,
           reason: err.reason,
         };
         logger.logger.error(
           "error",
-          `status_code:${err_status.status} message:${err_status.message} reason:${err_status.reason}`
+          `status_code:${errStatus.status} message:${errStatus.message} reason:${errStatus.reason}`
         );
-        return err_status;
+        return errStatus;
       });
   } catch (error) {
     logger.logger.error(
@@ -127,7 +127,7 @@ const DeleteDetails = async (id, rev) => {
 //export the methods
 
 module.exports = {
-  Post,
-  Get,
-  DeleteDetails,
+  post,
+  get,
+  deleteDetails,
 };

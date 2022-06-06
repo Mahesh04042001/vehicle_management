@@ -37,7 +37,7 @@ app.get("/get_login_user/:username/:password", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -73,7 +73,7 @@ app.post("/postUser", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -100,7 +100,7 @@ app.get("/getUser", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -124,7 +124,7 @@ app.get("/getUser/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -142,7 +142,7 @@ app.get("/getUser/:id", (request, response) => {
 
 app.delete("/deleteUser/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -182,7 +182,7 @@ app.put("/updateUser", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -222,7 +222,7 @@ app.post("/postDriver", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -249,7 +249,7 @@ app.get("/getDriver", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -273,7 +273,7 @@ app.get("/getDriver/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -291,7 +291,7 @@ app.get("/getDriver/:id", (request, response) => {
 
 app.delete("/deleteDriver/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -332,7 +332,7 @@ app.put("/updateDriver", (request, response) => {
     console.log("err", value.error);
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -373,7 +373,7 @@ app.post("/postVehicle", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -399,7 +399,7 @@ app.get("/getVehicle", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -422,7 +422,7 @@ app.get("/getVehicle/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then(async (res) => {
       let returnResponse = await res;
       returnResponse = returnResponse.data.docs[0];
@@ -445,7 +445,7 @@ app.get("/getVehicle/:id", (request, response) => {
 
 app.delete("/deleteVehicle/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -485,7 +485,7 @@ app.put("/updateVehicle", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -524,7 +524,7 @@ app.post("/postFuel", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -547,7 +547,7 @@ app.get("/getFuel", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -571,7 +571,7 @@ app.get("/getFuel/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -589,7 +589,7 @@ app.get("/getFuel/:id", (request, response) => {
 
 app.delete("/deleteFuel/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -628,7 +628,7 @@ app.put("/updateFuel", (request, response) => {
     console.log("user validation");
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -666,7 +666,7 @@ app.post("/postInsurance", (request, response) => {
     console.log("user validation");
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -693,7 +693,7 @@ app.get("/getInsurance", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -717,7 +717,7 @@ app.get("/getInsurance/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -738,7 +738,7 @@ app.get("/getInsurance/:id", (request, response) => {
 
 app.delete("/deleteInsurance/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -776,7 +776,7 @@ app.put("/updateInsurance", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -817,7 +817,7 @@ app.post("/postMaintanence", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -844,7 +844,7 @@ app.get("/getMaintanence", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -870,7 +870,7 @@ app.get("/getMaintanence/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -891,7 +891,7 @@ app.get("/getMaintanence/:id", (request, response) => {
 
 app.delete("/deleteMaintanence/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -930,7 +930,7 @@ app.put("/updateMaintanence", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -969,7 +969,7 @@ app.post("/postTrip", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
@@ -992,7 +992,7 @@ app.get("/getTrip", (_request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -1015,7 +1015,7 @@ app.get("/getTrip/:id", (request, response) => {
     },
   };
   controller
-    .Get(data)
+    .get(data)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -1033,7 +1033,7 @@ app.get("/getTrip/:id", (request, response) => {
 
 app.delete("/deleteTrip/:id/:rev", (request, response) => {
   controller
-    .DeleteDetails(request.params.id, request.params.rev)
+    .deleteDetails(request.params.id, request.params.rev)
     .then((res) => {
       response.send(res);
       logger.logger.log(
@@ -1072,7 +1072,7 @@ app.put("/updateTrip", (request, response) => {
     });
   } else {
     controller
-      .Post(object)
+      .post(object)
       .then((res) => {
         response.send(res);
         logger.logger.log(
