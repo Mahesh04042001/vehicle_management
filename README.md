@@ -11,7 +11,7 @@ Vehicle Management System Software (VMS) is the most modern system to manage You
 
 2.  VMS is used to add, delete, update the vehicles info like add drivers details,vehicles details,trip details, fuel expenses,maintanence exenses,insurance expenses day to day vehicles expenses.
 
-# Project structure
+# Project Flow
 
     Login---> - Home
               - About
@@ -111,4 +111,4 @@ command to install: npm install npm-package_name
 
 # Database
 
-1. cloudant
+1. cloudant(couch DB)
