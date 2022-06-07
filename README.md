@@ -102,12 +102,12 @@ Vehicle Management System Software (VMS) is the most modern system to manage You
 
 command to install: npm install npm-package_name
 
-1. "body-parser": "^1.20.0",
-2. "cors": "^2.8.5",
-3. "express": "^4.18.1",
-4. "joi": "^17.6.0",
-5. "nano": "^10.0.0",
-6. "winston": "^3.7.2"
+1. body-parser : 1.20.0,
+2. cors : 2.8.5,
+3. express : 4.18.1,
+4. joi : 17.6.0,
+5. nano : 10.0.0,
+6. winston : 3.7.2
 
 # Database
 
