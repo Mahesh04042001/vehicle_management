@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   //Login check function
 
-  login(formValue:any){
+  loginCheck(formValue:any){
     this.loginBtnDisable=false;
     this.api.getlogindata(formValue.username,formValue.password).subscribe(res=>{
       this.shared.allIdObj=res;
