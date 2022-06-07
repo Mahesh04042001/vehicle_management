@@ -8,6 +8,7 @@ const logger = require("./config/logger");
 const port = 8000;
 const cors = require("cors");
 app.use(bodyparser.json());
+app.disable("x-powered-by");
 
 //validator import statement
 const userValidator = require("./controllers/validators/user_validator/user.schema");
