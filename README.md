@@ -72,8 +72,8 @@ Vehicle Management System Software (VMS) is the most modern system to manage You
    Lookup relation.
    One to many relation.
 4. Exception Handling with try and catch.
-5. Promise with resolve and resolve.
-6. Avoing Double time Click save.
+5. Promise with resolve and reject.
+6. Avoid Double time Click save.
 7. Logger.
 8. Loggic Handling.
 9. Form validation in frontend level.
