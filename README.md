@@ -75,7 +75,7 @@ Vehicle Management System Software (VMS) is the most modern system to manage You
 5. Promise with resolve and reject.
 6. Avoid Double time Click save.
 7. Logger.
-8. Loggic Handling.
+8. Logic Handling.
 9. Form validation in frontend level.
 10. Form validation in NodeJs level.
 11. Form null validation in Cloudant database level.
